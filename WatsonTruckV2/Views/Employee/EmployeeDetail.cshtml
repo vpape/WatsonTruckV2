@@ -1,0 +1,279 @@
+﻿@model WatsonTruckV2.Models.EmployeeAndInsuranceVM
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Employee Detail</title>
+</head>
+<body>
+    <div class="form-horizontal">
+        <hr />
+        <input type="hidden" id="Employee_id" class="form-control" name="Employee_id" value="@ViewBag.Employee_id" />
+        <div class="collapsible" id="EmpDetail">Employee Detail</div>
+        <div class="content">
+            <p></p>
+            <p></p>
+            <dl class="dl-horizontal">
+                <dt>
+                    <label class="col-md-2 control-label">Employee Role:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="Role" class="form-control" name="EmployeeRole" value="@Html.Raw(Model.employee.EmployeeRole)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Current Employer:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="CurrentEmployer" class="form-control" name="CurrentEmployer" value="@Html.Raw(Model.employee.CurrentEmployer)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Hire Date:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="date" id="HireDate" class="form-control" name="HireDate" value="@Convert.ToDateTime(Model.employee.HireDate).ToString("yyyy-MM-dd")" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Job Title:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="JobTitle" class="form-control" name="JobTitle" value="@Html.Raw(Model.employee.JobTitle)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Employee Number:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="EmpNumber" class="form-control" name="SSN" value="@Html.Raw(Model.employee.SSN)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">First Name:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="FirstName" class="form-control" name="FirstName" value="@Html.Raw(Model.employee.FirstName)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Last Name:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="LastName" class="form-control" name="LastName" value="@Html.Raw(Model.employee.LastName)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Date of Birth:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="date" id="DateOfBirth" class="form-control" name="DateOfBirth" value="@Convert.ToDateTime(Model.employee.DateOfBirth).ToString("yyyy-MM-dd")" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Gender:</label>
+                </dt>
+                <dd class="col-md-10 form-group" id="Gender">
+                    @*@Html.RadioButtonFor(model => model.employee.Gender, "Male", true) Male @Html.RadioButtonFor(model => model.employee.Gender, "female", false) Female*@
+                    <input type="text" id="Gender" class="form-control" name="Gender" value="@Html.Raw(Model.employee.Gender)" disabled />
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Work Status:</label>
+                </dt>
+                <dd class="col-md-10 form-group" id="Gender">
+                    <input type="checkbox" class="checkbox-inline" id="Active" name="Active" value="Active" @((Model.employee.Active) == "True" ? "checked" : "") disabled />
+                    <text>Active</text>
+                    <input type="checkbox" class="checkbox-inline" id="Retired" name="Retired" value="Retired" @((Model.employee.Retired) == "True" ? "checked" : "") disabled />
+                    <text>Retired</text>
+                    <input type="checkbox" class="checkbox-inline" id="Cobra" name="CobraStateContinuation" value="Cobra/State Continuation" @((Model.employee.CobraStateContinuation) == "True" ? "checked" : "") disabled />
+                    <text>Cobra/State</text>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Marital Status:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="MaritalStatus" class="form-control" name="MaritalStatus" value="@Html.Raw(Model.employee.MaritalStatus)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">MailingAddress:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="MailingAddress" class="form-control" name="MailingAddress" value="@Html.Raw(Model.employee.MailingAddress)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">P.O. box:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="PObox" class="form-control" name="PObox" value="@Html.Raw(Model.employee.PObox)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">City:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="City" class="form-control" name="City" value="@Html.Raw(Model.employee.City)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">State:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="State" class="form-control" name="State" value="@Html.Raw(Model.employee.State)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">ZipCode:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="ZipCode" class="form-control" name="ZipCode" value="@Html.Raw(Model.employee.ZipCode)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Within City Limits?</label>
+                </dt>
+                <dd class="col-md-10 form-group" id="CityLimits">
+                    <input type="text" id="CityLimits" class="form-control" name="CityLimits" value="@Html.Raw(Model.employee.CityLimits)" disabled />
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">County</label>
+                </dt>
+                <dd class="col-md-10 form-group" id="County">
+                    <input type="text" id="County" class="form-control" name="County" value="@Html.Raw(Model.employee.County)" disabled />
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Physical Address:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="PhysicalAddress" class="form-control" name="PhysicalAddress" value="@Html.Raw(Model.employee.PhysicalAddress)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">City:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="CityTwo" class="form-control" name="CityTwo" value="@Html.Raw(Model.employee.CityTwo)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">State:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="StateTwo" class="form-control" name="StateTwo" value="@Html.Raw(Model.employee.StateTwo)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">ZipCode:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="ZipCodeTwo" class="form-control" name="ZipCodeTwo" value="@Html.Raw(Model.employee.ZipCodeTwo)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Email:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="EmailAddress" class="form-control" name="EmailAddress" value="@Html.Raw(Model.employee.EmailAddress)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Phone Number:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="tel" id="PhoneNumber" class="form-control" name="PhoneNumber" value="@Html.Raw(Model.employee.PhoneNumber)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Cell Phone:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="tel" id="CellPhone" class="form-control" name="CellPhone" value="@Html.Raw(Model.employee.CellPhone)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Other Insurance:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    @*@Html.RadioButtonFor(model => model.Gender, "Male", true) Male @Html.RadioButtonFor(model => model.Gender, "female", false) Female*@
+                    <input type="text" id="empOtherGrpHinsCoverage" class="form-control" name="CoveredByOtherInsurance" value="@Html.Raw(Model.grpHealth.OtherInsuranceCoverage)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Insurance Carrier:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="text" id="empInsCarrier" class="form-control" name="InsuranceCarrier" value="@Html.Raw(Model.grpHealth.InsuranceCarrier)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Policy Number:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="tel" id="empInsPolicyNumber" class="form-control" name="PolicyNumber" value="@Html.Raw(Model.grpHealth.PolicyNumber)" disabled>
+                </dd>
+                <dt>
+                    <label class="col-md-2 control-label">Phone Number:</label>
+                </dt>
+                <dd class="col-md-10 form-group">
+                    <input type="tel" id="empInsPhoneNumber" class="form-control" name="PhoneNumber" value="@Html.Raw(Model.grpHealth.PhoneNumber)" disabled>
+                </dd>
+                <dt>
+                    @Html.ActionLink("Edit", "EditEmployee", "Employee", new { Employee_id = Model.employee.Employee_id }, null)|
+                    @Html.ActionLink("Back to List", "EmpOverview")
+                </dt>
+            </dl>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+    .collapsible {
+        background-color: #2e4593;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: center;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #2e4593;
+        }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+
+    .button {
+        text-align: right;
+    }
+
+    .btn:hover {
+        background-color: #2e4593;
+        color: white;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 8px 8px;
+    }
+
+        a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+</style>
+
+<script>
+    var col = document.querySelectorAll(".collapsible");
+    var i;
+    var Employee_id;
+
+    for (i = 0; i < col.length; i++) {
+        col[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+
+        });
+    }
+
+    function EditEmpBtn() {
+
+        window.location.href = "/Employee/EditEmployee?Employee_id=@Model.employee.Employee_id";
+    }
+</script>

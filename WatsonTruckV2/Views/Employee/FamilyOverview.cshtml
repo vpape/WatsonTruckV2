@@ -1,0 +1,158 @@
+﻿@model List<WatsonTruckV2.Models.Family_Info>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>*@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>Family Overview</title>
+</head>
+<body>
+    <hr />
+    <h4>Family Overview</h4>
+    <input type="hidden" id="RelationshipToInsured" class="form-control" name="RelationshipToInsured" value="@ViewBag.RelationshipToInsured" />
+    <table class="table table-condensed">
+        <thead class="thead-dark">
+            <tr>
+                <th></th>
+                <th>Relation To Employee</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Employee Number</th>
+                <th>Employee Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <span>
+                            <i class="fa fa-file-text-o" style="font-size:24px" onclick="FamilyInsurance(@Html.Raw(item.Employee_id))"></i>
+                        </span>
+                    </td>
+                    <td>
+                        <input type="text" id="RelationshipToInsured" class="form-control" name="RelationshipToInsured" value="@Html.Raw(item.RelationshipToInsured)" readonly />
+                    </td>
+                    <td>
+                        <input type="text" id="FirstName" class="form-control" name="FirstName" value="@Html.Raw(item.FirstName)" readonly />
+                    </td>
+                    <td>
+                        <input type="text" id="LastName" class="form-control" name="LastName" value="@Html.Raw(item.LastName)" readonly />
+                    </td>
+                    <td>
+                        <input type="text" id="EmpNumber" class="form-control" name="SSN" value="@Html.Raw(item.Employee.SSN)" readonly />
+                    </td>
+                    <td>
+                        <input type="text" id="EmpFirstName" class="form-control" name="FirstName" value="@Html.Raw(item.Employee.FirstName)" readonly />
+                    </td>
+                    @if (item.RelationshipToInsured == "Spouse")
+                    {
+                        <td>
+                            @Html.ActionLink("Detail", "SpouseDetail", "Employee", new { FamilyMember_id = item.FamilyMember_id, item.RelationshipToInsured }, null)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditSpouse", "Employee", new { FamilyMember_id = item.FamilyMember_id, item.RelationshipToInsured }, null)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "DeleteSp", "Employee", new { FamilyMember_id = item.FamilyMember_id, item.RelationshipToInsured }, null)
+                        </td>
+                    }
+                    @if (item.RelationshipToInsured == "Dependent")
+                    {
+                        <td>
+                            @Html.ActionLink("Detail", "DependentDetail", "Employee", new { FamilyMember_id = item.FamilyMember_id, item.RelationshipToInsured }, null)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditDependent", "Employee", new { FamilyMember_id = item.FamilyMember_id, item.RelationshipToInsured }, null)
+
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "DeleteDep", "Employee", new { FamilyMember_id = item.FamilyMember_id, item.RelationshipToInsured }, null)
+                        </td>
+
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="form-group">
+        <p class="col-md-2">
+            <button id="FamilyEnrollmentUpdate" onclick="FamilyEnrollment()" class="btn">Add Family Member</button>
+        </p>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "EmpOverview")
+    </p>
+</body>
+</html>
+
+
+<style>
+    .btn:hover {
+        background-color: #2e4593;
+        color: white;
+    }
+
+    .button {
+        text-align: right;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 8px 8px;
+    }
+
+        a:hover {
+            background-color: #ddd;
+            color: #2e4593;
+        }
+
+    .fa-arrow-circle-o-right:hover {
+        border-radius: 50%;
+        color: white;
+        background-color: #2e4593;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        table tr {
+            border-bottom: 1px solid black;
+        }
+
+    .next {
+        background-color: #147;
+        padding-left: 1px;
+    }
+
+    .round {
+        border-radius: 50%;
+    }
+</style>
+
+<script>
+    function FamilyInsurance() {
+
+        window.location.href = "/Employee/FamilyInsurance?Employee_id=@ViewBag.Employee_id"; /* + "&FamilyMember_id="+ FamilyMember_id*/
+
+    }
+
+    function FamilyEnrollment() {
+
+        window.location.href = "/Employee/FamilyEnrollment?Employee_id=@ViewBag.Employee_id";
+    }
+
+</script>
+
+
+
+
+

@@ -1,0 +1,705 @@
+﻿@model WatsonTruckV2.Models.SpouseAndDependentInsVM
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Edit Spouse Enrollment</title>
+</head>
+<body>
+    <div class="form-horizontal">
+        <hr />
+        <input type="hidden" id="Employee_id" class="form-control" name="Employee_id" value="@ViewBag.Employee_id" />
+        <input type="hidden" id="FamilyMember_id" class="form-control" name="FamilyMember_id" value="@ViewBag.FamilyMember_id" />
+        <input type="hidden" id="OtherInsurance_id" class="form-control" name="OtherInsurance_id" value="@ViewBag.OtherInsurance_id" />
+        <input type="hidden" id="RelationshipToInsured" class="form-control" name="RelationshipToInsured" value="@ViewBag.RelationshipToInsured" />
+        <div class="collapsible" id="FirstStep">Edit Spouse Enrollment</div>
+        <div id="divSpEnrollment" class="content">
+            <p></p>
+            <p></p>
+            <div class="form-group" id="divRelationshipToInsured">
+                <label for="RelationshipToInsured" class="col-md-2 control-label">Relation To Employee:</label>
+                <div class="col-md-10">
+                    <input type="text" id="RelationshipToInsured" class="form-control" name="RelationshipToInsured" value="@Html.Raw(Model.family.RelationshipToInsured)" disabled />
+                </div>
+                @*<div class="col-md-10 col-md-offset-2">
+                        <select id="RelationshipToInsured" name="RelationshipToInsured" onchange="SpouseOrDependent()" class="form-control" disabled>
+                            @if (ViewBag.spouseExist == false)
+                            {
+                                <option id="Spouse" name="RelationshipToInsured" value="Spouse" @((ViewBag.RelationshipToInsured.ToLower() == "Spouse") ? "selected" : "")>Spouse</option>
+                            }
+                            else
+                            {
+                                <option id="Dependent" name="RelationshipToInsured" value="Dependent" @((ViewBag.RelationshipToInsured.ToLower() == "Dependent") ? "selected" : "")>Dependent</option>
+                            }
+                        </select>
+                    </div>*@
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Marital Status:</label>
+                <div class="col-md-10">
+                    <select id="MaritalStatus" class="form-control">
+                        <option value="">Choose Option:</option>
+                        <option value="MarriedwDep" @((Model.family.MaritalStatus) == "MarriedwDep" ? "selected" : "")>Married with Dependents</option>
+                        <option value="Married" @((Model.family.MaritalStatus) == "Married" ? "selected" : "")>Married</option>
+                        <option value="SinglewDep" @((Model.family.MaritalStatus) == "SinglewDep" ? "selected" : "")>Single with Dependents</option>
+                        <option value="Single" @((Model.family.MaritalStatus) == "Single" ? "selected" : "")>Single</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="SSN" class="col-md-2 control-label">SSN:</label>
+                <div class="col-md-10">
+                    <input type="text" id="SSN" class="form-control" placeholder="SSN" name="SSN" value="@Html.Raw(Model.family.SSN)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="FirstName" class="col-md-2 control-label">First Name:</label>
+                <div class="col-md-10">
+                    <input type="text" id="FirstName" class="form-control" placeholder="First Name" name="FirstName" value="@Html.Raw(Model.family.FirstName)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="LastName" class="col-md-2 control-label">Last Name:</label>
+                <div class="col-md-10">
+                    <input type="text" id="LastName" class="form-control" placeholder="Last Name" name="LastName" value="@Html.Raw(Model.family.LastName)" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Date of Birth:</label>
+                <div class="col-md-10">
+                    <input type="datetime" id="DateOfBirth" class="form-control" name="DateOfBirth" value="@Convert.ToDateTime(Model.family.DateOfBirth).ToString("yyyy-MM-dd")" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Gender:</label>
+                <div class="col-md-10">
+                    @*@Html.RadioButtonFor(model => model.family.Gender, "Male", true) Male @Html.RadioButtonFor(model => model.family.Gender, "female", false) Female*@
+                    <select id="Gender" class="form-control">
+                        <option value="">Select Option</option>
+                        <option value="Male" @((Model.family.Gender) == "Male" ? "selected" : "")>Male</option>
+                        <option value="Female" @((Model.family.Gender) == "Female" ? "selected" : "")>Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-11">
+                    @*<button type="submit" id="SpouseEnrollmentUpdate" class="btn">Save</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Spouse Contact *@
+    <div class="form-horizontal">
+        <p></p>
+        <div class="collapsible" id="SecondStep">Edit Spouse Contact</div>
+        <div id="divSpEnrollment" class="content">
+            <p></p>
+            <p></p>
+            <div id="divMailingAddress">
+                <div class="form-group">
+                    <label for="MailingAddress" class="col-md-2 control-label">Mailing Address:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="MailingAddress" class="form-control" placeholder="Street" name="MailingAddress" value="@Html.Raw(Model.family.MailingAddress)" />
+                        <input type="text" id="PObox" class="form-control" placeholder="PO Box" name="PObox" value="@Html.Raw(Model.family.PObox)" />
+                        <input type="text" id="City" class="form-control" placeholder="City" name="City" value="@Html.Raw(Model.family.City)" />
+                        <input type="text" id="State" class="form-control" placeholder="State" name="State" value="@Html.Raw(Model.family.State)" />
+                        <input type="text" id="ZipCode" class="form-control" placeholder="Zip Code" name="ZipCode" value="@Html.Raw(Model.family.ZipCode)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="County" class="col-md-2 control-label">County:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="County" class="form-control" placeholder="County" name="County" value="@Html.Raw(Model.family.County)" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" id="divMailingAddress">
+                <label class="col-md-2 control-label">Physical Address same as Mailing Address?</label>
+                <div class="col-md-10">
+                    <label class="radio-inline"><input type="radio" id="mailingAddr" class="radio-inline" onclick="showHidePhysicalAddress()" name="Address" value="True" />Yes</label>
+                    <label class="radio-inline"><input type="radio" id="mailingAddr" class="radio-inline" onclick="showHidePhysicalAddress()" name="Address" value="False" checked />No</label>
+                </div>
+            </div>
+            <div id="divPhysicalAddress">
+                <div class="form-group">
+                    <label for="PhysicalAddress" class="col-md-2 control-label">Physical Address:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="PhysicalAddress" class="form-control" placeholder="Street" name="PhysicalAddress" value="@Html.Raw(Model.family.PhysicalAddress)" />
+                        <input type="text" id="City2" class="form-control" placeholder="City" name="CityTwo" value="@Html.Raw(Model.family.CityTwo)" />
+                        <input type="text" id="State2" class="form-control" placeholder="State" name="StateTwo" value="@Html.Raw(Model.family.StateTwo)" />
+                        <input type="text" id="ZipCode2" class="form-control" placeholder="Zip Code" name="ZipCodeTwo" value="@Html.Raw( Model.family.ZipCodeTwo)" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="EmailAddress" class="col-md-2 control-label">Email Address:</label>
+                <div class="col-md-10">
+                    <input type="text" id="EmailAddress" class="form-control" placeholder="Email" name="EmailAddress" value="@Html.Raw(Model.family.EmailAddress)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="PhoneNumber" class="col-md-2 control-label">Phone Number:</label>
+                <div class="col-md-10">
+                    <input type="text" id="PhoneNumber" class="form-control" placeholder="Phone #" name="PhoneNumber" maxlength="14" value="@Html.Raw(Model.family.PhoneNumber)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="CellPhone" class="col-md-2 control-label">Cell Phone:</label>
+                <div class="col-md-10">
+                    <input type="text" id="CellPhone" class="form-control" placeholder="Cell Phone #" name="CellPhone" maxlength="14" value="@Html.Raw(Model.family.CellPhone)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-11">
+                    @*<button type="submit" id="SpouseEnrollmentUpdateStepTwo" class="btn">Save</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Spouse Employment *@
+    <div class="form-horizontal">
+        <p></p>
+        <div class="collapsible" id="ThirdStep">Edit Spouse Employment</div>
+        <div class="content">
+            <p></p>
+            <p></p>
+            <div id="divSpEmployment">
+                <div class="form-group">
+                    <label for="Employer" class="col-md-2 control-label">Current Employer:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="Employer" class="form-control" placeholder="Current Employer" name="Employer" value="@Html.Raw(Model.family.Employer)" />
+                    </div>
+                </div>
+                <div id="divEmployerAddress">
+                    <div class="form-group">
+                        <label for="EmployerAddress" class="col-md-2 control-label">Employer Address:</label>
+                        <div class="col-md-10">
+                            <input type="text" id="EmployerAddress" class="form-control" placeholder="Street" name="EmployerMailingAddress" value="@Html.Raw( Model.family.EmployerMailingAddress)" />
+                            <input type="text" id="EmployerPObox" class="form-control" placeholder="PO Box" name="EmployerPObox" value="@Html.Raw(Model.family.EmployerPObox)" />
+                            <input type="text" id="EmployerCity" class="form-control" placeholder="City" name="EmployerCity" value="@Html.Raw(Model.family.EmployerCity)" />
+                            <input type="text" id="EmployerState" class="form-control" placeholder="State" name="EmployerState" value="@Html.Raw(Model.family.EmployerState)" />
+                            <input type="text" id="EmployerZipCode" class="form-control" placeholder="Zip Code" name="EmployerZipCode" value="@Html.Raw(Model.family.EmployerZipCode)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="EmployerPhoneNumber" class="col-md-2 control-label">Phone Number:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="EmployerPhoneNumber" class="form-control" placeholder="Phone #" name="EmployerPhoneNumber" maxlength="14" value="@Html.Raw(Model.family.EmployerPhoneNumber)" />
+                    </div>
+                </div>
+                <div id="SpOtherIns">
+                    <label>Other Insurance Coverage?</label>
+                    <label class="radio-inline"><input type="radio" id="spOtherInsurance" class="radio-inline" onclick="showHideSpOtherInsCoverage()" name="OtherInsuranceCoverage" value="True" @Html.Raw((Model.family.OtherInsuranceCoverage) == "True" ? "checked" : "") />Yes</label>
+                    <label class="radio-inline"><input type="radio" id="spOtherInsurance" class="radio-inline" onclick="showHideSpOtherInsCoverage()" name="OtherInsuranceCoverage" value="False" @Html.Raw((Model.family.OtherInsuranceCoverage) == "False" ? "checked" : "") />No</label>
+                    <div id="SpOtherInsCoverageSelect">
+                        <label for="OtherInsuranceCoverage" class="control-label">Coverage:</label>
+                        <input type="checkbox" class="checkbox-inline" id="Medical" name="Medical" value="Medical" @((Model.family.Medical == "True") ? "checked" : "") /><text for="Medical">Medical</text>
+                        <input type="checkbox" class="checkbox-inline" id="Dental" name="Dental" value="Dental" @((Model.family.Dental == "True") ? "checked" : "") /><text for="Dental">Dental</text>
+                        <input type="checkbox" class="checkbox-inline" id="Vision" name="Vision" value="Vision" @((Model.family.Vision == "True") ? "checked" : "") /><text for="Vision">Vision</text>
+                        <input type="checkbox" class="checkbox-inline" id="Indemnity" name="Indemnity" value="Indemnity" @((Model.family.Indemnity == "True") ? "checked" : "") /><text for="Indemnity">Indemnity</text>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-11">
+                    @*<input type="submit" id="SpouseEnrollmentUpdateStepThree" value="Save" class="btn" />*@
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Spouse Insurance *@
+    <div class="form-horizontal">
+        <p></p>
+        <div class="collapsible" id="FourthStep">Edit Spouse Insurance</div>
+        <div class="content">
+            <p></p>
+            <p></p>
+            <div id="divSpInsurance">
+                <div id="SpOtherInsCoverage">
+                    <label>Is your spouse covered by other insurance, including Medicare/Medicaid?</label>
+                    <label class="radio-inline"><input type="radio" id="spInsuranceCoverage" class="radio-inline" onclick="showHideSpIns()" name="CoveredByOtherInsurance" value="True" @((Model.otherIns.CoveredByOtherInsurance == "True") ? "checked" : "") />Yes</label>
+                    <label class="radio-inline"><input type="radio" id="spInsuranceCoverage" class="radio-inline" onclick="showHideSpIns()" name="CoveredByOtherInsurance" value="False" @((Model.otherIns.CoveredByOtherInsurance == "False") ? "checked" : "") />No</label>
+                    <p></p>
+                    <div id="spInsInfo">
+                        <div class="form-group">
+                            <label for="Employer" class="col-md-2 control-label">Insurance Name:</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" id="spInsCarrier" placeholder="Insurance Carrier" name="InsuranceCarrier" value="@Html.Raw(Model.otherIns.InsuranceCarrier)" />
+                            </div>
+                        </div>
+                        <div id="divInsAddress">
+                            <div class="form-group">
+                                <label for="InsAddress" class="col-md-2 control-label">Insurance Address:</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" id="spInsMailingAddress" placeholder="Street" name="MailingAddress" value="@Html.Raw(Model.otherIns.InsuranceCarrier)" />
+                                    <input type="text" class="form-control" id="spInsCity" placeholder="City" name="City" value="@Html.Raw(Model.otherIns.City)" />
+                                    <input type="text" class="form-control" id="spInsState" placeholder="State" name="State" value="@Html.Raw(Model.otherIns.State)" />
+                                    <input type="text" class="form-control" id="spInsZipCode" placeholder="Zip Code" name="ZipCode" value="@Html.Raw(Model.otherIns.ZipCode)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="InsPhoneNumber" class="col-md-2 control-label">Phone Number:</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" id="spInsPhoneNumber" placeholder="Phone Number" name="PhoneNumber" value="@Html.Raw(Model.otherIns.PhoneNumber)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PolicyNumber" class="col-md-2 control-label">Policy Number:</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" id="spInsPolicyNumber" placeholder="Policy #" name="PolicyNumber" value="@Html.Raw(Model.otherIns.PolicyNumber)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-11">
+                    <input type="submit" id="SpouseEnrollmentUpdate" value="Save" class="btn" />
+                </div>
+            </div>
+            <p>
+                @Html.ActionLink("Back to List", "FamilyOverview", new { Employee_id = ViewBag.Employee_id }, null)
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+    .collapsible {
+        background-color: #2e4593;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: center;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #2e4593;
+        }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+
+    .button {
+        text-align: right;
+    }
+
+    .btn:hover {
+        background-color: #2e4593;
+        color: white;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 8px 8px;
+    }
+
+        a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+</style>
+
+<script>
+    var col = document.querySelectorAll(".collapsible");
+    var i;
+    var Employee_id;
+    var FamilyMember_id;
+
+    for (i = 0; i < col.length; i++) {
+        col[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+
+        });
+    }
+
+    function showHidePhysicalAddress() {
+        document.addEventListener("click", function () {
+            var selection = document.getElementById("mailingAddr");
+
+            if (selection.checked == false) {
+                document.getElementById("divPhysicalAddress").style.display = "block";
+            }
+            else {
+                document.getElementById("divPhysicalAddress").style.display = "none";
+            }
+        });
+    }
+
+    function showHideSpOtherInsCoverage() {
+        document.addEventListener("click", function () {
+            var selection = document.getElementById("spOtherInsurance");
+
+            if (selection.checked == true) {
+
+                document.getElementById("SpOtherInsCoverageSelect").style.display = "block";
+            }
+            else {
+                document.getElementById("SpOtherInsCoverageSelect").style.display = "none";
+            }
+        });
+    }
+
+    document.querySelector("#SpouseEnrollmentUpdate").addEventListener("click", function () {
+        var maritalStatus = document.querySelector("#MaritalStatus").value;
+
+        var message;
+        var alert = confirm("Would you like to proceed ? If yes, click the OK button to continue")
+
+        if (maritalStatus == "SinglewDep" || maritalStatus == "MarriedwDep") {
+            if (alert == true) {
+
+                message = "Please proceed to the Spouse Detail for review, Thank you!!";
+                var alert = confirm(message)
+                if (alert == true) {
+
+                    window.location.href = "/Employee/SpouseDetail/?FamilyMember_id=" + @ViewBag.FamilyMember_id + "&Employee_id=@ViewBag.Employee_id";
+
+                }
+                else {
+                    window.location.href = "/Employee/FamilyOverview/?Employee_id=" + @ViewBag.Employee_id;
+                }
+            }
+        }
+        else {
+            if (alert == false) {
+
+                window.location.href = "/Employee/EmpOverview/?Employee_id=" + @ViewBag.Employee_id;
+            }
+            else {
+
+                message = "Please proceed to the to the GroupHealth Enrollment, Thank you!!";
+                var alert = confirm(message)
+
+                if (alert == true) {
+
+                    window.location.href = "/Group_Health/GrpHealthEnrollment/?Employee_id=" + @ViewBag.Employee_id;
+
+                }
+                else {
+
+                    window.location.href = "/Employee/EmpOverview/?Employee_id=" + @ViewBag.Employee_id;
+                }
+            }
+        }
+    })
+
+    function showHideSpIns() {
+        document.addEventListener("click", function () {
+            var selection = document.getElementById("spInsuranceCoverage");
+
+            if (selection.checked == true) {
+
+                //document.getElementById("spInsInfo").style.visibility = "visible";
+                document.getElementById("spInsInfo").style.display = "block";
+            }
+            else {
+                //document.getElementById("spInsInfo").style.visibility = "hidden";
+                document.getElementById("spInsInfo").style.display = "none";
+            }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("#SpouseEnrollmentUpdate").addEventListener("click", function () {
+            Employee_id = document.getElementById("Employee_id").value;
+            FamilyMember_id = document.getElementById("FamilyMember_id").value;
+            RelationshipToInsured = document.getElementById("RelationshipToInsured").value;
+            MaritalStatus = document.getElementById("MaritalStatus").value;
+            SSN = document.getElementById("SSN").value;
+            FirstName = document.getElementById("FirstName").value;
+            LastName = document.getElementById("LastName").value;
+            DateOfBirth = document.getElementById("DateOfBirth").value;
+            Gender = document.getElementById("Gender").value;
+
+            MailingAddress = document.getElementById("MailingAddress").value;
+            PObox = document.getElementById("PObox").value;
+            City = document.getElementById("City").value;
+            State = document.getElementById("State").value;
+            ZipCode = document.getElementById("ZipCode").value;
+            County = document.getElementById("County").value;
+            PhysicalAddress = document.getElementById("PhysicalAddress").value;
+            City2 = document.getElementById("City2").value;
+            State2 = document.getElementById("State2").value;
+            ZipCode2 = document.getElementById("ZipCode2").value;
+            EmailAddress = document.getElementById("EmailAddress").value;
+            PhoneNumber = document.getElementById("PhoneNumber").value;
+            CellPhone = document.getElementById("CellPhone").value;
+
+            Employer = document.getElementById("Employer").value;
+            EmployerAddress = document.getElementById("EmployerAddress").value;
+            EmployerPObox = document.getElementById("EmployerPObox").value;
+            EmployerCity = document.getElementById("EmployerCity").value;
+            EmployerState = document.getElementById("EmployerState").value;
+            EmployerZipCode = document.getElementById("EmployerZipCode").value;
+            EmployerPhoneNumber = document.getElementById("EmployerPhoneNumber").value;
+            spOtherInsurance = document.getElementById("spOtherInsurance").value;
+            spOtherMedicalCoverage = document.getElementById("Medical").checked;
+            spOtherDentalCoverage = document.getElementById("Dental").checked;
+            spOtherVisionCoverage = document.getElementById("Vision").checked;
+            spIndemnityCoverage = document.getElementById("Indemnity").checked;
+
+            spInsuranceCoverage = document.getElementById("spInsuranceCoverage").checked;
+            spInsCarrier = document.getElementById("spInsCarrier").value;
+            spInsMailingAddress = document.getElementById("spInsMailingAddress").value;
+            spInsCity = document.getElementById("spInsCity").value;
+            spInsState = document.getElementById("spInsState").value;
+            spInsZipCode = document.getElementById("spInsZipCode").value;
+            spInsPhoneNumber = document.getElementById("spInsPhoneNumber").value;
+            spInsPolicyNumber = document.getElementById("spInsPolicyNumber").value;
+
+            var data = {
+                "Employee_id": Employee_id,
+                "FamilyMember_id": FamilyMember_id,
+                "RelationshipToInsured": RelationshipToInsured,
+                "MaritalStatus": MaritalStatus,
+                "SSN": SSN,
+                "FirstName": FirstName,
+                "LastName": LastName,
+                "DateOfBirth": DateOfBirth,
+                "Gender": Gender,
+
+                "MailingAddress": MailingAddress,
+                "PObox": PObox,
+                "City": City,
+                "State": State,
+                "ZipCode": ZipCode,
+                "County": County,
+                "PhysicalAddress": PhysicalAddress,
+                "City2": City2,
+                "State2": State2,
+                "ZipCode2": ZipCode2,
+                "EmailAddress": EmailAddress,
+                "PhoneNumber": PhoneNumber,
+                "CellPhone": CellPhone,
+
+                "Employer": Employer,
+                "EmployerAddress": EmployerAddress,
+                "EmployerPObox": EmployerPObox,
+                "EmployerCity": EmployerCity,
+                "EmployerState": EmployerState,
+                "EmployerZipCode": EmployerZipCode,
+                "EmployerPhoneNumber": EmployerPhoneNumber,
+                "spOtherInsurance": spOtherInsurance,
+                "spOtherMedicalCoverage": spOtherMedicalCoverage,
+                "spOtherDentalCoverage": spOtherDentalCoverage,
+                "spOtherVisionCoverage": spOtherVisionCoverage,
+                "spIndemnityCoverage": spIndemnityCoverage,
+
+                "spInsuranceCoverage": spInsuranceCoverage,
+                "spInsCarrier": spInsCarrier,
+                "spInsMailingAddress": spInsMailingAddress,
+                "spInsCity": spInsCity,
+                "spInsState": spInsState,
+                "spInsZipCode": spInsZipCode,
+                "spInsPhoneNumber": spInsPhoneNumber,
+                "spInsPolicyNumber": spInsPolicyNumber,
+            }
+
+            //var ret = postData('SpEditUpdate', data)
+            //    .then(data => { console.log(data);
+            //                  FirstStep(data);
+            //                  })
+            //    .catch(error => console.error(error))
+
+            fetch('SpEditUpdate', {
+                body: JSON.stringify(data), //must match 'Content-Type' header
+                cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', //include, same-origin, *omit
+                headers: {
+                    'Accept': 'application/json',
+                    'user-agent': 'Mozilla/4.0 MDN Example',
+                    'content-type': 'application/json'
+                },
+                method: 'Post', //*GET, POST, PUT, DELETE, etc...
+                mode: 'same-origin', //no-cors, cors, *same-origin
+                redirect: 'follow', //manual, *follow, error
+                referrer: 'no-referrer', //*client, no-referrer
+            }).then(res => res.json())
+                .then(response => FirstStep(response))
+                .catch(error => console.error('Error:', error));
+        })
+
+        //document.querySelector("#SpouseEnrollmentUpdateStepTwo").addEventListener("click", function () {
+
+
+        //    var data = {
+        //        "FamilyMember_id": FamilyMember_id,
+        //        "Employee_id": Employee_id,
+
+        //    }
+
+            //var ret = postData('SpEditUpdate', data)
+            //    .then(data => {
+            //        console.log(data);
+            //        SecondStep(data);
+            //    })
+            //    .catch(error => console.error(error))
+
+            //fetch('SpEditUpdate', {
+            //    body: JSON.stringify(data), //must match 'Content-Type' header
+            //    cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+            //    credentials: 'same-origin', //include, same-origin, *omit
+            //    headers: {
+            //        'Accept': 'application/json',
+            //        'user-agent': 'Mozilla/4.0 MDN Example',
+            //        'content-type': 'application/json'
+            //    },
+            //    method: 'Post', //*GET, POST, PUT, DELETE, etc...
+            //    mode: 'same-origin', //no-cors, cors, *same-origin
+            //    redirect: 'follow', //manual, *follow, error
+            //    referrer: 'no-referrer', //*client, no-referrer
+            //}).then(res => res.json())
+            //    .then(response => SecondStep(response))
+            //    .catch(error => console.error('Error:', error));
+        //})
+
+        //document.querySelector("#SpouseEnrollmentUpdateStepThree").addEventListener("click", function () {
+
+
+
+        //    var data = {
+        //        "FamilyMember_id": FamilyMember_id,
+        //        "Employee_id": Employee_id,
+
+        //    }
+
+            //var ret = postData('SpEditUpdate', data)
+            //    .then(data => {
+            //        console.log(data);
+            //        ThirdStep(data);
+            //    })
+            //    .catch(error => console.error(error))
+
+        //    fetch('SpEditUpdate', {
+        //        body: JSON.stringify(data), //must match 'Content-Type' header
+        //        cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+        //        credentials: 'same-origin', //include, same-origin, *omit
+        //        headers: {
+        //            'Accept': 'application/json',
+        //            'user-agent': 'Mozilla/4.0 MDN Example',
+        //            'content-type': 'application/json'
+        //        },
+        //        method: 'Post', //*GET, POST, PUT, DELETE, etc...
+        //        mode: 'same-origin', //no-cors, cors, *same-origin
+        //        redirect: 'follow', //manual, *follow, error
+        //        referrer: 'no-referrer', //*client, no-referrer
+        //    }).then(res => res.json())
+        //        .then(response => ThirdStep(response))
+        //        .catch(error => console.error('Error:', error));
+        //})
+
+
+        //document.querySelector("#SpouseEnrollmentUpdateStepFour").addEventListener("click", function () {
+
+
+        //    var data = {
+        //        "FamilyMember_id": FamilyMember_id,
+        //        "Employee_id": Employee_id,
+
+        //    }
+
+        //    var ret = postData('SpOtherInsuranceUpdate', data)
+        //        .then(data => {
+        //            console.log(data);
+        //            ThirdStep(data);
+        //        })
+        //        .catch(error => console.error(error))
+
+            //fetch('SpOtherInsuranceNew', {
+            //    body: JSON.stringify(data), //must match 'Content-Type' header
+            //    cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+            //    credentials: 'same-origin', //include, same-origin, *omit
+            //    headers: {
+            //        'Accept': 'application/json',
+            //        'user-agent': 'Mozilla/4.0 MDN Example',
+            //        'content-type': 'application/json'
+            //    },
+            //    method: 'Post', //*GET, POST, PUT, DELETE, etc...
+            //    mode: 'same-origin', //no-cors, cors, *same-origin
+            //    redirect: 'follow', //manual, *follow, error
+            //    referrer: 'no-referrer', //*client, no-referrer
+            //}).then(res => res.json())
+            //    .then(response => ThirdStep(response))
+            //    .catch(error => console.error('Error:', error));
+        //})
+
+    })
+
+    function FirstStep(sp) {
+        document.querySelector("#FirstStep").nextElementSibling.style.display = "none";
+        document.querySelector("#SecondStep").nextElementSibling.style.display = "block";
+        //Employee_id = sp.data;
+        console.log(sp);
+        FamilyMember_id = sp.data;
+    }
+
+    function SecondStep(sp) {
+        document.querySelector("#FirstStep").nextElementSibling.style.display = "none";
+        document.querySelector("#SecondStep").nextElementSibling.style.display = "none";
+        document.querySelector("#ThirdStep").nextElementSibling.style.display = "block";
+    }
+
+    function ThirdStep(sp) {
+        document.querySelector("#FirstStep").nextElementSibling.style.display = "none";
+        document.querySelector("#SecondStep").nextElementSibling.style.display = "none";
+        document.querySelector("#ThirdStep").nextElementSibling.style.display = "none";
+        document.querySelector("#FourthStep").nextElementSibling.style.display = "block";
+    }
+
+    function postData(url, data) {
+        //Default options are marked with *
+        console.log(data);
+        console.log(JSON.stringify(data));
+        return fetch(url, {
+            body: JSON.stringify(data), //must match 'Content-Type' header
+            cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', //include, same-origin, *omit
+            headers: {
+                'Accept': 'application/json',
+                'user-agent': 'Mozilla/4.0 MDN Example',
+                'content-type': 'application/json'
+            },
+            method: 'Post', //*GET, POST, PUT, DELETE, etc...
+            mode: 'same-origin', //no-cors, cors, *same-origin
+            redirect: 'follow', //manual, *follow, error
+            referrer: 'no-referrer', //*client, no-referrer
+        }).then(res => res.json())
+            .then(response => console.log('Success:', JSON.stringify(response)))
+            .catch(error => console.error('Error:', error));
+        //.then(Response => {
+        //    console.log(Response);
+        //    Response.json();
+        //}) //parses response to JSON
+    }
+</script>
+
+
+
+
+
+
+

@@ -1,0 +1,474 @@
+﻿@model WatsonTruckV2.Models.SpouseAndDependentInsVM
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Edit Dependent Enrollment</title>
+</head>
+<body>
+    <div class="form-horizontal">
+        <div id="divEditDepEnrollment">
+            <hr />
+            <input type="hidden" id="Employee_id" class="form-control" name="Employee_id" value="@ViewBag.Employee_id" />
+            <input type="hidden" id="FamilyMember_id" class="form-control" name="FamilyMember_id" value="@ViewBag.FamilyMember_id" />
+            <input type="hidden" id="OtherInsurance_id" class="form-control" name="OtherInsurance_id" value="@ViewBag.OtherInsurance_id" />
+            <input type="hidden" id="RelationshipToInsured" class="form-control" name="RelationshipToInsured" value="@ViewBag.RelationshipToInsured" />
+            <div class="collapsible" id="FirstStep">Edit Dependent Enrollment</div>
+            <div class="content" id="dependentSelectForm">
+                <p></p>
+                <div class="form-group" id="divRelationshipToInsured">
+                    <label for="RelationshipToInsured" class="col-md-2 control-label">Relation To Employee:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="RelationshipToInsured" class="form-control" name="RelationshipToInsured" value="@Html.Raw(Model.family.RelationshipToInsured)" disabled />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="SSN" class="col-md-2 control-label">SSN:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="SSN" class="form-control" placeholder="SSN" name="SSN" value="@Html.Raw(Model.family.SSN)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="DepFirstName" class="col-md-2 control-label">First Name:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="DepFirstName" class="form-control" placeholder="First Name" name="FirstName" value="@Html.Raw(Model.family.FirstName)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="DepLastName" class="col-md-2 control-label">Last Name:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="DepLastName" class="form-control" placeholder="Last Name" name="LastName" value="@Html.Raw(Model.family.LastName)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="DateOfBirth" class="col-md-2 control-label">Date of Birth:</label>
+                    <div class="col-md-10">
+                        <input type="datetime" id="DateOfBirth" class="form-control" name="DateOfBirth" value="@Convert.ToDateTime(Model.family.DateOfBirth).ToString("yyyy-MM-dd")" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Gender:</label>
+                    <div class="col-md-10">
+                        <select id="Gender" class="form-control">
+                            <option value="N/A" selected disabled hidden>Select Option</option>
+                            <option value="Male" @((Model.family.Gender) == "Male" ? "selected" : "")>Male</option>
+                            <option value="Female" @((Model.family.Gender) == "Female" ? "selected" : "")>Female</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="MailingAddress" class="col-md-2 control-label">Mailing Address:</label>
+                    <div class="col-md-10">
+                        <input type="hidden" id="FamilyMember_id" class="form-control" name="FamilyMember_id" value="@Html.Raw(Model.family.FamilyMember_id)" />
+                        <input type="text" id="MailingAddress" class="form-control" placeholder="Street" name="MailingAddress" value="@Html.Raw(Model.family.MailingAddress)" />
+                        <input type="text" id="City" class="form-control" placeholder="City" name="City" value="@Html.Raw(Model.family.City)" />
+                        <input type="text" id="State" class="form-control" placeholder="State" name="State" value="@Html.Raw(Model.family.State)" />
+                        <input type="text" id="ZipCode" class="form-control" placeholder="Zip Code" name="ZipCode" value="@Html.Raw(Model.family.ZipCode)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="County" class="col-md-2 control-label">County:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="County" class="form-control" placeholder="County" name="County" value="@Html.Raw(Model.family.County)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkboxes">
+                        <label style="margin-left: 7em;">Status:</label>
+                        <input type="checkbox" class="checkbox-inline" id="Student" name="Student" value="Student" @((Model.family.Student == "True") ? "checked" : "") /><label for="Student">Student</label>
+                        <input type="checkbox" class="checkbox-inline" id="Disabled" name="Disabled" value="Disabled" @((Model.family.Disabled == "True") ? "checked" : "") /><label for="Disabled">Disabled</label>
+                        <input type="checkbox" class="checkbox-inline" id="NonStandardDependent" name="NonStandardDependent" value="NonStandardDependent" @((Model.family.NonStandardDependent == "True") ? "checked" : "") /><label for="NonStandardDependent">Non Standard Dependent</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Add/Drop on Life Ins.</label>
+                    <div class="col-md-10">
+                        <select class="form-control" id="AddDropDepLifeIns">
+                            <option value="N/A" selected disabled hidden> Select an Option</option>
+                            <option value="AddDep" @((Model.family.AddDropDepLifeIns) == "AddDep" ? "selected" : "")>Add Dependent</option>
+                            <option value="DropDep" @((Model.family.AddDropDepLifeIns) == "DropDep" ? "selected" : "")>Drop Dependent</option>
+                        </select>
+                        <div id="divAddDropDepResult" hidden></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-11">
+                        @*<button type="submit" id="DepEnrollmentUpdate" onclick="DependentEnrollmentUpdate()" class="btn">Save</button>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <p></p>
+        <div class="collapsible" id="SecondStep">Edit Dependent Insurance</div>
+        <div id="divEditDepInsEnrollment" class="content">
+            <p></p>
+            <div id="DepOtherInsCoverage">
+                <label>Is your dependent covered by other insurance, including Medicare/Medicaid?</label>
+                <label class="radio-inline"><input type="radio" id="depInsuranceCoverage" class="radio-inline" onclick="showHideDepIns()" name="CoveredByOtherInsurance" value="True" @((Model.otherIns.CoveredByOtherInsurance) == "True" ? "checked" : "") />Yes</label>
+                <label class="radio-inline"><input type="radio" id="depInsuranceCoverage" class="radio-inline" onclick="showHideDepIns()" name="CoveredByOtherInsurance" value="False" @((Model.otherIns.CoveredByOtherInsurance) == "False" ? "checked" : "") />No</label>
+                <div id="depInsInfo">
+                    <div class="form-group col-md-2">
+                        <input type="text" id="depInsCarrier" class="form-control" placeholder="Insurance Carrier" name="InsuranceCarrier" value="@Html.Raw(Model.otherIns.InsuranceCarrier)" />
+                    </div>
+                    <div class="form-group col-md-2">
+                        <input type="text" id="depInsPolicyNumber" class="form-control" placeholder="Policy #" name="PolicyNumber" value="@Html.Raw(Model.otherIns.PolicyNumber)" />
+                    </div>
+                    <div class="form-group col-md-2">
+                        <input type="tel" id="depInsPhoneNumber" class="form-control" placeholder="Phone #" name="PhoneNumber" size="3" maxlength="14" value="@Html.Raw(Model.otherIns.PhoneNumber)" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-10">
+                    <button type="submit" id="EditDepEnrollmentUpdate" class="btn">Save</button>
+                    <button type="submit" @*onclick="AddDependent()"*@ id="addDep" class="btn">Add Dependent</button>
+                </div>
+            </div>
+            <p>
+                @Html.ActionLink("Back to List", "FamilyOverview", new { Employee_id = ViewBag.Employee_id })
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+    .collapsible {
+        background-color: #2e4593;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: center;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #2e4593;
+        }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+
+    .btn {
+        background-color: #2e4593;
+        color: white;
+    }
+
+    .button {
+        text-align: right;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 8px 8px;
+    }
+
+        a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    .checkboxes input {
+        margin: 0em 0em 0em .5em;
+    }
+</style>
+
+<script>
+    var col = document.querySelectorAll(".collapsible");
+    var i;
+    var Employee_id;
+    var FamilyMember_id;
+
+
+    for (i = 0; i < col.length; i++) {
+        col[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+
+    @*function AddDependent() {
+        document.addEventListener("click", function () {
+
+            window.location.href = "/Employee/AddDependent?Employee_id=@ViewBag.Employee_id" + "&FamilyMember_id=@ViewBag.FamilyMember_id";
+
+        });
+    }*@
+
+    $(document).ready(function () {
+        $('#divMailingAddress').hide();
+    });
+
+    function showHideMailingAddress() {
+        document.addEventListener("click", function () {
+            var nonstandard = document.getElementById("NonStandardDependent");
+
+            if (nonstandard.checked == false) {
+                document.getElementById("divMailingAddress").style.display = "none";
+            }
+            else {
+                document.getElementById("divMailingAddress").style.display = "block";
+            }
+        });
+    }
+
+    @*document.querySelector("#EditDepEnrollmentUpdate").addEventListener("click", function () {
+        var depSubmit = document.getElementById("EditDepEnrollmentUpdate");
+
+        var message;
+        var alert = confirm("Your progress has been saved. Please proceed to Overview page.")
+
+        if (depSubmit) {
+            if (alert == true) {
+
+                message = "Proceeding to Overview page. Thank you!!";
+                var alert = confirm(message)
+                if (alert == true) {
+
+                    window.location.href = "/Employee/FamilyOverview/?Employee_id=" + @ViewBag.Employee_id;
+
+                }
+                else {
+                    window.location.href = "/Employee/FamilyOverview/?Employee_id=" + @ViewBag.Employee_id;
+                }
+            }
+        }
+    })*@
+
+    //Redirects to Add Dependent Page
+    document.querySelector("#addDep").addEventListener("click", function () {
+        var depSubmit = document.getElementById("addDep");
+
+        var message;
+        var alert = confirm("Would you like to add another Dependent? If yes, select OK to add Dependent.")
+
+        if (depSubmit) {
+            if (alert == true) {
+
+                message = "Please proceed to add Dependent, Thank you!!";
+                var alert = confirm(message)
+                if (alert == true) {
+
+                    window.location.href = "/Employee/AddDependent/?Employee_id=" + @ViewBag.Employee_id;
+
+                }
+                else {
+                    window.location.href = "/Employee/FamilyOverview/?Employee_id=" + @ViewBag.Employee_id;
+                }
+            }
+        }
+        @*else {
+            if (alert == true) {
+
+                window.location.href = "/Group_Health/GrpHealthEnrollment/?Employee_id=" +  @ViewBag.Employee_id;
+            }
+            else {
+
+                message = "Please proceed to the Group Health Insurance Enrollment, Thank you!!";
+                var alert = confirm(message)
+
+                if (alert == true) {
+
+                    window.location.href = "/Group_Health/GrpHealthEnrollment/?Employee_id=" +  @ViewBag.Employee_id;
+
+                }
+                else {
+
+                    window.location.href = "/Employee/FamilyOverview/?Employee_id=" +  @ViewBag.Employee_id;
+                }
+
+            }
+
+        }*@
+    })
+
+    function showHideDepIns() {
+        document.addEventListener("click", function () {
+            var selection = document.getElementById("depInsuranceCoverage");
+
+            if (selection.checked == true) {
+
+                //document.getElementById("spInsInfo").style.visibility = "visible";
+                document.getElementById("depInsInfo").style.display = "block";
+            }
+            else {
+                //document.getElementById("spInsInfo").style.visibility = "hidden";
+                document.getElementById("depInsInfo").style.display = "none";
+            }
+        });
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("#EditDepEnrollmentUpdate").addEventListener("click", function () {
+            Employee_id = document.getElementById("Employee_id").value;
+            FamilyMember_id = document.getElementById("FamilyMember_id").value;
+            RelationshipToInsured = document.getElementById("RelationshipToInsured").value;
+            SSN = document.getElementById("SSN").value;
+            DepFirstName = document.getElementById("DepFirstName").value
+            DepLastName = document.getElementById("DepLastName").value
+            DateOfBirth = document.getElementById("DateOfBirth").value
+            Gender = document.getElementById("Gender").value
+            MailingAddress = document.getElementById("MailingAddress").value;
+            City = document.getElementById("City").value;
+            State = document.getElementById("State").value;
+            ZipCode = document.getElementById("ZipCode").value;
+            County = document.getElementById("County").value;
+            Student = document.getElementById("Student").checked;
+            Disabled = document.getElementById("Disabled").checked;
+            NonStandardDependent = document.getElementById("NonStandardDependent").checked;
+            AddDropDepLifeIns = document.getElementById("AddDropDepLifeIns").value;
+            document.getElementById("divAddDropDepResult").innerHTML = AddDropDepLifeIns;
+
+            depInsuranceCoverage = document.getElementById("depInsuranceCoverage").checked;
+            depInsCarrier = document.getElementById("depInsCarrier").value;
+            depInsPolicyNumber = document.getElementById("depInsPolicyNumber").value;
+            depInsPhoneNumber = document.getElementById("depInsPhoneNumber").value;
+
+            var data = {
+                "Employee_id": Employee_id,
+                "FamilyMember_id": FamilyMember_id,
+                "RelationshipToInsured": RelationshipToInsured,
+                "SSN": SSN,
+                "DepFirstName": DepFirstName,
+                "DepLastName": DepLastName,
+                "DateOfBirth": DateOfBirth,
+                "Gender": Gender,
+                "MailingAddress": MailingAddress,
+                "City": City,
+                "State": State,
+                "ZipCode": ZipCode,
+                "County": County,
+                "Student": Student,
+                "Disabled": Disabled,
+                "NonStandardDependent": NonStandardDependent,
+                "AddDropDepLifeIns": AddDropDepLifeIns,
+
+                "depInsuranceCoverage": depInsuranceCoverage,
+                "depInsCarrier": depInsCarrier,
+                "depInsPolicyNumber": depInsPolicyNumber,
+                "depInsPhoneNumber": depInsPhoneNumber,
+
+            }
+
+            //var ret = postData('DepEnrollmentNew', data)
+            //    .then(data => { console.log(data);
+            //                  FirstStep(data);
+            //                  })
+            //    .catch(error => console.error(error))
+
+            fetch('DepEditUpdate', {
+                body: JSON.stringify(data), //must match 'Content-Type' header
+                cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', //include, same-origin, *omit
+                headers: {
+                    'Accept': 'application/json',
+                    'user-agent': 'Mozilla/4.0 MDN Example',
+                    'content-type': 'application/json'
+                },
+                method: 'Post', //*GET, POST, PUT, DELETE, etc...
+                mode: 'same-origin', //no-cors, cors, *same-origin
+                redirect: 'follow', //manual, *follow, error
+                referrer: 'no-referrer', //*client, no-referrer
+            }).then(res => res.json())
+                .then(response => FirstStep(response))
+                .catch(error => console.error('Error:', error));
+        })
+
+        //document.querySelector("#DepInsEnrollmentUpdateStepTwo").addEventListener("click", function () {
+
+
+        //    var data = {
+
+        //        "Employee_id": Employee_id,
+
+        //    }
+
+        //    var ret = postData('DepEditUpdate', data)
+        //        .then(data => {
+        //            console.log(data);
+        //            SecondStep(data);
+        //        })
+        //        .catch(error => console.error(error))
+
+        //    //fetch('DepOtherInsuranceNew', {
+        //    //    body: JSON.stringify(data), //must match 'Content-Type' header
+        //    //    cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+        //    //    credentials: 'same-origin', //include, same-origin, *omit
+        //    //    headers: {
+        //    //        'Accept': 'application/json',
+        //    //        'user-agent': 'Mozilla/4.0 MDN Example',
+        //    //        'content-type': 'application/json'
+        //    //    },
+        //    //    method: 'Post', //*GET, POST, PUT, DELETE, etc...
+        //    //    mode: 'same-origin', //no-cors, cors, *same-origin
+        //    //    redirect: 'follow', //manual, *follow, error
+        //    //    referrer: 'no-referrer', //*client, no-referrer
+        //    //}).then(res => res.json())
+        //    //    .then(response => SecondStep(response))
+        //    //    .catch(error => console.error('Error:', error));
+        //})
+    })
+
+    function FirstStep(dep) {
+        document.querySelector("#FirstStep").nextElementSibling.style.display = "none";
+        document.querySelector("#SecondStep").nextElementSibling.style.display = "block";
+        console.log(dep);
+        FamilyMember_id = dep.data;
+    }
+
+    function SecondStep() {
+        document.querySelector("#FirstStep").nextElementSibling.style.display = "none";
+        document.querySelector("#SecondStep").nextElementSibling.style.display = "block";
+    }
+
+    function postData(url, data) {
+        //Default options are marked with *
+        console.log(data);
+        console.log(JSON.stringify(data));
+        return fetch(url, {
+            body: JSON.stringify(data), //must match 'Content-Type' header
+            cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', //include, same-origin, *omit
+            headers: {
+                'Accept': 'application/json',
+                'user-agent': 'Mozilla/4.0 MDN Example',
+                'content-type': 'application/json'
+            },
+            method: 'Post', //*GET, POST, PUT, DELETE, etc...
+            mode: 'same-origin', //no-cors, cors, *same-origin
+            redirect: 'follow', //manual, *follow, error
+            referrer: 'no-referrer', //*client, no-referrer
+        }).then(res => res.json())
+            .then(response => console.log('Success:', JSON.stringify(response)))
+            .catch(error => console.error('Error:', error));
+        //.then(Response => {
+        //    console.log(Response);
+        //    Response.json();
+        //}) //parses response to JSON
+    }
+</script>
+
+
+
+

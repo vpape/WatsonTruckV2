@@ -1,0 +1,224 @@
+﻿@model WatsonTruckV2.Models.SpouseAndDependentInsVM
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Delete Dependent</title>
+</head>
+<body>
+    <div class="form-horizontal">
+        <input type="hidden" id="Employee_id" class="form-control" name="Employee_id" value=@ViewBag.Employee_id />
+        <input type="hidden" id="FamilyMember_id" class="form-control" name="FamilyMember_id" value=@ViewBag.FamilyMember_id />
+        <hr />
+        <div class="collapsible" id="FirstStep">Dependent Information</div>
+        <div class="content">
+            <form action="/Employee/DeleteSp" method="post">
+                <div id="divEmployeeInfo">
+                    <p></p>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            <label class="col-md-offset-2">Relationship:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            @Html.DisplayFor(model => model.family.RelationshipToInsured)
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">SSN:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            @Html.DisplayFor(Model => Model.family.SSN)
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">First Name:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            @Html.DisplayFor(model => model.family.FirstName)
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">Last Name:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            @Html.DisplayFor(model => model.family.LastName)
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">Date of Birth:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            @Convert.ToDateTime(Model.family.DateOfBirth).ToString("yyyy-MM-dd")
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">Gender:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            <label class="radio-inline"><input disabled type="radio" id="Male" class="radio-inline" name="Gender" value="Male" @((Model.family.Gender) == "Male" ? "checked" : "") />Male</label>
+                            <label class="radio-inline"><input disabled type="radio" id="Female" class="radio-inline" name="Gender" value="Female" @((Model.family.Gender) == "Female" ? "checked" : "") />Female</label>
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">Mailing Address:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            @Html.DisplayFor(model => model.family.MailingAddress)
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">City:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            @Html.DisplayFor(model => model.family.City)
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">State:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            @Html.DisplayFor(model => model.family.State)
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">Zip Code:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            @Html.DisplayFor(model => model.family.ZipCode)
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">County:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            @Html.DisplayFor(model => model.family.County)
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">Status:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            <input type="checkbox" class="checkbox-inline" id="Student" name="Student" value="Student" @((Model.family.Student) == "True" ? "checked" : "") disabled />
+                            <text>Active</text>
+                            <input type="checkbox" class="checkbox-inline" id="Disabled" name="Disabled" value="Disabled" @((Model.family.Disabled) == "True" ? "checked" : "") disabled />
+                            <text>Retired</text>
+                            <input type="checkbox" class="checkbox-inline" id="NonStandardDependent" name="NonStandardDependent" value="NonStandardDependent" @((Model.family.NonStandardDependent) == "True" ? "checked" : "") disabled />
+                            <text>Cobra/State</text>
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">Other Ins?</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            <label class="radio-inline"><input disabled type="radio" id="OtherIns" class="radio-inline" name="CoveredByOtherInsurance" value="True" @((Model.otherIns.CoveredByOtherInsurance) == "True" ? "checked" : "") />Yes</label>
+                            <label class="radio-inline"><input disabled type="radio" id="OtherIns" class="radio-inline" name="CoveredByOtherInsurance" value="False" @((Model.otherIns.CoveredByOtherInsurance) == "False" ? "checked" : "") />No</label>
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">Insurance Carrier:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            @Html.DisplayFor(model => model.otherIns.InsuranceCarrier)
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">Policy Number:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            @Html.DisplayFor(model => model.otherIns.PolicyNumber)
+                        </dd>
+                        <dt>
+                            <label class="col-md-offset-2">Ins. Phone#:</label>
+                        </dt>
+                        <dd class="form-group-sm">
+                            @Html.DisplayFor(model => model.otherIns.PhoneNumber)
+                        </dd>
+                    </dl>
+                </div>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        @*<button type="submit" id="confirmDelete" value="Delete" class="btn" data-toggle="confirmation">Delete</button>*@
+                        <input type="submit" value="Delete" class="btn btn-default" /> |
+                        @Html.ActionLink("Back to List", "FamilyOverview", new { Employee_id = ViewBag.Employee_id })
+                    </div>
+                }
+            </form>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+<style>
+    .collapsible {
+        background-color: #2e4593;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: center;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #2e4593;
+        }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+
+    .button {
+        text-align: right;
+    }
+
+    .btn:hover {
+        background-color: #2e4593;
+        color: white;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 8px 8px;
+    }
+
+        a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    .phone-number .col-xs-3::after {
+        content: "-";
+        position: absolute;
+        right: 5px;
+        color: black;
+        border: 0px solid;
+        top: 8px;
+    }
+</style>
+
+<script>
+    var col = document.querySelectorAll(".collapsible");
+    var i;
+    var Employee_id;
+
+    for (i = 0; i < col.length; i++) {
+        col[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+
+        });
+    }
+
+</script>
+
+
+
+
+

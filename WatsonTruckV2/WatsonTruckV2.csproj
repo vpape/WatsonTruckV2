@@ -49,6 +49,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -187,14 +189,100 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Address.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetRole.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserClaim.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogin.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AvailablePosition.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Beneficiary.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C__MigrationHistory.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Deduction.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeAndInsuranceVM.cs" />
+    <Compile Include="Models\Family_Info.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupHealthGrpHEnrollmentVM.cs" />
+    <Compile Include="Models\Group_Health.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InsurancePlan.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InsurancePlanDetail.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InsurancePremium.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobApplicant.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobApplicantVM.cs" />
+    <Compile Include="Models\Life_Insurance.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Other_Insurance.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SpouseAndDependentInsVM.cs" />
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Vacation.cs">
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WatsonTruckEF.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WatsonTruckEF.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WatsonTruckEF.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WatsonTruckEF.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WatsonTruckEF.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -207,8 +295,25 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\WatsonTruckEF.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WatsonTruckEF.edmx</DependentUpon>
+      <LastGenOutput>WatsonTruckEF.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\WatsonTruckEF.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WatsonTruckEF.edmx</DependentUpon>
+      <LastGenOutput>WatsonTruckEF.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\WatsonTruckEF.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>WatsonTruckEF.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\WatsonTruckEF.edmx.diagram">
+      <DependentUpon>WatsonTruckEF.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -254,9 +359,26 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Employee\EmpOverview.cshtml" />
+    <Content Include="Views\Employee\EnrollmentSelection.cshtml" />
+    <Content Include="Views\Employee\NewEmployeeEnrollment.cshtml" />
+    <Content Include="Views\Employee\EditEmployee.cshtml" />
+    <Content Include="Views\Employee\EmployeeDetail.cshtml" />
+    <Content Include="Views\Employee\DeleteEmp.cshtml" />
+    <Content Include="Views\Employee\FamilyOverview.cshtml" />
+    <Content Include="Views\Employee\FamilyEnrollment.cshtml" />
+    <Content Include="Views\Employee\SpouseEnrollment.cshtml" />
+    <Content Include="Views\Employee\EditSpouse.cshtml" />
+    <Content Include="Views\Employee\SpouseDetail.cshtml" />
+    <Content Include="Views\Employee\DeleteSp.cshtml" />
+    <Content Include="Views\Employee\AddDependent.cshtml" />
+    <Content Include="Views\Employee\EditDependent.cshtml" />
+    <Content Include="Views\Employee\DependentDetail.cshtml" />
+    <Content Include="Views\Employee\DeleteDep.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -270,6 +392,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
