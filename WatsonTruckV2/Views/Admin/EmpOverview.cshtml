@@ -1,0 +1,128 @@
+﻿@model List<WatsonTruckV2.Models.Employee>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>*@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    @*<script src="https://kit.fontawesome.com/2987c70fa3.js" crossorigin="anonymous"></script>*@
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>Admin-Employee Overview</title>
+</head>
+<body>
+    <hr />
+    <h4>Admin-Employee Overview</h4>
+    <table class="table table-condensed">
+        <thead class="thead-dark">
+            <tr>
+                <th></th>
+                <th>Employee Number</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <span>
+                            <i class="fa fa-arrow-circle-o-right" style="font-size:24px" onclick="FamilyOverview(@Html.Raw(item.Employee_id))"></i>
+                        </span>
+                    </td>
+                    <td>
+                        <input type="text" id="empNumber" class="form-control" name="SSN" value="@Html.Raw(item.SSN)" readonly />
+                    </td>
+                    <td>
+                        <input type="text" id="FirstName" class="form-control" name="FirstName" value="@Html.Raw(item.FirstName)" readonly />
+                    </td>
+                    <td>
+                        <input type="text" id="LastName" class="form-control" name="LastName" value="@Html.Raw(item.LastName)" readonly />
+                    </td>
+                    <td>
+                        <input type="text" id="EmailAddress" class="form-control" name="EmailAddress" value="@Html.Raw(item.EmailAddress)" readonly />
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detail", "EmployeeDetail", "Admin", new { Employee_id = item.Employee_id }, null)
+                        @Html.ActionLink("Insurance", "GrpHealthEnrollment", "Admin", new { Employee_id = item.Employee_id }, null)
+                        @Html.ActionLink("Delete", "DeleteEmp", "Admin", new { Employee_id = item.Employee_id }, null)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="form-group">
+        <div class="col-md-2">
+            <button @*id="NewEmployeeEnrollment"*@ onclick="return NewEmployeeEnrollment()" class="btn">Create New</button>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+    .button {
+        text-align: right;
+    }
+
+    .btn:hover {
+        background-color: #2e4593;
+        color: white;
+    }
+
+    .next {
+        background-color: #2e4593;
+        padding-left: 1px;
+    }
+
+    .round {
+        border-radius: 50%;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 8px 8px;
+    }
+
+        a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    .fa-arrow-circle-o-right:hover {
+        border-radius: 50%;
+        color: white;
+        background-color: #2e4593;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        table tr {
+            border-bottom: 1px solid black;
+        }
+</style>
+
+<script>
+    function NewEmployeeEnrollment() {
+        window.location.href = "/Admin/EnrollmentSelection";
+
+    }
+
+    function FamilyOverview(Employee_id) {
+        window.location.href = "/Admin/FamilyOverview?Employee_id=" + Employee_id;
+    }
+
+
+
+</script>
+
+
+
+
+

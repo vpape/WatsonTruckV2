@@ -1,0 +1,1070 @@
+﻿@model WatsonTruckV2.Models.GroupHealthGrpHEnrollmentVM
+<h2></h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Admin-Edit Salary Redirection</title>
+</head>
+<body>
+    <input type="hidden" id="Employee_id" class="form-control" name="Employee_id" value=@ViewBag.Employee_id />
+    <input type="hidden" id="Deductions_id" class="form-control" name="Deductions_id" value=@ViewBag.Deductions_id />
+    <div class="form-horizontal">
+        <div class="collapsible" id="FirstStep">Admin- Edit Salary Redirection Agreement</div>
+        <div class="modal-content">
+            <table class="table table-condensed" id="SalaryRedirectTable">
+                <tr>
+                    <td>
+                        <label>
+                            Watson Truck & Supply, Inc.
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <input type="text" class="form-control" placeholder="First Name" value="@Html.DisplayFor(Model => Model.employee.FirstName)" disabled />
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" class="form-control" placeholder="Last Name" value="@Html.DisplayFor(Model => Model.employee.LastName)" disabled />
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" class="form-control" placeholder="Middle Initial" value="@Html.DisplayFor(Model => Model.employee.MiddleName)" disabled />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <input type="text" class="form-control" placeholder="Mailing Address" value="@Html.DisplayFor(Model => Model.employee.MailingAddress)" disabled />
+                            <input type="text" id="PObox" class="form-control" placeholder="PO Box" name="PObox" value="@Html.DisplayFor(Model => Model.employee.PObox)" disabled />
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" class="form-control" placeholder="City" value="@Html.DisplayFor(Model => Model.employee.City)" disabled />
+
+                        </div>
+                        <div>
+                            <input type="text" class="form-control" placeholder="State" value="@Html.DisplayFor(Model => Model.employee.State)" disabled />
+
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="text" class="form-control" placeholder="Zip Code" value="@Html.DisplayFor(Model => Model.employee.ZipCode)" disabled />
+
+                        </div>
+                        <div>
+                            <input type="text" class="form-control" placeholder="" value="" disabled />
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Social Security Number:</label>
+                        <div>
+                            <input type="text" class="form-control" placeholder="SSN #" value="@Html.DisplayFor(Model => Model.employee.SSN)" disabled />
+
+                        </div>
+                    </td>
+                    <td>
+                        <label>Hire Date:</label>
+                        <div>
+                            <input type="date" class="form-control" placeholder="Hire Date" value="@Convert.ToDateTime(Model.employee.HireDate).ToString("yyyy-MM-dd")" disabled />
+
+                        </div>
+                    </td>
+                    <td>
+                        <label>Effective Date:</label>
+                        <div>
+                            <input type="date" class="form-control" placeholder="Effective Date" value="@Convert.ToDateTime(Model.employee.EffectiveDate).ToString("yyyy-MM-dd")" disabled />
+
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="text-justify">
+                <p>
+                    On separate benefit enrollment form(s), I have enrolled for certain insurance coverage(s) and understand that my
+                    insurance premiums election amount will be deducted from my paycheck by my employer. Unless this agreement is amended
+                    or terminated, these deductions will be continuous and in an eaqual amount to the insurance premiums amount for each
+                    payroll throughout the plan year. The amount of my required contribution is set forth on a schedule that has been
+                    provided to me. In the event of a rate change, I authorize a corresponding change in the amount deducted from my
+                    salary without signing a new Salary Redirection Agreement. If the rate change is brought on by the third-party carrier
+                    (insurance company), the premium increase or decrease can be deducted pre-tax. "Employer-provided" non-elective benefits
+                    (if any) will not be deducted from my paycheck. In addition, pre-tax contributions reduce compensation for Social Security
+                    tax purposes; therefore, my Social Security benefits could be decreased. I elect to receive the following coverage(s) the
+                    Benefits Plan as elected in the pre-tax column. Any previous election and Salary Redirection Agreement under the
+                    Benefits Plan relating to the same benefits selected below are hereby revoked. My employer's deduction of premium/contribution
+                    amounts hereunder shall evidence acceptance of this agreement.
+                </p>
+            </div>
+            <table class="container-fluid table-condensed" cellpadding="20" cellspacing="20">
+                <tr>
+                    <td>
+                        <table class="table table-condensed" id="SalaryRedirectTable" width="400" cellpadding="10" cellspacing="10" border="1">
+                            <caption>Select the desired coverage(s) below:</caption>
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Coverage</th>
+                                    <th>Provider</th>
+                                    <th>EE Election Pre-Tax</th>
+                                    <th>Premium Pre-Tax</th>
+                                    <th>EE Election Post-Tax</th>
+                                    <th>Premium Post-Tax</th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" value="Medical:" readonly />
+                                </td>
+                                <td>
+                                    @*<input type="text" class="form-control" id="MedicalInsProvider" name="MedicalInsProvider" value="Insurance Mgmt. Service" readonly />*@
+                                    <select id="MedicalInsProvider" name="MedicalInsProvider" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Insurance Mgmt. Service" @((Model.deduction.MedicalInsProvider) == "Insurance Mgmt. Service" ? "selected" : "")>Insurance Mgmt. Service</option>
+                                        <option value="Guardian Life Ins." @((Model.deduction.MedicalInsProvider) == "Guardian Life Ins." ? "selected" : "")>Guardian Life Ins.</option>
+                                        <option value="AFLAC Ins." @((Model.deduction.MedicalInsProvider) == "AFLAC Ins." ? "selected" : "")>AFLAC Ins.</option>
+                                        <option value="Colonial Life Ins." @((Model.deduction.MedicalInsProvider) == "Colonial Life Ins." ? "selected" : "")>Colonial Life Ins.</option>
+                                        <option value="New York Life Ins." @((Model.deduction.MedicalInsProvider) == "New York Life Ins." ? "selected" : "")>New York Life Ins.</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="EEelectionPreTaxMedIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only-MEC" @((Model.deduction.EEelectionPreTaxMedIns) == "Employee Only-MEC" ? "selected" : "")>EO-MEC</option>
+                                        <option value="Employee Only-Standard" @((Model.deduction.EEelectionPreTaxMedIns) == "Employee Only-Standard" ? "selected" : "")>EO-Standard</option>
+                                        <option value="Employee Only-BuyUp" @((Model.deduction.EEelectionPreTaxMedIns) == "Employee Only-BuyUp" ? "selected" : "")>EO-BuyUp</option>
+
+                                        <option value="Employee & Spouse-MEC" @((Model.deduction.EEelectionPreTaxMedIns) == "Employee & Spouse-MEC" ? "selected" : "")>ES-MEC</option>
+                                        <option value="Employee & Spouse-Standard" @((Model.deduction.EEelectionPreTaxMedIns) == "Employee & Spouse-Standard" ? "selected" : "")>ES-Standard</option>
+                                        <option value="Employee & Spouse-BuyUp" @((Model.deduction.EEelectionPreTaxMedIns) == "Employee & Spouse-BuyUp" ? "selected" : "")>ES-BuyUp</option>
+
+                                        <option value="Employee & Child-MEC" @((Model.deduction.EEelectionPreTaxMedIns) == "Employee & Child-MEC" ? "selected" : "")>EC-MEC</option>
+                                        <option value="Employee & Child-Standard" @((Model.deduction.EEelectionPreTaxMedIns) == "Employee & Child-Standard" ? "selected" : "")>EC-Standard</option>
+                                        <option value="Employee & Child-BuyUp" @((Model.deduction.EEelectionPreTaxMedIns) == "Employee & Child-BuyUp" ? "selected" : "")>EC-BuyUp</option>
+
+                                        <option value="Employee & Family-MEC" @((Model.deduction.EEelectionPreTaxMedIns) == "Employee & Family-MEC" ? "selected" : "")>EF-MEC</option>
+                                        <option value="Employee & Family-Standard" @((Model.deduction.EEelectionPreTaxMedIns) == "Employee & Family-Standard" ? "selected" : "")>EF-Standard</option>
+                                        <option value="Employee & Family-BuyUp" @((Model.deduction.EEelectionPreTaxMedIns) == "Employee & Family-BuyUp" ? "selected" : "")>EF-BuyUp</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc" id="PremiumPreTaxMedIns" name="PremiumPreTaxMedIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPreTaxMedIns)" />
+                                </td>
+                                <td>
+                                    <select id="EEelectionPostTaxMedIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only-MEC" @((Model.deduction.EEelectionPostTaxMedIns) == "Employee Only-MEC" ? "selected" : "")>EO-MEC</option>
+                                        <option value="Employee Only-Standard" @((Model.deduction.EEelectionPostTaxMedIns) == "Employee Only-Standard" ? "selected" : "")>EO-Standard</option>
+                                        <option value="Employee Only-BuyUp" @((Model.deduction.EEelectionPostTaxMedIns) == "Employee Only-BuyUp" ? "selected" : "")>EO-BuyUp</option>
+
+                                        <option value="Employee & Spouse-MEC" @((Model.deduction.EEelectionPostTaxMedIns) == "Employee & Spouse-MEC" ? "selected" : "")>ES-MEC</option>
+                                        <option value="Employee & Spouse-Standard" @((Model.deduction.EEelectionPostTaxMedIns) == "Employee & Spouse-Standard" ? "selected" : "")>ES-Standard</option>
+                                        <option value="Employee & Spouse-BuyUp" @((Model.deduction.EEelectionPostTaxMedIns) == "Employee & Spouse-BuyUp" ? "selected" : "")>ES-BuyUp</option>
+
+                                        <option value="Employee & Child-MEC" @((Model.deduction.EEelectionPostTaxMedIns) == "Employee & Child-MEC" ? "selected" : "")>EC-MEC</option>
+                                        <option value="Employee & Child-Standard" @((Model.deduction.EEelectionPostTaxMedIns) == "Employee & Child-Standard" ? "selected" : "")>EC-Standard</option>
+                                        <option value="Employee & Child-BuyUp" @((Model.deduction.EEelectionPostTaxMedIns) == "Employee & Child-BuyUp" ? "selected" : "")>EC-BuyUp</option>
+
+                                        <option value="Employee & Family-MEC" @((Model.deduction.EEelectionPostTaxMedIns) == "Employee & Family-MEC" ? "selected" : "")>EF-MEC</option>
+                                        <option value="Employee & Family-Standard" @((Model.deduction.EEelectionPostTaxMedIns) == "Employee & Family-Standard" ? "selected" : "")>EF-Standard</option>
+                                        <option value="Employee & Family-BuyUp" @((Model.deduction.EEelectionPostTaxMedIns) == "Employee & Family-BuyUp" ? "selected" : "")>EF-BuyUp</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc2" id="PremiumPostTaxMedIns" name="PremiumPostTaxMedIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPostTaxMedIns)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" value="Dental:" readonly />
+                                </td>
+                                <td>
+                                    @*<input type="text" class="form-control" id="DentalInsProvider" name="DentalInsProvider" value="Guardian Life Ins." readonly />*@
+                                    <select id="DentalInsProvider" name="DentalInsProvider" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Insurance Mgmt. Service" @((Model.deduction.DentalInsProvider) == "Insurance Mgmt. Service" ? "selected" : "")>Insurance Mgmt. Service</option>
+                                        <option value="Guardian Life Ins." @((Model.deduction.DentalInsProvider) == "Guardian Life Ins." ? "selected" : "")>Guardian Life Ins.</option>
+                                        <option value="AFLAC Ins." @((Model.deduction.DentalInsProvider) == "AFLAC Ins." ? "selected" : "")>AFLAC Ins.</option>
+                                        <option value="Colonial Life Ins." @((Model.deduction.DentalInsProvider) == "Colonial Life Ins." ? "selected" : "")>Colonial Life Ins.</option>
+                                        <option value="New York Life Ins." @((Model.deduction.DentalInsProvider) == "New York Life Ins." ? "selected" : "")>New York Life Ins.</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="EEelectionPreTaxDentalIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPreTaxDentalIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPreTaxDentalIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPreTaxDentalIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPreTaxDentalIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPreTaxDentalIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPreTaxDentalIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc" id="PremiumPreTaxDentalIns" name="PremiumPreTaxDentalIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPreTaxDentalIns)" />
+                                </td>
+                                <td>
+                                    <select id="EEelectionPostTaxDentalIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPostTaxDentalIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPostTaxDentalIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPostTaxDentalIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPostTaxDentalIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPostTaxDentalIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPostTaxDentalIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc2" id="PremiumPostTaxDentalIns" name="PremiumPostTaxDentalIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPostTaxDentalIns)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" value="Vision:" readonly />
+                                </td>
+                                <td>
+                                    @*<input type="text" class="form-control" id="VisionInsProvider" name="VisionInsProvider" value="Guardian Life Ins." readonly />*@
+                                    <select id="VisionInsProvider" name="VisionInsProvider" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Insurance Mgmt. Service" @((Model.deduction.VisionInsProvider) == "Insurance Mgmt. Service" ? "selected" : "")>Insurance Mgmt. Service</option>
+                                        <option value="Guardian Life Ins." @((Model.deduction.VisionInsProvider) == "Guardian Life Ins." ? "selected" : "")>Guardian Life Ins.</option>
+                                        <option value="AFLAC Ins." @((Model.deduction.VisionInsProvider) == "AFLAC Ins." ? "selected" : "")>AFLAC Ins.</option>
+                                        <option value="Colonial Life Ins." @((Model.deduction.VisionInsProvider) == "Colonial Life Ins." ? "selected" : "")>Colonial Life Ins.</option>
+                                        <option value="New York Life Ins." @((Model.deduction.VisionInsProvider) == "New York Life Ins." ? "selected" : "")>New York Life Ins.</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="EEelectionPreTaxVisionIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPreTaxVisionIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPreTaxVisionIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPreTaxVisionIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPreTaxVisionIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPreTaxVisionIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPreTaxVisionIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc" id="PremiumPreTaxVisionIns" name="PremiumPreTaxVisionIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPreTaxVisionIns)" />
+                                </td>
+                                <td>
+                                    <select id="EEelectionPostTaxVisionIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPostTaxVisionIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPostTaxVisionIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPostTaxVisionIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPostTaxVisionIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPostTaxVisionIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPostTaxVisionIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc2" id="PremiumPostTaxVisionIns" name="PremiumPostTaxVisionIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPostTaxVisionIns)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" value="Short-Term Disability:" readonly />
+                                </td>
+                                <td>
+                                    @*<input type="text" class="form-control" id="StDisabilityProvider" name="StDisabilityProvider" value="@Html.DisplayFor(Model => Model.deduction.StDisabilityProvider)" />*@
+                                    <select id="StDisabilityProvider" name="StDisabilityProvider" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Insurance Mgmt. Service" @((Model.deduction.StDisabilityProvider) == "Insurance Mgmt. Service" ? "selected" : "")>Insurance Mgmt. Service</option>
+                                        <option value="Guardian Life Ins." @((Model.deduction.StDisabilityProvider) == "Guardian Life Ins." ? "selected" : "")>Guardian Life Ins.</option>
+                                        <option value="AFLAC Ins." @((Model.deduction.StDisabilityProvider) == "AFLAC Ins." ? "selected" : "")>AFLAC Ins.</option>
+                                        <option value="Colonial Life Ins." @((Model.deduction.StDisabilityProvider) == "Colonial Life Ins." ? "selected" : "")>Colonial Life Ins.</option>
+                                        <option value="New York Life Ins." @((Model.deduction.StDisabilityProvider) == "New York Life Ins." ? "selected" : "")>New York Life Ins.</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="EEelectionPreTaxStDisability" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPreTaxStDisability) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPreTaxStDisability) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPreTaxStDisability) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPreTaxStDisability) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPreTaxStDisability) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPreTaxStDisability) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc" id="PremiumPreTaxStDisability" name="PremiumPreTaxStDisability" value="@Html.DisplayFor(Model => Model.deduction.PremiumPreTaxStDisability)" />
+                                </td>
+                                <td>
+                                    <select id="EEelectionPostTaxStDisability" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPostTaxStDisability) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPostTaxStDisability) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPostTaxStDisability) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPostTaxStDisability) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPostTaxStDisability) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPostTaxStDisability) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc2" id="PremiumPostTaxStDisability" name="PremiumPostTaxStDisability" value="@Html.DisplayFor(Model => Model.deduction.PremiumPostTaxStDisability)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" value="Hospital Indemnity:" readonly />
+                                </td>
+                                <td>
+                                    @*<input type="text" class="form-control" id="HospitalIndemProvider" name="HospitalIndemProvider" value="@Html.DisplayFor(Model => Model.deduction.HospitalIndemProvider)" />*@
+                                    <select id="HospitalIndemProvider" name="HospitalIndemProvider" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Insurance Mgmt. Service" @((Model.deduction.HospitalIndemProvider) == "Insurance Mgmt. Service" ? "selected" : "")>Insurance Mgmt. Service</option>
+                                        <option value="Guardian Life Ins." @((Model.deduction.HospitalIndemProvider) == "Guardian Life Ins." ? "selected" : "")>Guardian Life Ins.</option>
+                                        <option value="AFLAC Ins." @((Model.deduction.HospitalIndemProvider) == "AFLAC Ins." ? "selected" : "")>AFLAC Ins.</option>
+                                        <option value="Colonial Life Ins." @((Model.deduction.HospitalIndemProvider) == "Colonial Life Ins." ? "selected" : "")>Colonial Life Ins.</option>
+                                        <option value="New York Life Ins." @((Model.deduction.HospitalIndemProvider) == "New York Life Ins." ? "selected" : "")>New York Life Ins.</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="EEelectionPreTaxHospitalIndem" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPreTaxHospitalIndem) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPreTaxHospitalIndem) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPreTaxHospitalIndem) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPreTaxHospitalIndem) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPreTaxHospitalIndem) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPreTaxHospitalIndem) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc" id="PremiumPreTaxHospitalIndem" name="PremiumPreTaxHospitalIndem" value="@Html.DisplayFor(Model => Model.deduction.PremiumPreTaxHospitalIndem)" />
+                                </td>
+                                <td>
+                                    <select id="EEelectionPostTaxHospitalIndem" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPostTaxHospitalIndem) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPostTaxHospitalIndem) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPostTaxHospitalIndem) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPostTaxHospitalIndem) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPostTaxHospitalIndem) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPostTaxHospitalIndem) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc2" id="PremiumPostTaxHospitalIndem" name="PremiumPostTaxHospitalIndem" value="@Html.DisplayFor(Model => Model.deduction.PremiumPostTaxHospitalIndem)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" value="Term Life:" readonly />
+                                </td>
+                                <td>
+                                    @*<input type="text" class="form-control" id="TermLifeInsProvider" name="TermLifeInsProvider" value="@Html.DisplayFor(Model => Model.deduction.TermLifeInsProvider)" />*@
+                                    <select id="TermLifeInsProvider" name="TermLifeInsProvider" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Insurance Mgmt. Service" @((Model.deduction.TermLifeInsProvider) == "Insurance Mgmt. Service" ? "selected" : "")>Insurance Mgmt. Service</option>
+                                        <option value="Guardian Life Ins." @((Model.deduction.TermLifeInsProvider) == "Guardian Life Ins." ? "selected" : "")>Guardian Life Ins.</option>
+                                        <option value="AFLAC Ins." @((Model.deduction.TermLifeInsProvider) == "AFLAC Ins." ? "selected" : "")>AFLAC Ins.</option>
+                                        <option value="Colonial Life Ins." @((Model.deduction.TermLifeInsProvider) == "Colonial Life Ins." ? "selected" : "")>Colonial Life Ins.</option>
+                                        <option value="New York Life Ins." @((Model.deduction.TermLifeInsProvider) == "New York Life Ins." ? "selected" : "")>New York Life Ins.</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="EEelectionPreTaxTermLifeIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPreTaxTermLifeIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPreTaxTermLifeIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPreTaxTermLifeIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPreTaxTermLifeIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPreTaxTermLifeIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPreTaxTermLifeIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc" id="PremiumPreTaxTermLifeIns" name="PremiumPreTaxTermLifeIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPreTaxTermLifeIns)" />
+                                </td>
+                                <td>
+                                    <select id="EEelectionPostTaxTermLifeIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPostTaxTermLifeIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPostTaxTermLifeIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPostTaxTermLifeIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPostTaxTermLifeIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPostTaxTermLifeIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPostTaxTermLifeIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc2" id="PremiumPostTaxTermLifeIns" name="PremiumPostTaxTermLifeIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPostTaxTermLifeIns)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" value="Whole Life:" readonly />
+                                </td>
+                                <td>
+                                    @*<input type="text" class="form-control" id="WholeLifeInsProvider" name="WholeLifeInsProvider" value="@Html.DisplayFor(Model => Model.deduction.WholeLifeInsProvider)" />*@
+                                    <select id="WholeLifeInsProvider" name="WholeLifeInsProvider" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Insurance Mgmt. Service" @((Model.deduction.WholeLifeInsProvider) == "Insurance Mgmt. Service" ? "selected" : "")>Insurance Mgmt. Service</option>
+                                        <option value="Guardian Life Ins." @((Model.deduction.WholeLifeInsProvider) == "Guardian Life Ins." ? "selected" : "")>Guardian Life Ins.</option>
+                                        <option value="AFLAC Ins." @((Model.deduction.WholeLifeInsProvider) == "AFLAC Ins." ? "selected" : "")>AFLAC Ins.</option>
+                                        <option value="Colonial Life Ins." @((Model.deduction.WholeLifeInsProvider) == "Colonial Life Ins." ? "selected" : "")>Colonial Life Ins.</option>
+                                        <option value="New York Life Ins." @((Model.deduction.WholeLifeInsProvider) == "New York Life Ins." ? "selected" : "")>New York Life Ins.</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="EEelectionPreTaxWholeLifeIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPreTaxWholeLifeIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPreTaxWholeLifeIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPreTaxWholeLifeIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPreTaxWholeLifeIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPreTaxWholeLifeIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPreTaxWholeLifeIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc" id="PremiumPreTaxWholeLifeIns" name="PremiumPreTaxWholeLifeIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPreTaxWholeLifeIns)" />
+                                </td>
+                                <td>
+                                    <select id="EEelectionPostTaxWholeLifeIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPostTaxWholeLifeIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPostTaxWholeLifeIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPostTaxWholeLifeIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPostTaxWholeLifeIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPostTaxWholeLifeIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPostTaxWholeLifeIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc2" id="PremiumPostTaxWholeLifeIns" name="PremiumPostTaxWholeLifeIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPostTaxWholeLifeIns)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" value="Accident:" readonly />
+                                </td>
+                                <td>
+                                    @*<input type="text" class="form-control" id="AccidentProvider" name="AccidentProvider" value="@Html.DisplayFor(Model => Model.deduction.AccidentProvider)" />*@
+                                    <select id="AccidentProvider" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Insurance Mgmt. Service" @((Model.deduction.AccidentProvider) == "Insurance Mgmt. Service" ? "selected" : "")>Insurance Mgmt. Service</option>
+                                        <option value="Guardian Life Ins." @((Model.deduction.AccidentProvider) == "Guardian Life Ins." ? "selected" : "")>Guardian Life Ins.</option>
+                                        <option value="AFLAC Ins." @((Model.deduction.AccidentProvider) == "AFLAC Ins." ? "selected" : "")>AFLAC Ins.</option>
+                                        <option value="Colonial Life Ins." @((Model.deduction.AccidentProvider) == "Colonial Life Ins." ? "selected" : "")>Colonial Life Ins.</option>
+                                        <option value="New York Life Ins." @((Model.deduction.AccidentProvider) == "New York Life Ins." ? "selected" : "")>New York Life Ins.</option>
+                                    </select>
+                                    @*<div id="AccidentInsOptionResult" hidden></div>*@
+
+                                </td>
+                                <td>
+                                    <select id="EEelectionPreTaxAccidentIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPreTaxAccidentIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPreTaxAccidentIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPreTaxAccidentIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPreTaxAccidentIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPreTaxAccidentIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPreTaxAccidentIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc" id="PremiumPreTaxAccidentIns" name="PremiumPreTaxAccidentIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPreTaxAccidentIns)" />
+                                </td>
+                                <td>
+                                    <select id="EEelectionPostTaxAccidentIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPostTaxAccidentIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPostTaxAccidentIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPostTaxAccidentIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPostTaxAccidentIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPostTaxAccidentIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPostTaxAccidentIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc2" id="PremiumPostTaxAccidentIns" name="PremiumPostTaxAccidentIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPostTaxAccidentIns)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" value="Cancer:" readonly />
+                                </td>
+                                <td>
+                                    @*<input type="text" class="form-control" id="CancerProvider" name="CancerProvider" value="@Html.DisplayFor(Model => Model.deduction.CancerProvider)" />*@
+                                    <select id="CancerProvider" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Insurance Mgmt. Service" @((Model.deduction.CancerProvider) == "Insurance Mgmt. Service" ? "selected" : "")>Insurance Mgmt. Service</option>
+                                        <option value="Guardian Life Ins." @((Model.deduction.CancerProvider) == "Guardian Life Ins." ? "selected" : "")>Guardian Life Ins.</option>
+                                        <option value="AFLAC Ins." @((Model.deduction.CancerProvider) == "AFLAC Ins." ? "selected" : "")>AFLAC Ins.</option>
+                                        <option value="Colonial Life Ins." @((Model.deduction.CancerProvider) == "Colonial Life Ins." ? "selected" : "")>Colonial Life Ins.</option>
+                                        <option value="New York Life Ins." @((Model.deduction.CancerProvider) == "New York Life Ins." ? "selected" : "")>New York Life Ins.</option>
+                                    </select>
+                                    @*<div id="CancerInsOptionResult" hidden></div>*@
+                                </td>
+                                <td>
+                                    <select id="EEelectionPreTaxCancerIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPreTaxCancerIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPreTaxCancerIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPreTaxCancerIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPreTaxCancerIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPreTaxCancerIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPreTaxCancerIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc" id="PremiumPreTaxCancerIns" name="PremiumPreTaxCancerIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPreTaxCancerIns)" />
+                                </td>
+                                <td>
+                                    <select id="EEelectionPostTaxCancerIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPostTaxCancerIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPostTaxCancerIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPostTaxCancerIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPostTaxCancerIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPostTaxCancerIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPostTaxCancerIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc2" id="PremiumPostTaxCancerIns" name="PremiumPostTaxCancerIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPostTaxCancerIns)" />
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <td>
+                                    <input type="text" class="form-control" value="Other:" readonly />
+                                </td>
+                                <td>
+                                    @*<input type="text" class="form-control" id="OtherInsProvider" name="OtherInsProvider" value="@Html.DisplayFor(Model => Model.deduction.OtherInsProvider)" />*@
+                                    <select id="OtherInsProvider" name="OtherInsProvider" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Insurance Mgmt. Service" @((Model.deduction.OtherInsProvider) == "Insurance Mgmt. Service" ? "selected" : "")>Insurance Mgmt. Service</option>
+                                        <option value="Guardian Life Ins." @((Model.deduction.OtherInsProvider) == "Guardian Life Ins." ? "selected" : "")>Guardian Life Ins.</option>
+                                        <option value="AFLAC Ins." @((Model.deduction.OtherInsProvider) == "AFLAC Ins." ? "selected" : "")>AFLAC Ins.</option>
+                                        <option value="Colonial Life Ins." @((Model.deduction.OtherInsProvider) == "Colonial Life Ins." ? "selected" : "")>Colonial Life Ins.</option>
+                                        <option value="New York Life Ins." @((Model.deduction.OtherInsProvider) == "New York Life Ins." ? "selected" : "")>New York Life Ins.</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="EEelectionPreTaxOtherIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPreTaxOtherIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPreTaxOtherIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPreTaxOtherIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPreTaxOtherIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPreTaxOtherIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPreTaxOtherIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc" id="PremiumPreTaxOtherIns" name="PremiumPreTaxOtherIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPreTaxOtherIns)" />
+                                </td>
+                                <td>
+                                    <select id="EEelectionPostTaxOtherIns" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Employee Only" @((Model.deduction.EEelectionPostTaxOtherIns) == "Employee Only" ? "selected" : "")>Employee Only</option>
+                                        <option value="Employee & Spouse" @((Model.deduction.EEelectionPostTaxOtherIns) == "Employee & Spouse" ? "selected" : "")>Employee & Spouse</option>
+                                        <option value="Employee & Child" @((Model.deduction.EEelectionPostTaxOtherIns) == "Employee & Child" ? "selected" : "")>Employee & Child</option>
+                                        <option value="Employee & Family" @((Model.deduction.EEelectionPostTaxOtherIns) == "Employee & Family" ? "selected" : "")>Employee & Family</option>
+                                        <option value="Covered By Other Insurance" @((Model.deduction.EEelectionPostTaxOtherIns) == "Covered By Other Insurance" ? "selected" : "")>Covered By Other Insurance</option>
+                                        <option value="Not Interested" @((Model.deduction.EEelectionPostTaxOtherIns) == "Not Interested" ? "selected" : "")>Not Interested</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">
+                                    <input type="number" class="form-control prc2" id="PremiumPostTaxOtherIns" name="PremiumPostTaxOtherIns" value="@Html.DisplayFor(Model => Model.deduction.PremiumPostTaxOtherIns)" />
+                                </td>
+                            </tr>
+
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <text id="PreTaxTotalbtn" @*onclick="return TotalPreTax()"*@ class="col-md-offset-4 btn">Total Pre-Tax</text>
+                                    <b>$</b><input type="text" id="PreTaxTotal" value="@Html.DisplayFor(Model => Model.deduction.TotalPreTax)" readonly />
+                                </td>
+                                <td>
+                                    <text id="PostTaxTotalbtn" @*onclick="return TotalPostTax()"*@ class="col-md-offset-3 btn">Total Post-Tax</text>
+                                    <b>$</b><input type="text" id="PostTaxTotal" value="@Html.DisplayFor(Model => Model.deduction.TotalPostTax)" readonly />
+                                </td>
+                            </tr>
+                        </table>
+                        <hr />
+                        <div class="text-justify">
+                            <label style="padding-left: 10px;"><u>I understand and agree to the following (inital all):</u></label>
+                            <p>
+                                <input type="text" id="empInitials1" name="EmployeeInitials" value="@Html.DisplayFor(Model => Model.deduction.EmployeeInitials)" />
+                                On separate benefit enrollment form(s), I have enrolled for certain insurance coverage(s) and understand that my
+                                insurance premiums election amount will be deducted from my paycheck by my employer. Unless this agreement is amended
+                                or terminated, these deductions will be continuous and in an eaqual amount to the insurance premiums amount for each
+                            </p>
+                            <p>
+                                <input type="text" id="empInitials1" name="EmployeeInitials" value="@Html.DisplayFor(Model => Model.deduction.EmployeeInitials)" />
+                                On separate benefit enrollment form(s), I have enrolled for certain insurance coverage(s) and understand that my
+                                insurance premiums election amount will be deducted from my paycheck by my employer. Unless this agreement is amended
+                                or terminated, these deductions will be continuous and in an eaqual amount to the insurance premiums amount for each
+                            </p>
+                            <p>
+                                <input type="text" id="empInitials1" name="EmployeeInitials" value="@Html.DisplayFor(Model => Model.deduction.EmployeeInitials)" />
+                                On separate benefit enrollment form(s), I have enrolled for certain insurance coverage(s) and understand that my
+                                insurance premiums election amount will be deducted from my paycheck by my employer. Unless this agreement is amended
+                                or terminated, these deductions will be continuous and in an eaqual amount to the insurance premiums amount for each
+                            </p>
+                            <p>
+                                <input type="text" id="empInitials1" name="EmployeeInitials" value="@Html.DisplayFor(Model => Model.deduction.EmployeeInitials)" />
+                                On separate benefit enrollment form(s), I have enrolled for certain insurance coverage(s) and understand that my
+                                insurance premiums election amount will be deducted from my paycheck by my employer. Unless this agreement is amended
+                                or terminated, these deductions will be continuous and in an eaqual amount to the insurance premiums amount for each
+                            </p>
+                            <label style="padding-left: 10px;"><u>Waiver of Pre-Tax Benefits Under the Benefits Plan:</u></label>
+                            <p>
+                                <input type="text" id="PreTaxBenefitWaiverinitials" name="PreTaxBenefitWaiverinitials" value="@Html.DisplayFor(Model => Model.deduction.PreTaxBenefitWaiverinitials)" />
+                                On separate benefit enrollment form(s), I have enrolled for certain insurance coverage(s) and understand that my
+                                insurance premiums election amount will be deducted from my paycheck by my employer. Unless this agreement is amended
+                                or terminated, these deductions will be continuous and in an eaqual amount to the insurance premiums amount for each
+                            </p>
+                            <hr />
+                            <div>
+                                <label style="padding-left: 10px;">
+                                    Employee Signature:
+                                </label>
+                                <input type="text" id="signature" name="EmployeeSignature" value="@Html.DisplayFor(Model => Model.deduction.EmployeeSignature)" />
+                                <label style="padding-left: 10px;">
+                                    Date:
+                                </label>
+                                <input type="date" id="signatureDate" name="EmployeeSignatureDate" value="@Convert.ToDateTime(Model.deduction.EmployeeSignatureDate).ToString("yyyy-MM-dd")" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-11">
+                                <button id="SalaryRedirectEditUpdate" class="btn">Save</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <p>
+                @Html.ActionLink("Back to Insurance", "GrpHealthEnrollment", new { Employee_id = ViewBag.Employee_id }, null)
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+<style>
+    .collapsible {
+        background-color: #2e4593;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: center;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #2e4593;
+        }
+
+    .content {
+        padding: 0 10px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+
+    .button {
+        text-align: right;
+    }
+
+    .btn:hover {
+        background-color: #2e4593;
+        color: white;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 8px 8px;
+    }
+
+        a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    p {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #label {
+        font-weight: bold;
+        text-align: left;
+        font-size: 100%;
+    }
+
+    #TotalPreTax, #TotalPostTax {
+        width: 15%;
+        border: 0px;
+        border-bottom: 1px solid black;
+        height: 30px;
+        text-align: center;
+    }
+
+    #empInitials1, #empInitials2,
+    #empInitials3, #empInitials4,
+    #PreTaxBenefitWaiverinitials {
+        width: 5%;
+        border: 0px;
+        border-bottom: 1px solid black;
+        height: 20px;
+        text-align: center;
+    }
+
+    #signature {
+        width: 100%;
+        border: 0px;
+        border-bottom: 1px solid black;
+        height: 20px;
+    }
+
+    #signatureDate {
+        width: 15%;
+        border: 0px;
+        border-bottom: 1px solid black;
+        height: 20px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    /*table tr {
+            border-bottom: 1px solid black;
+        }*/
+
+    td:empty {
+        width: 10px;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 0px;
+    }
+
+    th {
+        border-bottom: 5px solid black;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<script>
+    var col = document.querySelectorAll(".collapsible");
+    var i;
+    var Employee_id;
+
+    for (i = 0; i < col.length; i++) {
+        col[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+
+        });
+    }
+
+    $('.col-md-1').on('input', '.prc', function () {
+        var totalSum = 0;
+        $('.col-md-1 .prc').each(function () {
+            var inputVal = $(this).val();
+            if ($.isNumeric(inputVal)) {
+                totalSum += parseFloat(inputVal);
+            }
+        });
+        $('#PreTaxTotal').val(totalSum);
+    });
+
+
+    $('.col-md-1').on('input', '.prc2', function () {
+        var totalSum = 0;
+        $('.col-md-1 .prc2').each(function () {
+            var inputVal = $(this).val();
+            if ($.isNumeric(inputVal)) {
+                totalSum += parseFloat(inputVal);
+            }
+        });
+        $('#PostTaxTotal').val(totalSum);
+    });
+
+    //function TotalPreTax() {
+
+    //    document.addEventListener("click", function () {
+
+    //        var rows = document.querySelectorAll("table tr td:last-child");
+    //        var total = 0;
+
+    //        for (var i = 0; i < rows.length-1; i++) {
+
+    //            total += Number(rows[i].textContent);
+    //        }
+
+    //        document.getElementById("PreTaxTotal").textContent = total;
+
+    //    })
+    //}
+
+    //function TotalPostTax() {
+
+    //    document.addEventListener("click", function () {
+
+    //        var rows = document.querySelectorAll("table tr td:last-child");
+    //        var total = 0;
+
+    //        for (var i = 0; i < rows.length - 1; i++) {
+
+    //            total += Number(rows[i].textContent);
+    //        }
+
+    //        document.getElementById("PostTaxTotal").textContent = total;
+
+    //    })
+
+    //}
+
+    @*function EditSalaryRedirection() {
+
+        window.location.href = "/Admin/EditSalaryRedirection?Employee_id=@ViewBag.Employee_id";
+    }*@
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("#SalaryRedirectEditUpdate").addEventListener("click", function () {
+            Employee_id = document.getElementById("Employee_id").value;
+            Deductions_id = document.getElementById("Deductions_id").value;
+            MedicalInsProvider = document.getElementById("MedicalInsProvider").value;
+            EEelectionPreTaxMedIns = document.getElementById("EEelectionPreTaxMedIns").value;
+            PremiumPreTaxMedIns = document.getElementById("PremiumPreTaxMedIns").value;
+            EEelectionPostTaxMedIns = document.getElementById("EEelectionPostTaxMedIns").value;
+            PremiumPostTaxMedIns = document.getElementById("PremiumPostTaxMedIns").value;
+
+            DentalInsProvider = document.getElementById("DentalInsProvider").value;
+            EEelectionPreTaxDentalIns = document.getElementById("EEelectionPreTaxDentalIns").value;
+            PremiumPreTaxDentalIns = document.getElementById("PremiumPreTaxDentalIns").value;
+            EEelectionPostTaxDentalIns = document.getElementById("EEelectionPostTaxDentalIns").value;
+            PremiumPostTaxDentalIns = document.getElementById("PremiumPostTaxDentalIns").value;
+
+            VisionInsProvider = document.getElementById("VisionInsProvider").value;
+            EEelectionPreTaxVisionIns = document.getElementById("EEelectionPreTaxVisionIns").value;
+            PremiumPreTaxVisionIns = document.getElementById("PremiumPreTaxVisionIns").value;
+            EEelectionPostTaxVisionIns = document.getElementById("EEelectionPostTaxVisionIns").value;
+            PremiumPostTaxVisionIns = document.getElementById("PremiumPostTaxVisionIns").value;
+
+
+
+            StDisabilityProvider = document.getElementById("StDisabilityProvider").value;
+            EEelectionPreTaxStDisability = document.getElementById("EEelectionPreTaxStDisability").value;
+            PremiumPreTaxStDisability = document.getElementById("PremiumPreTaxStDisability").value;
+            EEelectionPostTaxStDisability = document.getElementById("EEelectionPostTaxStDisability").value;
+            PremiumPostTaxStDisability = document.getElementById("PremiumPostTaxStDisability").value;
+
+            HospitalIndemProvider = document.getElementById("HospitalIndemProvider").value;
+            EEelectionPreTaxHospitalIndem = document.getElementById("EEelectionPreTaxHospitalIndem").value;
+            PremiumPreTaxHospitalIndem = document.getElementById("PremiumPreTaxHospitalIndem").value;
+            EEelectionPostTaxHospitalIndem = document.getElementById("EEelectionPostTaxHospitalIndem").value;
+            PremiumPostTaxHospitalIndem = document.getElementById("PremiumPostTaxHospitalIndem").value;
+
+            TermLifeInsProvider = document.getElementById("TermLifeInsProvider").value;
+            EEelectionPreTaxTermLifeIns = document.getElementById("EEelectionPreTaxTermLifeIns").value;
+            PremiumPreTaxTermLifeIns = document.getElementById("PremiumPreTaxTermLifeIns").value;
+            EEelectionPostTaxTermLifeIns = document.getElementById("EEelectionPostTaxTermLifeIns").value;
+            PremiumPostTaxTermLifeIns = document.getElementById("PremiumPostTaxTermLifeIns").value;
+
+            WholeLifeInsProvider = document.getElementById("WholeLifeInsProvider").value;
+            EEelectionPreTaxWholeLifeIns = document.getElementById("EEelectionPreTaxWholeLifeIns").value;
+            PremiumPreTaxWholeLifeIns = document.getElementById("PremiumPreTaxWholeLifeIns").value;
+            EEelectionPostTaxWholeLifeIns = document.getElementById("EEelectionPostTaxWholeLifeIns").value;
+            PremiumPostTaxWholeLifeIns = document.getElementById("PremiumPostTaxWholeLifeIns").value;
+
+            //refer to line 359 and 505- data passing, but not reaching controller- and the IDs match the controller names
+            AccidentProvider = document.getElementById("AccidentProvider").value;
+            //document.getElementById("AccidentInsOptionResult").innerHTML = AccidentProvider;
+
+            EEelectionPreTaxAccidentIns = document.getElementById("EEelectionPreTaxAccidentIns").value;
+            PremiumPreTaxAccidentIns = document.getElementById("PremiumPreTaxAccidentIns").value;
+            EEelectionPostTaxAccidentIns = document.getElementById("EEelectionPostTaxAccidentIns").value;
+            PremiumPostTaxAccidentIns = document.getElementById("PremiumPostTaxAccidentIns").value;
+
+            CancerProvider = document.getElementById("CancerProvider").value;
+            //document.getElementById("CancerInsOptionResult").innerHTML = CancerProvider;
+
+            EEelectionPreTaxCancerIns = document.getElementById("EEelectionPreTaxCancerIns").value;
+            PremiumPreTaxCancerIns = document.getElementById("PremiumPreTaxCancerIns").value;
+            EEelectionPostTaxCancerIns = document.getElementById("EEelectionPostTaxCancerIns").value;
+            PremiumPostTaxCancerIns = document.getElementById("PremiumPostTaxCancerIns").value;
+
+            OtherInsProvider = document.getElementById("OtherInsProvider").value;
+            EEelectionPreTaxOtherIns = document.getElementById("EEelectionPreTaxOtherIns").value;
+            PremiumPreTaxOtherIns = document.getElementById("PremiumPreTaxOtherIns").value;
+            EEelectionPostTaxOtherIns = document.getElementById("EEelectionPostTaxOtherIns").value;
+            PremiumPostTaxOtherIns = document.getElementById("PremiumPostTaxOtherIns").value;
+
+            TotalPreTax = document.getElementById("PreTaxTotal").value;
+            TotalPostTax = document.getElementById("PostTaxTotal").value;
+            empSignature = document.getElementById("signature").value;
+            empSignatureDate = document.getElementById("signatureDate").value;
+            empInitials1 = document.getElementById("empInitials1").value;
+            PreTaxBenefitWaiverinitials = document.getElementById("PreTaxBenefitWaiverinitials").value;
+
+            var data = {
+                "Employee_id": Employee_id,
+                "Deductions_id": Deductions_id,
+                "MedicalInsProvider": MedicalInsProvider,
+                "EEelectionPreTaxMedIns": EEelectionPreTaxMedIns,
+                "PremiumPreTaxMedIns": PremiumPreTaxMedIns,
+                "EEelectionPostTaxMedIns": EEelectionPostTaxMedIns,
+                "PremiumPostTaxMedIns": PremiumPostTaxMedIns,
+
+                "DentalInsProvider": DentalInsProvider,
+                "EEelectionPreTaxDentalIns": EEelectionPreTaxDentalIns,
+                "PremiumPreTaxDentalIns": PremiumPreTaxDentalIns,
+                "EEelectionPostTaxDentalIns": EEelectionPostTaxDentalIns,
+                "PremiumPostTaxDentalIns": PremiumPostTaxDentalIns,
+
+                "VisionInsProvider": VisionInsProvider,
+                "EEelectionPreTaxVisionIns": EEelectionPreTaxVisionIns,
+                "PremiumPreTaxVisionIns": PremiumPreTaxVisionIns,
+                "EEelectionPostTaxVisionIns": EEelectionPostTaxVisionIns,
+                "PremiumPostTaxVisionIns": PremiumPostTaxVisionIns,
+
+
+
+                "StDisabilityProvider": StDisabilityProvider,
+                "EEelectionPreTaxStDisability": EEelectionPreTaxStDisability,
+                "PremiumPreTaxStDisability": PremiumPreTaxStDisability,
+                "EEelectionPostTaxStDisability": EEelectionPostTaxStDisability,
+                "PremiumPostTaxStDisability": PremiumPostTaxStDisability,
+
+                "HospitalIndemProvider": HospitalIndemProvider,
+                "EEelectionPreTaxHospitalIndem": EEelectionPreTaxHospitalIndem,
+                "PremiumPreTaxHospitalIndem": PremiumPreTaxHospitalIndem,
+                "EEelectionPostTaxHospitalIndem": EEelectionPostTaxHospitalIndem,
+                "PremiumPostTaxHospitalIndem": PremiumPostTaxHospitalIndem,
+
+                "TermLifeInsProvider": TermLifeInsProvider,
+                "EEelectionPreTaxTermLifeIns": EEelectionPreTaxTermLifeIns,
+                "PremiumPreTaxTermLifeIns": PremiumPreTaxTermLifeIns,
+                "EEelectionPostTaxTermLifeIns": EEelectionPostTaxTermLifeIns,
+                "PremiumPostTaxTermLifeIns": PremiumPostTaxTermLifeIns,
+
+                "WholeLifeInsProvider": WholeLifeInsProvider,
+                "EEelectionPreTaxWholeLifeIns": EEelectionPreTaxWholeLifeIns,
+                "PremiumPreTaxWholeLifeIns": PremiumPreTaxWholeLifeIns,
+                "EEelectionPostTaxWholeLifeIns": EEelectionPostTaxWholeLifeIns,
+                "PremiumPostTaxWholeLifeIns": PremiumPostTaxWholeLifeIns,
+
+                "AccidentProvider ": AccidentProvider,
+                "EEelectionPreTaxAccidentIns": EEelectionPreTaxAccidentIns,
+                "PremiumPreTaxAccidentIns": PremiumPreTaxAccidentIns,
+                "EEelectionPostTaxAccidentIns": EEelectionPostTaxAccidentIns,
+                "PremiumPostTaxAccidentIns": PremiumPostTaxAccidentIns,
+
+                "CancerProvider ": CancerProvider,
+                "EEelectionPreTaxCancerIns": EEelectionPreTaxCancerIns,
+                "PremiumPreTaxCancerIns": PremiumPreTaxCancerIns,
+                "EEelectionPostTaxCancerIns": EEelectionPostTaxCancerIns,
+                "PremiumPostTaxCancerIns": PremiumPostTaxCancerIns,
+
+                "OtherInsProvider": OtherInsProvider,
+                "EEelectionPreTaxOtherIns": EEelectionPreTaxOtherIns,
+                "PremiumPreTaxOtherIns": PremiumPreTaxOtherIns,
+                "EEelectionPostTaxOtherIns": EEelectionPostTaxOtherIns,
+                "PremiumPostTaxOtherIns": PremiumPostTaxOtherIns,
+
+                "TotalPreTax": TotalPreTax,
+                "TotalPostTax": TotalPostTax,
+                "empSignature": empSignature,
+                "empSignatureDate": empSignatureDate,
+                "empInitials1": empInitials1,
+                "PreTaxBenefitWaiverinitials": PreTaxBenefitWaiverinitials,
+            }
+
+            //var ret = postData('SalaryRedirectionEditUpdate', data)
+            //    .then(data => {
+            //        console.log(data);
+            //        FirstStep(data);
+            //    })
+            //    .catch(error => console.error(error))
+
+            fetch('SalaryRedirectionEditUpdate', {
+                body: JSON.stringify(data), //must match 'Content-Type' header
+                cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', //include, same-origin, *omit
+                headers: {
+                    'Accept': 'application/json',
+                    'user-agent': 'Mozilla/4.0 MDN Example',
+                    'content-type': 'application/json'
+                },
+                method: 'Post', //*GET, POST, PUT, DELETE, etc...
+                mode: 'same-origin', //no-cors, cors, *same-origin
+                redirect: 'follow', //manual, *follow, error
+                referrer: 'no-referrer', //*client, no-referrer
+            }).then(res => res.json())
+                .then(response => FirstStep(response))
+                .catch(error => console.error('Error:', error));
+
+        })
+        function FirstStep(emp) {
+            document.querySelector("#FirstStep").nextElementSibling.style.display = "block";
+            Employee_id = emp.data;
+
+        }
+
+        function postData(url, data) {
+            //Default options are marked with *
+            console.log(data);
+            console.log(JSON.stringify(data));
+            return fetch(url, {
+                body: JSON.stringify(data), //must match 'Content-Type' header
+                cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', //include, same-origin, *omit
+                headers: {
+                    'Accept': 'application/json',
+                    'user-agent': 'Mozilla/4.0 MDN Example',
+                    'content-type': 'application/json'
+                },
+                method: 'Post', //*GET, POST, PUT, DELETE, etc...
+                mode: 'same-origin', //no-cors, cors, *same-origin
+                redirect: 'follow', //manual, *follow, error
+                referrer: 'no-referrer', //*client, no-referrer
+            }).then(res => res.json())
+                .then(response => console.log('Success:', JSON.stringify(response)))
+                .catch(error => console.error('Error:', error));
+            //.then(Response => {
+            //    console.log(Response);
+            //    Response.json();
+            //}) //parses response to JSON
+        }
+    })
+</script>
+

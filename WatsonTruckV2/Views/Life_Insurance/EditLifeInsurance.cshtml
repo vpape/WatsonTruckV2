@@ -1,0 +1,1060 @@
+﻿@model WatsonTruckV2.Models.EmployeeAndInsuranceVM
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Edit Life Insurance</title>
+</head>
+<body>
+    <input type="hidden" id="Employee_id" class="form-control" name="Employee_id" value=@ViewBag.Employee_id />
+    <input type="hidden" id="LifeInsurance_id" class="form-control" name="LifeInsurance_id" value=@ViewBag.LifeInsurance_id />
+    <hr />
+    <div class="form-horizontal">
+        <div class="collapsible" id="FirstStep">Edit Life Insurance</div>
+        <div class="modal-content">
+            <table class="table table-bordered">
+                <tr>
+                    <td>
+                        <table class="table table-condensed">
+                            <caption>Employer Name:</caption>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <h4><b>Watson Truck & Supply, Inc.</b></h4>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <text>Group Plan Number:</text>
+                                        <input type="text" class="form-control" id="GroupPlanNumber" name="GroupPlanNumber" value="@Html.DisplayFor(Model => Model.lifeIns.GroupPlanNumber)" disabled />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <text>Benefits Effective Date:</text>
+                                        <input type="date" class="form-control" id="BenefitsEffectiveDate" name="BenefitsEffectiveDate" value="@Convert.ToDateTime(Model.employee.EffectiveDate).ToString("yyyy-MM-dd")" disabled />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table table-condensed">
+                            <caption>Please Check Appropriate Box:</caption>
+                            <tr>
+                                <td>
+                                    <div class="checkboxes">
+                                        <input type="checkbox" id="InitialEnrollment" name="InitialEnrollment" value="InitialEnrollment" disabled /><label for="InitialEnrollment">Initial Enrollment</label>
+                                        <input type="checkbox" id="ReEnrollment" name="ReEnrollment" value="ReEnrollment" disabled /><label for="ReEnrollment">Re-Enrollment</label>
+                                        <input type="checkbox" id="AddEmployeeAndDependents" name="AddEmployeeAndDependents" value="AddEmployeeAndDependents" disabled /><label for="AddEmployeeAndDependents">Add Employee/Dependents</label>
+                                        <input type="checkbox" id="DropRefuseCoverage" name="DropRefuseCoverage" value="DropRefuseCoverage" disabled /><label for="DropRefuseCoverage">Drop/Refuse Coverage</label>
+                                        <input type="checkbox" id="InformationChange" name="InformationChange" value="InformationChange" disabled /><label for="InformationChange">Information Change</label>
+                                        <input type="checkbox" id="IncreaseAmount" name="IncreaseAmount" value="IncreaseAmount" disabled /><label for="IncreaseAmount">Increase Amount</label>
+                                        <input type="checkbox" id="FamilyStatusChange" name="FamilyStatusChange" value="FamilyStatusChange" @*@((Model.lifeIns.FamilyStatusChange) == "True" ? "checked" : "")*@ disabled /><label for="FamilyStatusChange">Family Status Change</label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table table-condensed">
+                            <caption>Class:</caption>
+                            <tr>
+                                <td class="col-sm-4, col-md-3">
+                                    <h5><b>All Other Eligible Employees Enrolling in Medical</b></h5>
+                                </td>
+                                <td>
+                                    <label style="display:table-cell">Division:</label>
+                                    <input type="text" class="form-control" id="Division" name="Division" value="@Html.Raw(Model.employee.Department)" disabled />
+                                </td>
+                                <td>
+                                    <label style="display:table-cell">Subtotal Code:</label>
+                                    <input type="text" class="form-control" id="SubTotalCode" name="SubTotalCode" value="@Html.Raw(Model.lifeIns.SubTotalCode)" disabled />
+                                </td>
+                            </tr>
+                        </table>
+                        <h4 style="display:table-cell"><b>About You:</b></h4>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="col-sm-1, col-md-3">
+                                    <input type="text" class="form-control" placeholder="First Name" value="@Html.Raw(Model.employee.FirstName)" disabled />
+                                </td>
+                                <td class="col-sm-1, col-md-3">
+                                    <input type="text" class="form-control" placeholder="Last Name" value="@Html.Raw(Model.employee.LastName)" disabled />
+                                </td>
+                                <td class="col-sm-1, col-md-3">
+                                    <input type="text" class="form-control" placeholder="SSN" value="@Html.Raw(Model.employee.SSN)" disabled />
+                                </td>
+                                <td class="col-sm-1, col-md-3">
+                                    <input type="text" class="form-control" placeholder="" value="" disabled />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" placeholder="Mailing Address" value="@Html.Raw(Model.employee.MailingAddress)" disabled />
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" placeholder="City" value="@Html.Raw(Model.employee.City)" disabled />
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" placeholder="State" value="@Html.Raw(Model.employee.State)" disabled />
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" placeholder="Zip Code" value="@Html.Raw(Model.employee.ZipCode)" disabled />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center center-block">
+                                    <input type="checkbox" id="Gender" name="Gender" value="Male" @((Model.employee.Gender) == "Male" ? "checked" : "") disabled /><label>Male</label>
+                                    <input type="checkbox" id="Gender" name="Gender" value="Female" @((Model.employee.Gender) == "Female" ? "checked" : "") disabled /><label>Female</label>
+                                </td>
+                                <td>
+                                    <label style="display:table-cell">Date of Birth:</label>
+                                    <input type="date" class="form-control" value="@Convert.ToDateTime(Model.employee.DateOfBirth).ToString("yyyy-MM-dd")" disabled />
+                                </td>
+                                <td>
+                                    <label style="display:table-cell">Phone Number:</label>
+                                    <input type="text" class="form-control" placeholder="Phone Number" value="@Html.Raw(Model.employee.PhoneNumber)" disabled />
+                                </td>
+                                <td>
+                                    <label style="display:table-cell">Email Address:</label>
+                                    <input type="text" class="form-control" placeholder="Email Address" value="@Html.Raw(Model.employee.EmailAddress)" disabled />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="center-block">
+                                    <div>
+                                        <label>Are you Married or do you have a spouse?</label>
+                                        <input type="radio" class="radio-inline" id="Married" name="MarriedOrHaveSpouse" value="" @((Model.lifeIns.MarriedOrHaveSpouse) == "True" ? "checked" : "") disabled />
+                                        <label>Yes</label>
+                                        <input type="radio" class="radio-inline" id="Married" name="MarriedOrHaveSpouse" value="" @((Model.lifeIns.MarriedOrHaveSpouse) == "False" ? "checked" : "") disabled />
+                                        <label>No</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="divDateOfMarriage">
+                                        <div>
+                                            <label style="display:table-cell">Date of Marriage:</label>
+                                            <input type="date" class="form-control" id="DateOfMarriage" name="DateOfMarriage" value="@Convert.ToDateTime(Model.lifeIns.DateOfMarriage).ToString("yyyy-MM-dd")" disabled />
+                                        </div>
+                                        <p></p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label style="display:table-cell">Do you have children or other Dependents?</label>
+                                        <input type="radio" class="radio-inline" id="OtherDependents" name="HaveChildrenOrHaveDependents" value="" @((Model.lifeIns.HaveChildrenOrHaveDependents) == "True" ? "checked" : "") disabled />
+                                        <label>Yes</label>
+                                        <input type="radio" class="radio-inline" id="OtherDependents" name="HaveChildrenOrHaveDependents" value="" @((Model.lifeIns.HaveChildrenOrHaveDependents) == "False" ? "checked" : "") disabled />
+                                        <label>No</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="divDateOfAdoption">
+                                        <div>
+                                            <label style="display:table-cell">Placement Date of Adoption:</label>
+                                            <input type="date" class="form-control" id="DateOfAdoption" name="PlacementDateOfAdoptedChild" value="@Convert.ToDateTime(Model.lifeIns.PlacementDateOfAdoptedChild).ToString("yyyy-MM-dd")" disabled />
+                                        </div>
+                                        <p></p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <h4 style="display:table-cell"><b>About Your Job:</b></h4>
+                        <table class="table table-condensed">
+                            <tr>
+                                <td class="center-block text-center">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div class="checkboxes">
+                                                    <label style="display:table-cell">Work Status:</label>
+                                                    <input type="checkbox" class="checkbox-inline" id="Active" name="Active" value="Active" @((Model.employee.Active) == "True" ? "checked" : "") disabled /><label>Active</label>
+                                                    <input type="checkbox" class="checkbox-inline" id="Retired" name="Retired" value="Retired" @((Model.employee.Retired) == "True" ? "checked" : "") disabled /><label>Retired</label>
+                                                    <input type="checkbox" class="checkbox-inline" id="CobraStateContinuation" name="CobraStateContinuation" value="Cobra/State Continuation" @((Model.employee.CobraStateContinuation) == "True" ? "checked" : "") disabled /><label>Cobra/State</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <label style="display:table-cell">Job Title:</label>
+                                    <input type="text" class="form-control" name="JobTitle" value="@Html.Raw(Model.employee.JobTitle)" disabled />
+                                </td>
+                                <td>
+                                    <label style="display:table-cell">Hours Worked per Week:</label>
+                                    <input type="number" class="form-control" id="HoursWorkedPerWeek" name="HoursWorkedPerWeek" value="@Html.Raw(Model.employee.HoursWorkedPerWeek)" disabled />
+                                </td>
+                                <td>
+                                    <label style="display:table-cell">Hire Date:</label>
+                                    <input type="date" class="form-control" name="HireDate" value="@Convert.ToDateTime(Model.employee.HireDate).ToString("yyyy-MM-dd")" disabled />
+                                <td>
+                                    <label style="display:table-cell">Annual Salary: $</label>
+                                    <input type="text" class="form-control" name="AnnualSalary" value="@Html.Raw(Model.employee.AnnualSalary)" disabled />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <h4><b>About Your Family:Please include the name of the dependents you wish to enroll for coverage. Additional information may be required for non-standard dpendents such as niece or nephew.</b></h4>
+            <table class="table table-bordered table-condensed">
+                <caption><b>Spouse Information:</b></caption>
+                <tr>
+                    <td>
+                        <input type="hidden" id="FamilyMember_id" class="form-control" name="FamilyMember_id" value="@Model.spouse.FamilyMember_id" />
+                        <input type="hidden" id="RelationshipToInsured" class="form-control" name="RelationshipToInsured" value="@Model.spouse.RelationshipToInsured" />
+                        <input type="text" class="form-control" placeholder="First Name" value="@Html.Raw(Model.spouse.FirstName)" disabled />
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="Last Name" value="@Html.Raw(Model.spouse.LastName)" disabled />
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="SSN" value="@Html.Raw(Model.spouse.SSN)" disabled />
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="" value="@Model.spouse.RelationshipToInsured" disabled />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" class="form-control" placeholder="Mailing Address" value="@Html.Raw(Model.spouse.MailingAddress)" disabled />
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="City" value="@Html.Raw(Model.spouse.City)" disabled />
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="State" value="@Html.Raw(Model.spouse.State)" disabled />
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="Zip Code" value="@Html.Raw(Model.spouse.ZipCode)" disabled />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center center-block">
+                        <input type="checkbox" id="Gender" name="Gender" value="Male" @((Model.spouse.Gender) == "Male" ? "checked" : "") disabled /><label>Male</label>
+                        <input type="checkbox" id="Gender" name="Gender" value="Female" @((Model.spouse.Gender) == "Female" ? "checked" : "") disabled /><label>Female</label>
+                    </td>
+                    <td>
+                        <label style="display:table-cell">Date of Birth:</label>
+                        <input type="date" class="form-control" value="@Convert.ToDateTime(Model.spouse.DateOfBirth).ToString("yyyy-MM-dd")" disabled />
+                    </td>
+                    <td>
+                        <label style="display:table-cell">Phone Number:</label>
+                        <input type="text" class="form-control" placeholder="Phone Number" value="@Html.Raw(Model.spouse.PhoneNumber)" disabled />
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-bordered table-condensed">
+                <caption><b>Dependent Information:</b></caption>
+                @foreach (var dep in Model.family)
+                {
+                    <tr>
+                        <td class="col-sm-1, col-md-3">
+                            <input type="hidden" id="FamilyMember_id" class="form-control" name="FamilyMember_id" value="@dep.FamilyMember_id" />
+                            <input type="hidden" id="RelationshipToInsured" class="form-control" name="RelationshipToInsured" value="@dep.RelationshipToInsured" />
+                            <input type="text" class="form-control" placeholder="First Name" value="@dep.FirstName" disabled />
+                        </td>
+                        <td class="col-sm-1, col-md-3">
+                            <input type="text" class="form-control" placeholder="Last Name" value="@dep.LastName" disabled />
+                        </td>
+                        <td class="col-sm-1, col-md-3">
+                            <input type="text" class="form-control" placeholder="SSN" value="@dep.SSN" disabled />
+                        </td>
+                        <td class="col-sm-1, col-md-3">
+                            <input type="text" class="form-control" placeholder="Relationship to Insured" value="@dep.RelationshipToInsured" disabled />
+                        </td>
+                    </tr>
+                    <tr id="Address">
+                        <td>
+                            <input type="text" class="form-control" id="Address" placeholder="Mailing Address" value="@dep.MailingAddress" disabled />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="Address" placeholder="City" value="@dep.City" disabled />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="Address" placeholder="State" value="@dep.State" disabled />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="Address" placeholder="Zip Code" value="@dep.ZipCode" disabled />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center center-block">
+                            <div>
+                                <label style="display:table-cell">Add/Drop Dependent</label>
+                                <select class="form-control" id="AddDropDepLifeIns" disabled>
+                                    <option value="N/A" selected disabled hidden> Select an Option</option>
+                                    <option value="" @((dep.AddDropDepLifeIns) == "AddDep" ? "selected" : "") disabled>Add Dependent</option>
+                                    <option value="" @((dep.AddDropDepLifeIns) == "DropDep" ? "selected" : "") disabled>Drop Dependent</option>
+                                </select>
+                            </div>
+                            @*<div>
+                                    <input type="radio" class="addDropradio-inline" id="AddDep" name="AddDependent" value="" @((Model.lifeIns.AddDependent) == "True" ? "checked" : "") /><label for="AddDep">Add Dependent</label>
+                                    <input type="radio" class="addDropradio-inline" id="DropDep" name="DropDependent" value="" @((Model.lifeIns.DropDependent) == "True" ? "checked" : "") /><label for="DropDep">Drop Dependent</label>
+                                </div>*@
+                        </td>
+                        <td>
+                            <label style="display:table-cell">Date of Birth:</label>
+                            <input type="date" class="form-control" value="@Convert.ToDateTime(dep.DateOfBirth).ToString("yyyy-MM-dd")" disabled />
+                        </td>
+                        <td>
+                            <label style="display:table-cell">Phone Number:</label>
+                            <input type="text" class="form-control" placeholder="Phone Number" value="@Html.Raw(dep.PhoneNumber)" disabled />
+                        </td>
+                        <td>
+                            <label style="display:table-cell">Status:</label>
+                            <div class="checkboxes">
+                                <input type="checkbox" class="checkbox-inline" id="Student" name="Student" value="" @((dep.Student) == "True" ? "checked" : "") disabled /><label>Student</label>
+                                <input type="checkbox" class="checkbox-inline" id="Disabled" name="Disabled" value="" @((dep.Disabled) == "True" ? "checked" : "") disabled /><label>Disabled</label>
+                                <input type="checkbox" class="checkbox-inline" id="NonStandardDependent" name="NonStandardDependent" value="" @((dep.NonStandardDependent) == "True" ? "checked" : "") disabled /><label>Non Standard</label>
+                                <input type="checkbox" id="Gender" name="Gender" value="Male" @((dep.Gender) == "Male" ? "checked" : "") disabled /><label>Male</label>
+                                <input type="checkbox" id="Gender" name="Gender" value="Female" @((dep.Gender) == "Female" ? "checked" : "") disabled /><label>Female</label>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                }
+            </table>
+            <div class="form-horizontal">
+                <table class="table table-bordered">
+                    <caption><b>Coverage:</b></caption>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label>Drop Coverage:</label>
+                                        <div class="checkboxes">
+                                            <input type="checkbox" class="checkbox-inline" id="DropEmployee" name="DropEmployee" value="" @((Model.lifeIns.DropEmployee) == "True" ? "checked" : "") disabled /><label for="DropEmployee">Drop Employee</label>
+                                            <input type="checkbox" class="checkbox-inline" id="DropDependents" name="DropDependents" value="" @((Model.lifeIns.DropDependents) == "True" ? "checked" : "") disabled /><label for="DropDependents">Drop Dependents</label><br />
+                                            <label style="display:table-cell">Last Day of Coverage:</label>
+                                            <input type="date" class="form-control" id="LastDayOfCoverage" name="LastDayOfCoverage" value="@Convert.ToDateTime(Model.lifeIns.LastDayOfCoverage).ToString("yyyy-MM-dd")" disabled />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <input type="checkbox" class="dropcoveragecheckboxes-inline" id="TerminationEmploymentOfDropCoverage" name="TerminationEmploymentOfDropCoverage" value="" @((Model.lifeIns.TerminationEmploymentOfDropCoverage) == "True" ? "checked" : "") disabled /><label for="TerminationEmploymentOfDropCoverage">Termination Of Employment</label><br />
+                            <input type="checkbox" class="dropcoveragecheckboxes-inline" id="Retirement" name="Retirement" value="" @((Model.lifeIns.Retirement) == "True" ? "checked" : "") disabled /><label for=Retirement>Retirement</label><br />
+                            <input type="date" class="form-control" id="LastDayWorked" name="LastDayWorked" value="@Convert.ToDateTime(Model.lifeIns.LastDayWorked).ToString("yyyy-MM-dd")" disabled />
+                        </td>
+                        <td>
+                            <input type="checkbox" class="dropcoveragecheckboxes-inline" id="OtherEvent" name="OtherEvent" value="" @((Model.lifeIns.OtherEvent) == "True" ? "checked" : "") disabled /><label for="OtherEvent">Other Event:</label>
+                            <input type="text" class="form-control" id="OtherEventReason" placeholder="List Reason" name="OtherEventReason" value="@((Model.lifeIns.OtherEventReason))" disabled />
+                            <input type="date" class="form-control" id="OtherEventDate" name="OtherEventDate" value="@Convert.ToDateTime(Model.lifeIns.OtherEventDate).ToString("yyyy-MM-dd")" disabled />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="checkboxes">
+                            <label><b>Coverage Being Dropped:</b></label>
+                            <div>
+                                <input type="checkbox" class="checkbox-inline" id="BasicLife" name="DropBasicLife" value="" @((Model.lifeIns.DropBasicLife) == "True" ? "checked" : "") disabled /><label for="BasicLife">Basic Life</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="checkbox-inline" id="EmployeeDentalDrop" name="EmployeeDentalDrop" value="" @((Model.lifeIns.EmployeeDentalDrop) == "True" ? "checked" : "") disabled /><label for="EmployeeDentalDrop">Employee Dental</label>
+                                <input type="checkbox" class="checkbox-inline" id="SpouseDentalDrop" name="SpouseDentalDrop" value="" @((Model.lifeIns.SpouseDentalDrop) == "True" ? "checked" : "") disabled /><label for="SpouseDentalDrop">Spouse Dental</label>
+                                <input type="checkbox" class="checkbox-inline" id="DependentDentalDrop" name="DependentDentalDrop" value="" @((Model.lifeIns.DependentDentalDrop) == "True" ? "checked" : "") disabled /><label for="DependentDentalDrop">Child(ren) Dental</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="checkbox-inline" id="EmployeeVisionDrop" name="EmployeeVisionDrop" value="" @((Model.lifeIns.EmployeeVisionDrop) == "True" ? "checked" : "") disabled /><label for="EmployeeVisionDrop">Employee Vision</label>
+                                <input type="checkbox" class="checkbox-inline" id="SpouseVisionDrop" name="SpouseVisionDrop" value="" @((Model.lifeIns.SpouseVisionDrop) == "True" ? "checked" : "") disabled /><label for="SpouseVisionDrop">Spouse Vision</label>
+                                <input type="checkbox" class="checkbox-inline" id="DependentVisionDrop" name="DependentVisionDrop" value="" @((Model.lifeIns.DependentVisionDrop) == "True" ? "checked" : "") disabled /><label for="DependentVisionDrop">Child(ren) Vision</label>
+                            </div>
+
+                        </td>
+                        <td class="checkboxes">
+                            <label>Loss Of Other Coverage:</label><br />
+                            <input type="checkbox" class="lossofothercheckboxes-inline" id="TerminationEmploymentLossOfOtherCoverage" name="TerminationEmploymentLossOfOtherCoverage" value="" @((Model.lifeIns.TerminationEmploymentLossOfOtherCoverage) == "True" ? "checked" : "") disabled /><label for="TerminationEmploymentLossOfOtherCoverage">Termination Of Employment</label>
+                            <input type="date" class="form-control" id="TerminationEmploymentDateLossOfOtherCoverage" name="TerminationEmploymentDateLossOfOtherCoverage" value="@Convert.ToDateTime(Model.lifeIns.TerminationEmploymentDateLossOfOtherCoverage).ToString("yyyy-MM-dd")" disabled />
+                            <p></p>
+                            <input type="checkbox" class="lossofothercheckboxes-inline" id="Divorce" name="Divorce" value="" @((Model.lifeIns.Divorce) == "True" ? "checked" : "") disabled /><label for="Divorce">Divorce</label><br />
+                            <input type="date" class="form-control" id="DivorceDate" name="DivorceDate" value="@Convert.ToDateTime(Model.lifeIns.DivorceDate).ToString("yyyy-MM-dd")" disabled />
+                        </td>
+                        <td class="checkboxes">
+                            <input type="checkbox" class="lossofothercheckboxes-inline" id="DeathOfSpouse" name="DeathOfSpouse" value="" @((Model.lifeIns.DeathOfSpouse) == "True" ? "checked" : "") disabled /><label for="DeathOfSpouse">Death Of Spouse</label><br />
+                            <input type="date" class="form-control" id="DeathOfSpouseDate" name="DeathOfSpouseDate" value="@Convert.ToDateTime(Model.lifeIns.DeathOfSpouseDate).ToString("yyyy-MM-dd")" disabled />
+                            <p></p>
+                            <input type="checkbox" class="lossofothercheckboxes-inline" id="TerminationOrExpirationOfCoverage" name="TerminationOrExpirationOfCoverage" value="" @((Model.lifeIns.TerminationOrExpirationOfCoverage) == "True" ? "checked" : "") disabled />
+                            <label for="TerminationOrExpirationOfCoverage">Termination Of Coverage</label><br />
+                            <input type="date" class="form-control" id="TerminationOrExpirationOfCoverageDate" name="TerminationOrExpirationOfCoverageDate" value="@Convert.ToDateTime(Model.lifeIns.TerminationOrExpirationOfCoverageDate).ToString("yyyy-MM-dd")" disabled />
+                            <p></p>
+                            <label style="display:table-cell">Coverage Lost:</label>
+                            <input type="checkbox" class="checkbox-inline" id="DentalCoverageLost" name="DentalCoverageLost" value="" @((Model.lifeIns.DentalCoverageLost) == "True" ? "checked" : "") disabled /><label for="DentalCoverageLost">Dental</label>
+                            <input type="checkbox" class="checkbox-inline" id="VisionCoverageLost" name="VisionCoverageLost" value="" @((Model.lifeIns.VisionCoverageLost) == "True" ? "checked" : "") disabled /><label for="VisionCoverageLost">Vision</label>
+                        </td>
+                    </tr>
+                </table>
+                <table class="table-condensed">
+                    <tr>
+                        <td>
+                            <div>
+                                <label><b>I have been offered the above coverage(s) and wish to drop enrollment for the following reasons:</b></label>
+                                <br />
+                                <div class="checkboxes">
+                                    <input type="checkbox" class="othercheckboxes-inline" id="CoveredUnderOtherInsurance" name="CoveredUnderOtherInsurance" value="" @((Model.lifeIns.CoveredUnderOtherInsurance) == "True" ? "checked" : "") disabled /><label for="CoveredUnderOtherInsurance">Covered Under Another Insurance Plan</label><br />
+                                    <input type="checkbox" class="othercheckboxes-inline" id="Other" name="Other" value="" @((Model.lifeIns.Other) == "True" ? "checked" : "") disabled /><label for="Other">Other</label>
+                                    <input type="text" id="OtherReason" class="form-control" placeholder="List Reason" name="OtherReason" value="@Html.DisplayFor(Model => Model.lifeIns.OtherReason)" disabled />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-bordered">
+                    <caption>You must be enrolled to cover your dependents. Check only one box.</caption>
+                    <tr>
+                        <td>
+                            <label>Dental Coverage:</label>
+                            <div class="checkboxes">
+                                <select class="form-control" id="divDentalPlan" name="DentalPlan" disabled>
+                                    <option value="none" selected disabled hidden> Select an Option</option>
+                                    <option value="none"></option>
+                                    <option value="EO-Dental Plan" @((Model.lifeIns.DentalCoverage) == "EO-Dental Plan" ? "selected" : "")>Employee Only</option>
+                                    <option value="ES-Dental Plan" @((Model.lifeIns.DentalCoverage) == "ES-Dental Plan" ? "selected" : "")>Employee & Spouse</option>
+                                    <option value="EC-Dental Plan" @((Model.lifeIns.DentalCoverage) == "EC-Dental Plan" ? "selected" : "")>Employee & Child</option>
+                                    <option value="EF-Dental Plan" @((Model.lifeIns.DentalCoverage) == "EF-Dental Plan" ? "selected" : "")>Employee & Family</option>
+                                </select>
+                                <div id="divDentalPlanResult" hidden></div>
+                                @*<input type="checkbox" class="dentalcoveragecheckboxes-inline" id="EmployeeOnlyDental" name="DentalPlan" value="EmployeeOnly" @((Model.lifeIns.EmployeeOnlyDental) == "True" ? "checked" : "") /><label>Employee Only</label>
+                                    <input type="checkbox" class="dentalcoveragecheckboxes-inline" id="EEAndSpouseDental" name="DentalPlan" value="EmployeeAndSpouse" @((Model.lifeIns.EEAndSpouseDental) == "True" ? "checked" : "") /><label>Employee & Spouse</label><br />
+                                    <input type="checkbox" class="dentalcoveragecheckboxes-inline" id="EEAndDependentsDental" name="DentalPlan" value="EmployeeAndDependent" @((Model.lifeIns.EEAndDependentsDental) == "True" ? "checked" : "") /><label>Employee & Dependent</label>
+                                    <input type="checkbox" class="dentalcoveragecheckboxes-inline" id="EEAndFamilyDental" name="DentalPlan" value="EmployeeAndFamily" @((Model.lifeIns.EEAndFamilyDental) == "True" ? "checked" : "") /><label>Employee & Family</label>*@
+                            </div>
+                            <p></p>
+                            <div class="checkboxes">
+                                <label>If you do not want Dental Coverage, please mark all that apply:</label><br />
+                                <input type="checkbox" class="checkbox-inline" id="DoNotWantDentalCoverage" name="DoNotWantDentalCoverage" value="" @((Model.lifeIns.DoNotWantDentalCoverage) == "True" ? "checked" : "") disabled /><label for="DoNotWantDentalCoverage">I do not want this coverage.</label><br />
+                                <input type="checkbox" class="checkbox-inline" id="EmployeeCoveredUnderOtherDental" name="EmployeeCoveredUnderOtherDentalPlan" value="" @((Model.lifeIns.EmployeeCoveredUnderOtherDentalPlan) == "True" ? "checked" : "") disabled /><label for="EmployeeCoveredUnderOtherDental">I am covered under another Dental plan.</label><br />
+                                <input type="checkbox" class="checkbox-inline" id="SpouseCoveredUnderOtherDental" name="SpouseCoveredUnderOtherDentalPlan" value="" @((Model.lifeIns.SpouseCoveredUnderOtherDentalPlan) == "True" ? "checked" : "") disabled /><label for="SpouseCoveredUnderOtherDental">My spouse is covered under another Dental plan</label><br />
+                                <input type="checkbox" class="checkbox-inline" id="DependentsCoveredUnderOtherDental" name="DependentsCoveredUnderOtherDentalPlan" value="" @((Model.lifeIns.DependentsCoveredUnderOtherDentalPlan) == "True" ? "checked" : "") disabled /><label for="DependentsCoveredUnderOtherDental">My dependents are covered under another Dental plan</label>
+                            </div>
+                        </td>
+                        <td>
+                            <label>Vision Coverage:</label>
+                            <div class="checkboxes">
+                                <select class="form-control" id="divVisionPlan" name="VisionPlan" disabled>
+                                    <option value="none" selected disabled hidden> Select an Option</option>
+                                    <option value="none"></option>
+                                    <option value="EO-Vision Plan" @((Model.lifeIns.VisionCoverage) == "EO-Vision Plan" ? "selected" : "")>Employee Only</option>
+                                    <option value="ES-Vision Plan" @((Model.lifeIns.VisionCoverage) == "ES-Vision Plan" ? "selected" : "")>Employee & Spouse</option>
+                                    <option value="EC-Vision Plan" @((Model.lifeIns.VisionCoverage) == "EC-Vision Plan" ? "selected" : "")>Employee & Child</option>
+                                    <option value="EF-Vision Plan" @((Model.lifeIns.VisionCoverage) == "EF-Vision Plan" ? "selected" : "")>Employee & Family</option>
+                                </select>
+                                <div id="divVisionPlanResult" hidden></div>
+                            </div>
+                            <p></p>
+                            <div class="checkboxes">
+                                <label>If you do not want Vision Coverage, please mark all that apply:</label><br />
+                                <input type="checkbox" class="checkbox-inline" id="DoNotWantVisionCoverage" name="DoNotWantVisionCoverage" value="" @((Model.lifeIns.DoNotWantVisionCoverage) == "True" ? "checked" : "") disabled /><label for="DoNotWantVisionCoverage">I do not want this coverage.</label><br />
+                                <input type="checkbox" class="checkbox-inline" id="EmployeeCoveredUnderOtherVision" name="EmployeeCoveredUnderOtherVisionPlan" value="" @((Model.lifeIns.EmployeeCoveredUnderOtherVisionPlan) == "True" ? "checked" : "") disabled /><label for="EmployeeCoveredUnderOtherVision">I am covered under another Vision plan.</label><br />
+                                <input type="checkbox" class="checkbox-inline" id="SpouseCoveredUnderOtherVision" name="SpouseCoveredUnderOtherVisionPlan" value="" @((Model.lifeIns.SpouseCoveredUnderOtherVisionPlan) == "True" ? "checked" : "") disabled /><label for="SpouseCoveredUnderOtherVision">My spouse is covered under another Vision plan</label><br />
+                                <input type="checkbox" class="checkbox-inline" id="DependentsCoveredUnderOtherVision" name="DependentsCoveredUnderOtherVisionPlan" value="" @((Model.lifeIns.DependentsCoveredUnderOtherVisionPlan) == "True" ? "checked" : "") disabled /><label for="DependentsCoveredUnderOtherVision">My dependents are covered under another Vision plan</label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table class="table-condensed">
+                    <caption>Basic Life Coverage with AD&D (Accidental Death and Dismemberment):</caption>
+                    <tr>
+                        <td>
+                            <label>Policy Amount:</label>
+                            <div class="checkboxes">
+                                <input type="checkbox" class="policyamountcheckboxes-inline" id="OwnerBasicLifeADandDPolicyAmount" name="OwnerBasicLifeWithADandDPolicyAmount" value="" @((Model.lifeIns.OwnerBasicLifeWithADandDPolicyAmount) == "True" ? "checked" : "") disabled /><label for="OwnerBasicLifeADandDPolicyAmount">Owner</label><br />
+                                <input type="checkbox" class="policyamountcheckboxes-inline" id="ManagerBasicLifeADandDPolicyAmount" name="ManagerBasicLifeWithADandDPolicyAmount" value="" @((Model.lifeIns.ManagerBasicLifeWithADandDPolicyAmount) == "True" ? "checked" : "") disabled /><label for="ManagerBasicLifeADandDPolicyAmount">Manager</label><br />
+                                <input type="checkbox" class="policyamountcheckboxes-inline" id="EmployeeBasicLifeADandDPolicyAmount" name="EmployeeBasicLifeWithADandDPolicyAmount" value="" @((Model.lifeIns.EmployeeBasicLifeWithADandDPolicyAmount) == "True" ? "checked" : "") disabled /><label for="EmployeeBasicLifeADandDPolicyAmount">Employee ($15,000)</label><br />
+                                <input type="checkbox" class="policyamountcheckboxes-inline" id="DoNotWantBasicLifeCoverageADandD" name="DoNotWantBasicLifeCoverageWithADandD" value="" @((Model.lifeIns.DoNotWantBasicLifeCoverageWithADandD) == "True" ? "checked" : "") disabled /><label for="DoNotWantBasicLifeCoverageADandD">I do not want this coverage</label>
+                            </div>
+                            <p></p>
+                            <label>*The Guarantee Amount is $15,000.</label>
+                        </td>
+                </table>
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            <div>
+                                <label>
+                                    If this Basic Life policy will replace your existing life insurance policy under your current employer, provide the amount of the previous policy.
+                                </label><br />
+                                <input type="number" class="form-control" id="PreviousPolicyAmount" name="AmountOfPreviousPolicy" value="@Html.DisplayFor(Model => Model.lifeIns.AmountOfPreviousPolicy)" disabled />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="col-md-3">
+                    <button type="button" onclick="AddBeneficiary()" class="btn">Add Beneficiary</button>
+                </div>
+                <table class="table table-condensed">
+                    @foreach (var benefitInfo in Model.benefiList)
+                    {
+                        <tr>
+                            <td>
+                                <input type="hidden" id="Beneficiary_id" class="form-control" name="Beneficiary_id" value="@benefitInfo.Beneficiary_id" />
+                                <input type="checkbox" class="checkbox-inline" id="PrimaryBeneficiary" name="PrimaryBeneficiary" value="" @((benefitInfo.PrimaryBeneficiary) == "True" ? "checked" : "") disabled /><label for="Primary">Primary</label>
+                                <input type="checkbox" class="checkbox-inline" id="ContingentBeneficiary" name="ContingentBeneficiary" value="" @((benefitInfo.ContingentBeneficiary) == "True" ? "checked" : "") disabled /><label for="Contingent">Contingent</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" id="FirstName" class="form-control" name="FirstName" placeholder="First Name" value="@benefitInfo.FirstName" disabled />
+                            </td>
+                            <td>
+                                <input type="text" id="LastName" class="form-control" name="LastName" placeholder="Last Name" value="@benefitInfo.LastName" disabled />
+                            </td>
+                            <td>
+                                <input type="text" id="SSN" class="form-control" name="SSN" placeholder="SSN" value="@benefitInfo.SSN" disabled />
+                            </td>
+                            <td>
+                                <input type="text" id="RelationshipToEmployee" class="form-control" name="RelationshipToEmployee" placeholder="Relationship to Employee" value="@benefitInfo.RelationshipToEmployee" disabled />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" id="MailingAddress" class="form-control" name="Address" placeholder="Mailing Address" value="@benefitInfo.Address" disabled />
+                            </td>
+                            <td>
+                                <input type="text" id="City" class="form-control" name="City" placeholder="City" value="@benefitInfo.CIty" disabled />
+                            </td>
+                            <td>
+                                <input type="text" id="State" class="form-control" name="State" placeholder="State" value="@benefitInfo.State" disabled />
+                            </td>
+                            <td>
+                                <input type="text" id="ZipCode" class="form-control" name="ZipCode" placeholder="Zip Code" value="@benefitInfo.ZipCode" disabled />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label style="display:table-cell">Date of Birth:</label>
+                                <input type="date" id="DOB" class="form-control" name="DOB" value="@Convert.ToDateTime(benefitInfo.DOB).ToString("yyyy-MM-dd")" disabled />
+                            </td>
+                            <td>
+                                <label style="display:table-cell">Phone Number:</label>
+                                <input type="text" id="PhoneNumber" class="form-control" name="PhoneNumber" placeholder="Phone Number" value="@benefitInfo.PhoneNumber" disabled />
+                            </td>
+                            <td>
+                                <label style="display:table-cell">Percentage Of Benefits:</label>
+                                <input type="number" id="PercentageOfBenefits" class="form-control" name="PercentageOfBenefits" placeholder="Percentage Of Benefits" value="@benefitInfo.PercentageOfBenefits" disabled />
+                            </td>
+                            <td>
+                                <div style="margin-top: 18px;">
+
+                                    @Html.ActionLink("Edit", "EditBeneficiary", "Life_Insurance", new { Employee_id = @ViewBag.Employee_id, benefitInfo.Beneficiary_id }, null)
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            <div class="text-justify">
+                                <p>
+                                    The state in which you reside may have a specific state fraud warning. Please refer to the attached <b>Fraud Warning Statements</b> page.
+                                </p>
+                                <p>
+                                    The laws of New York require the following statement appear: Any person who knowingly and with intent to defraud any insurance company
+                                    or other person files an application for insurance or statement of claim containing any materially false information, or conceals for
+                                    the purpose of misleading, information concerning any fact material thereto, commits a fraudulent insurance act, which is a crime, and
+                                    sall also be subject to a civil penalty not to exceed five thousand dollars and the stated value of th eclaim for each such violation.<br />
+                                    (Does not apply to Life Insurance)
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <div>
+                                <label style="padding-left: 10px;">
+                                    Employee Signature:
+                                </label>
+                                <input type="text" id="EmployeeSignature" name="EmployeeSignature" value="@Model.lifeIns.EmployeeSignature" />
+                                <label style="padding-left: 10px;">
+                                    Date:
+                                </label>
+                                <input type="date" id="EmployeeSignatureDate" name="EmployeeSignatureDate" value="@Convert.ToDateTime(Model.lifeIns.EmployeeSignatureDate).ToString("yyyy-MM-dd")" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="form-group">
+                    <div class="col-md-offset-11" hidden>
+                        <button type="submit" id="EditLifeInsUpdate" class="btn" disabled>Save</button>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            <div class="text-justify">
+                                <h4><b>Fraud Warning Statments</b></h4>
+                                <p>
+                                    The laws of several states require the following statements to appear on the enrollment form:
+                                </p>
+                                <p>
+                                    <b>Alabama:</b> Any person who knowingly presents a false or fraudulent claim for payment of a loss or benefit or who knowingly presents false
+                                    information in an application for insurance is guilty of a crime and maybe subject to restitution fines or confinement in prison, or any combination thereof.
+                                </p>
+                                <p>
+                                    <b>Arizona:</b> :For your protection Arizona law requires the following statementto appear on this form. Any person who knowingly presents a false
+                                    or fraudulent claim for payment of a loss is subject to criminal and civil penalties.
+                                </p>
+                                <p>
+                                    <b>California:</b> For your protection California law requires the following to appear on this form. The falsity of any statement in the application
+                                    shall not bar the right to recovery under the policy unless such false statement was made with actual intent to deceive or unless it materially
+                                    affected either the acceptance of the risk or the hazard assumed by the insurer.
+
+                                </p>
+                                <p>
+                                    <b>Colorado:</b> It is unlawful to knowingly provide false, incomplete, or misleading facts or information to an insurance company for the purpose
+                                    of defrauding  or attempting to defraud the company. Penalties may include imprisonment, fines, denial of insurance, and civil damages. Any insurance
+                                    company or agent of an insurance company who knowingly provides false, incomplete, or misleading factsor information to apolicy holder or claimant
+                                    for the purpose of defrauding or attempting to defraud the policy holder or claimant with regard to a settlement or award payable from insurance
+                                    proceeds shall be reported to the Colorado Division of Insurance within the Department of Regulatory Agencies.
+
+                                </p>
+                                <p>
+                                    <b>Connecticut, Iowa, Nebraska, and Oregon:</b> Any person who knowingly, and with intent to defraud any insurance company or other person, files an
+                                    application of insurance or statement of claim containing any materially false information or conceals, for the purpose of misleading, information
+                                    concerning any fact material thereto, may be guilty of a fraudulent insurance act, which may be a crime, and may also be subject to civil penalties.
+
+                                </p>
+                                <p>
+                                    <b>Delaware, Indiana, and Oklahoma:</b> Any person who knowingly, and with intent to injure, defraud or deceive any insurer, makes any claim for the
+                                    proceeds of an insurance policy containing any false, incomplete or misleading information is guilty of a felony.
+
+                                </p>
+                                <p>
+                                    <b>District of Columbia:</b> It is a crime to provide false or misleading information to an insurer for the purpose of defrauding the insurer or any
+                                    other person. Penalties include imprisonment and/or fines. In addition, an insurer may deny insurance benefits, if false information materially related
+                                    to a claim was provided by the applicant.
+
+                                </p>
+                                <p>
+                                    <b>Florida:</b> Any person who knowingly and with intent to injure, defraud, or deceive any insurer files a statement of claim or an application containing
+                                    any false, incomplete, or misleading information is guilty of a felony of the third degree.
+
+                                </p>
+                                <p>
+                                    <b>Kansas:</b> Any person who knowingly, and with intent to defraud any insurance company or other person, files an application of insurance or statement
+                                    of claim containing any materially false information or conceals, for the purpose of misleading, information concerning any fact material thereto, may be
+                                    guilty of insurance fraud as determined by a court of law.
+
+                                </p>
+                                <p>
+                                    <b>Kentucky:</b> Any person who knowingly and with intent to defraud any insurance company or other person files a statement of claim containing any materially
+                                    false information or conceals, for the purpose of misleading, information concerning any fact material there to commits a fraudulent insurance act, which is a crime.
+                                </p>
+                                <p>
+                                    <b>Louisiana and Texas:</b> Any person who knowingly presents a false or fraudulent claim for payment of a loss or benefit is guilty of a crime and may be subject
+                                    to fines and confinement in state prison.
+                                </p>
+                                <p>
+                                    <b>Maine, Tennessee, and Washington:</b> It is a crime to knowingly provide false, incomplete or misleading information to an insurance company for the purpose
+                                    of defrauding the company. Penalties may include imprisonment, fines or a denial of insurance benefits.
+                                </p>
+                                <p>
+                                    <b>Maryland:</b> Any person who knowingly or willfully presents a false or fraudulent claim for payment of a loss or benefit or knowingly or willfully presents
+                                    falseinformation in an application for insurance is guilty of a crime and may be subject to fines and confinement in prison.
+                                </p>
+                                <p>
+                                    <b>Rhode Island:</b> Any person who knowingly and will fully presents a false or fraudulent claim for payment of a loss or benefit or knowingly and willfully presents
+                                    false information in an application for insurance is guilty of a crime and may be subject to fines and confinement in prison.
+                                </p>
+                                <p>
+                                    <b>Minnesota:</b> Any person who files a claim with intent to defraud or helps commit a fraud against an insurer is guilty of a crime.
+
+                                </p>
+                                <p>
+                                    <b>New Hampshire:</b> Any person who, with a purpose to injure, defraud or deceive any insurance company, files a statement of claim containing any false, incomplete
+                                    or misleading information is subject to prosecution and punishment for insurance fraud, as provided in N.H.Rev.Stat.Ann.§ 638:20
+
+                                </p>
+                                <p>
+                                    <b>New Jersey:</b> Any person who knowingly files a statement of claim containing any false or misleading information is subject to criminal and civil penalties.
+
+                                </p>
+                                <p>
+                                    <b>New Mexico:</b>  Any person who knowingly presents a false or fraudulent claim for payment or a loss or benefit or knowingly presents false information in an
+                                    application for insurance is guilty of a crime and may be subject to civil fines and criminal penalties or denialofinsurancebenefits.
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="col-md">
+                    @Html.ActionLink("Back to Insurance", "LifeInsuranceEnrollment", "Life_Insurance", new { Employee_id = ViewBag.Employee_id }, null)
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<style>
+    .collapsible {
+        background-color: #2e4593;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: center;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #2e4593;
+        }
+
+    .content {
+        padding: 0 10px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+
+    .button {
+        text-align: right;
+    }
+
+    .btn:hover {
+        background-color: #2e4593;
+        color: white;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 8px 16px;
+    }
+
+        a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    /*a {
+        text-decoration: none;
+        display: inline-block;
+        padding: 30px 10px 10px 10px;
+    }*/
+
+    .label {
+        display: table-cell;
+    }
+
+    .checkboxes input {
+        margin: 0em 0em 0em .5em;
+    }
+</style>
+
+<script>
+    var col = document.querySelectorAll(".collapsible");
+    var i;
+    var Employee_id;
+
+    for (i = 0; i < col.length; i++) {
+        col[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+
+        });
+    }
+
+    $(document).ready(function () {
+        $('.addDropradio-inline').click(function () {
+            $('.addDropradio-inline').not(this).prop('checked', false);
+        });
+    });
+
+    $(document).ready(function () {
+        $('.dropcoveragecheckboxes-inline').click(function () {
+            $('.dropcoveragecheckboxes-inline').not(this).prop('checked', false);
+        });
+    });
+
+    $(document).ready(function () {
+        $('.lossofothercheckboxes-inline').click(function () {
+            $('.lossofothercheckboxes-inline').not(this).prop('checked', false);
+        });
+    });
+
+    $(document).ready(function () {
+        $('.othercheckboxes-inline').click(function () {
+            $('.othercheckboxes-inline').not(this).prop('checked', false);
+        });
+    });
+
+    $(document).ready(function () {
+        $('.dentalcoveragecheckboxes-inline').click(function () {
+            $('.dentalcoveragecheckboxes-inline').not(this).prop('checked', false);
+        });
+    });
+
+    $(document).ready(function () {
+        $('.visioncoveragecheckboxes-inline').click(function () {
+            $('.visioncoveragecheckboxes-inline').not(this).prop('checked', false);
+        });
+    });
+
+    $(document).ready(function () {
+        $('.policyamountcheckboxes-inline').click(function () {
+            $('.policyamountcheckboxes-inline').not(this).prop('checked', false);
+        });
+    });
+
+
+    document.querySelector("#EditLifeInsUpdate").addEventListener("click", function () {
+        submitEditLifeIns = document.getElementById("EditLifeInsUpdate");
+
+        var message
+        var alert = confirm("Life Insurance has been saved. Click the OK button to proceed. Thank you!");
+
+        if (submitEditLifeIns.onclick) {
+            if (alert == true) {
+
+                message = "Please proceed to Group Health page to review information. Thank you!!";
+                var alert = confirm(message)
+                if (alert == true) {
+
+                    window.location.href = "/Group_Health/GrpHealthEnrollment/?Employee_id=" + @ViewBag.Employee_id;
+
+                }
+                else {
+                    window.location.href = "/Employee/EmpOverview/?Employee_id=" + @ViewBag.Employee_id;
+                }
+            }
+        }
+        else {
+            if (alert == false) {
+
+                window.location.href = "/Employee/EmpOverview/?Employee_id=" + @ViewBag.Employee_id;
+            }
+        }
+    })
+
+    function AddBeneficiary() {
+         window.location.href = "/Life_Insurance/AddBeneficiary/?Employee_id=@ViewBag.Employee_id";
+
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("#EditLifeInsUpdate").addEventListener("click", function () {
+            Employee_id = document.getElementById("Employee_id").value;
+            //Beneficiary_id = document.getElementById("Beneficiary_id").value;
+            LifeInsurance_id = document.getElementById("LifeInsurance_id").value;
+            GroupPlanNumber = document.getElementById("GroupPlanNumber").value
+            BenefitsEffectiveDate = document.getElementById("BenefitsEffectiveDate").value;
+            InitialEnrollment = document.getElementById("InitialEnrollment").checked;
+            ReEnrollment = document.getElementById("ReEnrollment").checked;
+            AddEmployeeAndDependents = document.getElementById("AddEmployeeAndDependents").checked;
+            DropRefuseCoverage = document.getElementById("DropRefuseCoverage").checked;
+            InformationChange = document.getElementById("InformationChange").checked;
+            IncreaseAmount = document.getElementById("IncreaseAmount").checked;
+            FamilyStatusChange = document.getElementById("FamilyStatusChange").checked;
+            SubTotalCode = document.getElementById("SubTotalCode").value;
+            Married = document.getElementById("Married").checked;
+            DateOfMarriage = document.getElementById("DateOfMarriage").value;
+            OtherDependents = document.getElementById("OtherDependents").checked;
+            DateOfAdoption = document.getElementById("DateOfAdoption").value;
+            //AddDropDepLifeIns = document.getElementById("AddDropDepLifeIns").value;
+            //AddDep = document.getElementById("AddDep").checked;
+            //DropDep = document.getElementById("DropDep").checked;
+            DropEmployee = document.getElementById("DropEmployee").checked;
+            DropDependents = document.getElementById("DropDependents").checked;
+            LastDayOfCoverage = document.getElementById("LastDayOfCoverage").value;
+            TerminationEmploymentOfDropCoverage = document.getElementById("TerminationEmploymentOfDropCoverage").checked;
+            Retirement = document.getElementById("Retirement").checked;
+            LastDayWorked = document.getElementById("LastDayWorked").value;
+            OtherEvent = document.getElementById("OtherEvent").checked;
+            OtherEventReason = document.getElementById("OtherEventReason").value;
+            OtherEventDate = document.getElementById("OtherEventDate").value;
+            BasicLife = document.getElementById("BasicLife").checked;
+            EmployeeDentalDrop = document.getElementById("EmployeeDentalDrop").checked;
+            SpouseDentalDrop = document.getElementById("SpouseDentalDrop").checked;
+            DependentDentalDrop = document.getElementById("DependentDentalDrop").checked;
+            EmployeeVisionDrop = document.getElementById("EmployeeVisionDrop").checked;
+            SpouseVisionDrop = document.getElementById("SpouseVisionDrop").checked;
+            DependentVisionDrop = document.getElementById("DependentVisionDrop").checked;
+            TerminationEmploymentLossOfOtherCoverage = document.getElementById("TerminationEmploymentLossOfOtherCoverage").checked;
+            TerminationEmploymentDateLossOfOtherCoverage = document.getElementById("TerminationEmploymentDateLossOfOtherCoverage").value;
+            Divorce = document.getElementById("Divorce").checked;
+            DivorceDate = document.getElementById("DivorceDate").value;
+            DeathOfSpouse = document.getElementById("DeathOfSpouse").checked;
+            DeathOfSpouseDate = document.getElementById("DeathOfSpouseDate").value;
+            TerminationOrExpirationOfCoverage = document.getElementById("TerminationOrExpirationOfCoverage").checked;
+            TerminationOrExpirationOfCoverageDate = document.getElementById("TerminationOrExpirationOfCoverageDate").value;
+            DentalCoverageLost = document.getElementById("DentalCoverageLost").checked;
+            VisionCoverageLost = document.getElementById("VisionCoverageLost").checked;
+            CoveredUnderOtherInsurance = document.getElementById("CoveredUnderOtherInsurance").checked;
+            Other = document.getElementById("Other").checked;
+            OtherReason = document.getElementById("OtherReason").value;
+
+            //refer to row 400
+            //DentalPlan = document.querySelector('input[name="DentalPlan"]').value;
+            //document.getElementById("DentalPlanResult").innerHTML = DentalPlan;
+            DentalPlan = document.getElementById("divDentalPlan").value;
+            document.getElementById("divDentalPlanResult").innerHTML = DentalPlan;
+            VisionPlan = document.getElementById("divVisionPlan").value;
+            document.getElementById("divVisionPlanResult").innerHTML = VisionPlan;
+
+            DoNotWantDentalCoverage = document.getElementById("DoNotWantDentalCoverage").checked;
+            EmployeeCoveredUnderOtherDental = document.getElementById("EmployeeCoveredUnderOtherDental").checked;
+            SpouseCoveredUnderOtherDental = document.getElementById("SpouseCoveredUnderOtherDental").checked;
+            DependentsCoveredUnderOtherDental = document.getElementById("DependentsCoveredUnderOtherDental").checked;
+
+            DoNotWantVisionCoverage = document.getElementById("DoNotWantVisionCoverage").checked;
+            EmployeeCoveredUnderOtherVision = document.getElementById("EmployeeCoveredUnderOtherVision").checked;
+            SpouseCoveredUnderOtherVision = document.getElementById("SpouseCoveredUnderOtherVision").checked;
+            DependentsCoveredUnderOtherVision = document.getElementById("DependentsCoveredUnderOtherVision").checked;
+            OwnerBasicLifeADandDPolicyAmount = document.getElementById("OwnerBasicLifeADandDPolicyAmount").checked;
+            ManagerBasicLifeADandDPolicyAmount = document.getElementById("ManagerBasicLifeADandDPolicyAmount").checked;
+            EmployeeBasicLifeADandDPolicyAmount = document.getElementById("EmployeeBasicLifeADandDPolicyAmount").checked;
+            DoNotWantBasicLifeCoverageADandD = document.getElementById("DoNotWantBasicLifeCoverageADandD").checked;
+            PreviousPolicyAmount = document.getElementById("PreviousPolicyAmount").value;
+            EmployeeSignature = document.getElementById("EmployeeSignature").value;
+            EmployeeSignatureDate = document.getElementById("EmployeeSignatureDate").value;
+
+            var data = {
+                "Employee_id": Employee_id,
+                //"Beneficiary_id": Beneficiary_id,
+                "LifeInsurance_id": LifeInsurance_id,
+                "GroupPlanNumber": GroupPlanNumber,
+                "BenefitsEffectiveDate": BenefitsEffectiveDate,
+                "InitialEnrollment": InitialEnrollment,
+                "ReEnrollment": ReEnrollment,
+                "AddEmployeeAndDependents": AddEmployeeAndDependents,
+                "DropRefuseCoverage": DropRefuseCoverage,
+                "InformationChange": InformationChange,
+                "IncreaseAmount": IncreaseAmount,
+                "FamilyStatusChange": FamilyStatusChange,
+                "SubTotalCode": SubTotalCode,
+                "Married": Married,
+                "DateOfMarriage": DateOfMarriage,
+                "OtherDependents": OtherDependents,
+                "DateOfAdoption": DateOfAdoption,
+                //"AddDropDepLifeIns": AddDropDepLifeIns,
+                //"AddDep": AddDep,
+                //"DropDep": DropDep,
+                "DropEmployee": DropEmployee,
+                "DropDependents": DropDependents,
+                "LastDayOfCoverage": LastDayOfCoverage,
+                "TerminationEmploymentOfDropCoverage": TerminationEmploymentOfDropCoverage,
+                "Retirement": Retirement,
+                "LastDayWorked": LastDayWorked,
+                "OtherEvent": OtherEvent,
+                "OtherEventReason": OtherEventReason,
+                "OtherEventDate": OtherEventDate,
+                "DropBasicLife": BasicLife,
+                "EmployeeDentalDrop": EmployeeDentalDrop,
+                "SpouseDentalDrop": SpouseDentalDrop,
+                "DependentDentalDrop": DependentDentalDrop,
+                "EmployeeVisionDrop": EmployeeVisionDrop,
+                "SpouseVisionDrop": SpouseVisionDrop,
+                "DependentVisionDrop": DependentVisionDrop,
+                "TerminationEmploymentLossOfOtherCoverage": TerminationEmploymentLossOfOtherCoverage,
+                "TerminationEmploymentDateLossOfOtherCoverage": TerminationEmploymentDateLossOfOtherCoverage,
+                "Divorce": Divorce,
+                "DivorceDate": DivorceDate,
+                "DeathOfSpouse": DeathOfSpouse,
+                "DeathOfSpouseDate": DeathOfSpouseDate,
+                "TerminationOrExpirationOfCoverage": TerminationOrExpirationOfCoverage,
+                "TerminationOrExpirationOfCoverageDate": TerminationOrExpirationOfCoverageDate,
+                "DentalCoverageLost": DentalCoverageLost,
+                "VisionCoverageLost": VisionCoverageLost,
+                "CoveredUnderOtherInsurance": CoveredUnderOtherInsurance,
+                "Other": Other,
+                "OtherReason": OtherReason,
+
+                "DentalPlan": DentalPlan,
+                "VisionPlan": VisionPlan,
+
+                "DoNotWantDentalCoverage": DoNotWantDentalCoverage,
+                "EmployeeCoveredUnderOtherDental": EmployeeCoveredUnderOtherDental,
+                "SpouseCoveredUnderOtherDental": SpouseCoveredUnderOtherDental,
+                "DependentsCoveredUnderOtherDental": DependentsCoveredUnderOtherDental,
+
+                "DoNotWantVisionCoverage": DoNotWantVisionCoverage,
+                "EmployeeCoveredUnderOtherVision": EmployeeCoveredUnderOtherVision,
+                "SpouseCoveredUnderOtherVision": SpouseCoveredUnderOtherVision,
+                "DependentsCoveredUnderOtherVision": DependentsCoveredUnderOtherVision,
+                "OwnerBasicLifeADandDPolicyAmount": OwnerBasicLifeADandDPolicyAmount,
+                "ManagerBasicLifeADandDPolicyAmount": ManagerBasicLifeADandDPolicyAmount,
+                "EmployeeBasicLifeADandDPolicyAmount": EmployeeBasicLifeADandDPolicyAmount,
+                "DoNotWantBasicLifeCoverageADandD": DoNotWantBasicLifeCoverageADandD,
+                "PreviousPolicyAmount": PreviousPolicyAmount,
+                "EmployeeSignature": EmployeeSignature,
+                "EmployeeSignatureDate": EmployeeSignatureDate,
+            }
+
+                 //var ret = postData('EditLifeInsUpdate', data)
+            //    .then(data => {
+            //        console.log(data);
+            //        FirstStep(data); })
+            //    .catch(error => console.error(error))
+
+            fetch('EditLifeInsUpdate', {
+                body: JSON.stringify(data), //must match 'Content-Type' header
+                cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', //include, same-origin, *omit
+                headers: {
+                    'Accept': 'application/json',
+                    'user-agent': 'Mozilla/4.0 MDN Example',
+                    'content-type': 'application/json'
+                },
+                method: 'Post', //*GET, POST, PUT, DELETE, etc...
+                mode: 'same-origin', //no-cors, cors, *same-origin
+                redirect: 'follow', //manual, *follow, error
+                referrer: 'no-referrer', //*client, no-referrer
+            }).then(res => res.json())
+                .then(response => FirstStep(response))
+                .catch(error => console.error('Error:', error));
+
+        })
+    })
+
+    function FirstStep(emp) {
+        Employee_id = emp.data;
+    }
+
+    function postData(url, data) {
+        //Default options are marked with *
+        console.log(data);
+        console.log(JSON.stringify(data));
+        return fetch(url, {
+            body: JSON.stringify(data), //must match 'Content-Type' header
+            cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', //include, same-origin, *omit
+            headers: {
+                'Accept': 'application/json',
+                'user-agent': 'Mozilla/4.0 MDN Example',
+                'content-type': 'application/json'
+            },
+            method: 'Post', //*GET, POST, PUT, DELETE, etc...
+            mode: 'same-origin', //no-cors, cors, *same-origin
+            redirect: 'follow', //manual, *follow, error
+            referrer: 'no-referrer', //*client, no-referrer
+        }).then(res => res.json())
+            .then(response => console.log('Success:', JSON.stringify(response)))
+            .catch(error => console.error('Error:', error));
+        //.then(Response => {
+        //    console.log(Response);
+        //    Response.json();
+        //}) //parses response to JSON
+    }
+
+
+</script>
+
+
+
+

@@ -1,0 +1,502 @@
+﻿@model WatsonTruckV2.Models.EmployeeAndInsuranceVM
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Admin-Edit Employee</title>
+</head>
+<body>
+    <div class="form-horizontal">
+        <hr />
+        <input type="hidden" id="Employee_id" class="form-control" name="Employee_id" value="@ViewBag.Employee_id" />
+        <input type="hidden" id="EmployeeRole" class="form-control" name="EmployeeRole" value="@ViewBag.EmployeeRole" />
+        <div class="collapsible" id="FirstStep">Admin-Edit Employee</div>
+        <div id="divEmpEnrollment" class="content">
+            <p></p>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Employee Role:</label>
+                <div class="col-md-10">
+                    <input type="text" id="EmpRole" class="form-control" name="EmployeeRole" value="@Html.Raw(Model.employee.EmployeeRole)" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="CurrentEmployer" class="col-md-2 control-label">Current Employer:</label>
+                <div class="col-md-10">
+                    <input type="text" id="CurrentEmployer" class="form-control" name="CurrentEmployer" value="@Html.Raw(Model.employee.CurrentEmployer)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Hire Date:</label>
+                <div class="col-md-10">
+                    <input type="date" id="HireDate" class="form-control" name="HireDate" value="@Convert.ToDateTime(Model.employee.HireDate).ToString("yyyy-MM-dd")" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="JobTitle" class="col-md-2 control-label">Job Title:</label>
+                <div class="col-md-10">
+                    <input type="text" id="JobTitle" class="form-control" name="JobTitle" value="@Html.Raw(Model.employee.JobTitle)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="EmpNumber" class="col-md-2 control-label">Employee Number:</label>
+                <div class="col-md-10">
+                    <input type="text" id="EmpNumber" class="form-control" name="SSN" value="@Html.Raw(Model.employee.SSN)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Marital Status:</label>
+                <div class="col-md-10">
+                    <select id="MaritalStatus" class="form-control">
+                        <option value="">Choose Option:</option>
+                        <option value="MarriedwDep" @((Model.employee.MaritalStatus) == "MarriedwDep" ? "selected" : "")>Married with Dependents</option>
+                        <option value="Married" @((Model.employee.MaritalStatus) == "Married" ? "selected" : "")>Married</option>
+                        <option value="SinglewDep" @((Model.employee.MaritalStatus) == "SinglewDep" ? "selected" : "")>Single with Dependents</option>
+                        <option value="Single" @((Model.employee.MaritalStatus) == "Single" ? "selected" : "")>Single</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="FirstName" class="col-md-2 control-label">First Name:</label>
+                <div class="col-md-10">
+                    <input type="text" id="FirstName" class="form-control" name="FirstName" value="@Html.Raw(Model.employee.FirstName)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="LastName" class="col-md-2 control-label">Last Name:</label>
+                <div class="col-md-10">
+                    <input type="text" id="LastName" class="form-control" name="LastName" value="@Html.Raw(Model.employee.LastName)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Date of Birth:</label>
+                <div class="col-md-10">
+                    <input type="date" id="DateOfBirth" class="form-control" name="DateOfBirth" value="@Convert.ToDateTime(Model.employee.DateOfBirth).ToString("yyyy-MM-dd")" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Gender:</label>
+                <div class="col-md-10">
+                    <select id="Gender" class="form-control">
+                        <option value="Male" @((Model.employee.Gender) == "Male" ? "selected" : "")>Male</option>
+                        <option value="Female" @((Model.employee.Gender) == "Female" ? "selected" : "")>Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkboxes">
+                    <label style="margin-left: 7em;">Work Status:</label>
+                    <input type="checkbox" class="checkbox-inline" id="Active" name="Active" value="Active" @((Model.employee.Active) == "True" ? "checked" : "") /><label for="Active">Active</label>
+                    <input type="checkbox" class="checkbox-inline" id="Retired" name="Retired" value="Retired" @((Model.employee.Retired) == "True" ? "checked" : "") /><label label for="Retired">Retired</label>
+                    <input type="checkbox" class="checkbox-inline" id="Cobra" name="CobraStateContinuation" value="Cobra/State Continuation" @((Model.employee.CobraStateContinuation) == "True" ? "checked" : "") /><label label for="Cobra">Cobra/State</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-11">
+                    @*<button id="EditEmployeeEnrollment" class="btn">Save</button>*@
+                </div>
+            </div>
+        </div>
+        @* Contact Info *@
+        <div class="form-horizontal">
+            <p></p>
+            <div class="collapsible" id="SecondStep">Edit Contact</div>
+            <div id="divEmpEnrollment" class="content">
+                <p></p>
+                <div id="divMailingAddress">
+                    <div class="form-group">
+                        <label for="MailingAddress" class="col-md-2 control-label">Mailing Address:</label>
+                        <div class="col-md-10">
+                            <input type="text" id="MailingAddress" class="form-control" placeholder="Street" name="MailingAddress" value="@Html.Raw(Model.employee.MailingAddress)" />
+                            <input type="text" id="PObox" class="form-control" placeholder="PO Box" name="PObox" value="@Html.Raw(Model.employee.PObox)" />
+                            <input type="text" id="City" class="form-control" placeholder="City" name="City" value="@Html.Raw(Model.employee.City)" />
+                            <input type="text" id="State" class="form-control" placeholder="State" name="State" value="@Html.Raw(Model.employee.State)" />
+                            <input type="text" id="ZipCode" class="form-control" placeholder="Zip Code" name="ZipCode" value="@Html.Raw(Model.employee.ZipCode)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Within City Limits?</label>
+                    <div class="col-md-10">
+                        <select id="CityLimits" class="form-control">
+                            <option value="">Select Option</option>
+                            <option value="True" @(Model.employee.CityLimits == "True" ? "selected" : "")>Yes</option>
+                            <option value="False" @(Model.employee.CityLimits == "False" ? "selected" : "")>No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="County" class="col-md-2 control-label">County:</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" placeholder="County" id="County" name="County" value="@Html.Raw(Model.employee.County)" />
+                    </div>
+                </div>
+                <div class="form-group" id="divMailingAddress">
+                    <label class="col-md-2 control-label">Physical Address same as Mailing Address?</label>
+                    <div class="col-md-10">
+                        <label class="radio-inline"><input type="radio" id="mailingAddr" class="radio-inline" onclick="showHidePhysicalAddress()" name="Address" value="True" />Yes</label>
+                        <label class="radio-inline"><input type="radio" id="mailingAddr" class="radio-inline" onclick="showHidePhysicalAddress()" name="Address" value="False" checked />No</label>
+                    </div>
+                </div>
+                <div id="divPhysicalAddress">
+                    <div class="form-group">
+                        <label for="PhysicalAddress" class="col-md-2 control-label">Physical Address:</label>
+                        <div class="col-md-10">
+                            <input type="text" id="PhysicalAddress" class="form-control" placeholder="Street" name="PhysicalAddress" value="@Html.Raw(Model.employee.PhysicalAddress)" />
+                            <input type="text" id="City2" class="form-control" placeholder="City" name="CityTwo" value="@Html.Raw(Model.employee.CityTwo)" />
+                            <input type="text" id="State2" class="form-control" placeholder="State" name="StateTwo" value="@Html.Raw(Model.employee.StateTwo)" />
+                            <input type="text" id="ZipCode2" class="form-control" placeholder="Zip Code" name="ZipCodeTwo" value="@Html.Raw(Model.employee.ZipCodeTwo)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="EmailAddress" class="col-md-2 control-label">Email Address:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="EmailAddress" class="form-control" placeholder="Email" name="EmailAddress" value="@Html.Raw(Model.employee.EmailAddress)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="PhoneNumber" class="col-md-2 control-label">Phone Number:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="PhoneNumber" class="form-control" placeholder="Phone #" name="PhoneNumber" maxlength="14" value="@Html.Raw(Model.employee.PhoneNumber)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="CellPhone" class="col-md-2 control-label">Cell Phone:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="CellPhone" class="form-control" placeholder="Cell Phone #" name="CellPhone" maxlength="14" value="@Html.Raw(Model.employee.CellPhone)" />
+                    </div>
+                </div>
+                <div class="form-group" id="divRedirect">
+                    <div class="col-md-offset-11">
+                        @*<button id="EditEmployeeEnrollmentStepTwo" class="btn">Save</button>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <p></p>
+            <div class="collapsible" id="ThirdStep">Edit Insurance</div>
+            <div id="divEmpIns" class="content">
+                <p></p>
+                <div>
+                    <div class="form-group">
+                        <label>Are you covered by any other insurance, including Medicare?</label>
+                        <label class="radio-inline"><input type="radio" id="empOtherGrpHinsCoverage" class="radio-inline" onclick="showHidEmpOtherInsCoverage()" name="OtherInsuranceCoverage" value="True" @((Model.grpHealth.OtherInsuranceCoverage == "True") ? "checked" : "") />Yes</label>
+                        <label class="radio-inline"><input type="radio" id="empOtherGrpHinsCoverage" class="radio-inline" onclick="showHidEmpOtherInsCoverage()" name="OtherInsuranceCoverage" value="False" @((Model.grpHealth.OtherInsuranceCoverage == "False") ? "checked" : "") />No</label>
+                        @*@Html.RadioButtonFor(model => model.grpHealth.OtherInsuranceCoverage, "Yes", true) Yes @Html.RadioButtonFor(model => model.grpHealth.OtherInsuranceCoverage, "No", false) No*@
+                    </div>
+                    <p></p>
+                    <div id="empInsInfo">
+                        <div class="form-group col-md-3">
+                            <input type="text" id="empInsCarrier" class="form-control" placeholder="Insurance Company" name="InsuranceCarrier" value="@Html.Raw(Model.grpHealth.InsuranceCarrier)" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="text" id="empInsPolicyNumber" class="form-control" placeholder="Policy #" name="PolicyNumber" value="@Html.Raw(Model.grpHealth.PolicyNumber)" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="tel" id="empInsPhoneNumber" class="form-control" placeholder="Phone #" name="PhoneNumber" size="3" maxlength="14" value="@Html.Raw(Model.grpHealth.PhoneNumber)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" id="divRedirect">
+                    <div class="col-md-offset-11">
+                        @*<button id="EditEmployeeEnrollmentStepThree" class="btn">Save</button>*@
+                        <button id="EditEmployeeEnrollment" class="btn">Save</button>
+                    </div>
+                </div>
+                <p>
+                    @Html.ActionLink("Back to List", "EmpOverview")
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+<style>
+    .collapsible {
+        background-color: #2e4593;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: center;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #2e4593;
+        }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+
+    .button {
+        text-align: right;
+    }
+
+    .btn:hover {
+        background-color: #2e4593;
+        color: white;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 8px 8px;
+    }
+
+        a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    .checkboxes input {
+        margin: 0em 0em 0em 1em;
+    }
+
+    .phone-number .col-xs-3::after {
+        content: "-";
+        position: absolute;
+        right: 5px;
+        color: black;
+        border: 0px solid;
+        top: 8px;
+    }
+</style>
+
+<script>
+    var col = document.querySelectorAll(".collapsible");
+    var i;
+    var Employee_id;
+
+    for (i = 0; i < col.length; i++) {
+        col[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+
+        });
+    }
+
+    function showHidePhysicalAddress() {
+        document.addEventListener("click", function () {
+            var selection = document.getElementById("mailingAddr");
+
+            if (selection.checked == false) {
+                document.getElementById("divPhysicalAddress").style.display = "block";
+            }
+            else {
+                document.getElementById("divPhysicalAddress").style.display = "none";
+            }
+        });
+    }
+
+    function showHidEmpOtherInsCoverage() {
+        document.addEventListener("click", function () {
+            var selection = document.getElementById("empOtherGrpHinsCoverage");
+
+            if (selection.checked == true) {
+                document.getElementById("empInsInfo").style.display = "block";
+            }
+            else {
+                document.getElementById("empInsInfo").style.display = "none";
+            }
+        })
+    }
+
+    document.querySelector("#EditEmployeeEnrollment").addEventListener("click", function () {
+        submit = document.getElementById("EditEmployeeEnrollment");
+
+        var message;
+        alert = confirm("Progress has been saved.")
+
+        if (alert == true) {
+
+            message = "Please proceed to Employee Detail to review information, Thank you!!";
+            var alert = confirm(message)
+            if (alert == true) {
+                    window.location.href = "/Admin/EmployeeDetail?Employee_id=" + @ViewBag.Employee_id;
+            }
+
+        }
+        else {
+            if (alert == false) {
+
+                window.location.href = "/Admin/EmpOverview/?Employee_id=" + @ViewBag.Employee_id;
+            }
+            else {
+
+                message = "Your request has been canceled. Please proceed to Employee Overview , Thank you!!";
+                var alert = confirm(message)
+
+                window.location.href = "/Admin/EmpOverview/?Employee_id=" + @ViewBag.Employee_id;
+            }
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("#EditEmployeeEnrollment").addEventListener("click", function () {
+            Employee_id = document.getElementById("Employee_id").value;
+            EmpRole = document.getElementById("EmpRole").value;
+            CurrentEmployer = document.getElementById("CurrentEmployer").value;
+            JobTitle = document.getElementById("JobTitle").value;
+            EmpNumber = document.getElementById("EmpNumber").value;
+            HireDate = document.getElementById("HireDate").value;
+            FirstName = document.getElementById("FirstName").value;
+            LastName = document.getElementById("LastName").value;
+            DateOfBirth = document.getElementById("DateOfBirth").value;
+            MaritalStatus = document.getElementById("MaritalStatus").value;
+            Gender = document.getElementById("Gender").value;
+            Active = document.getElementById("Active").checked;
+            Retired = document.getElementById("Retired").checked;
+            CobraState = document.getElementById("Cobra").checked;
+
+            MailingAddress = document.getElementById("MailingAddress").value;
+            PObox = document.getElementById("PObox").value;
+            City = document.getElementById("City").value;
+            State = document.getElementById("State").value;
+            ZipCode = document.getElementById("ZipCode").value;
+            CityLimits = document.getElementById("CityLimits").value;
+            County = document.getElementById("County").value;
+            PhysicalAddress = document.getElementById("PhysicalAddress").value;
+            City2 = document.getElementById("City2").value;
+            State2 = document.getElementById("State2").value;
+            ZipCode2 = document.getElementById("ZipCode2").value;
+            EmailAddress = document.getElementById("EmailAddress").value;
+            PhoneNumber = document.getElementById("PhoneNumber").value;
+            CellPhone = document.getElementById("CellPhone").value;
+
+            OtherGrpHinsCoverage = document.getElementById("empOtherGrpHinsCoverage").value
+            InsCarrier = document.getElementById("empInsCarrier").value
+            InsPolicyNumber = document.getElementById("empInsPolicyNumber").value
+            InsPhoneNumber = document.getElementById("empInsPhoneNumber").value
+
+            var data = {
+                "Employee_id": Employee_id,
+                "EmpRole": EmpRole,
+                "CurrentEmployer": CurrentEmployer,
+                "JobTitle": JobTitle,
+                "EmpNumber": EmpNumber,
+                "HireDate": HireDate,
+                "MaritalStatus": MaritalStatus,
+                "FirstName": FirstName,
+                "LastName": LastName,
+                "DateOfBirth": DateOfBirth,
+                "Gender": Gender,
+                "Active": Active,
+                "Retired": Retired,
+                "CobraState": CobraState,
+
+                "MailingAddress": MailingAddress,
+                "PObox": PObox,
+                "City": City,
+                "State": State,
+                "ZipCode": ZipCode,
+                "CityLimits": CityLimits,
+                "County": County,
+                "PhysicalAddress": PhysicalAddress,
+                "City2": City2,
+                "State2": State2,
+                "ZipCode2": ZipCode2,
+                "EmailAddress": EmailAddress,
+                "PhoneNumber": PhoneNumber,
+                "CellPhone": CellPhone,
+
+                "OtherGrpHinsCoverage": OtherGrpHinsCoverage,
+                "InsCarrier": InsCarrier,
+                "InsPolicyNumber": InsPolicyNumber,
+                "InsPhoneNumber": InsPhoneNumber,
+            }
+
+            //var ret = postData('EmployeeEditUpdate', data)
+            //    .then(data => {
+            //        console.log(data);
+            //        FirstStep(data); })
+            //    .catch(error => console.error(error))
+
+            fetch('EmployeeEditUpdate', {
+                body: JSON.stringify(data), //must match 'Content-Type' header
+                cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', //include, same-origin, *omit
+                headers: {
+                    'Accept': 'application/json',
+                    'user-agent': 'Mozilla/4.0 MDN Example',
+                    'content-type': 'application/json'
+                },
+                method: 'Post', //*GET, POST, PUT, DELETE, etc...
+                mode: 'same-origin', //no-cors, cors, *same-origin
+                redirect: 'follow', //manual, *follow, error
+                referrer: 'no-referrer', //*client, no-referrer
+            }).then(res => res.json())
+                .then(response => FirstStep(response))
+                .catch(error => console.error('Error:', error));
+        })
+
+    })
+
+    function FirstStep(emp) {
+        document.querySelector("#FirstStep").nextElementSibling.style.display = "none";
+        document.querySelector("#SecondStep").nextElementSibling.style.display = "block";
+        Employee_id = emp.data;
+    }
+
+    function SecondStep(emp) {
+        document.querySelector("#FirstStep").nextElementSibling.style.display = "none";
+        document.querySelector("#SecondStep").nextElementSibling.style.display = "none";
+        document.querySelector("#ThirdStep").nextElementSibling.style.display = "block";
+
+    }
+
+    function ThirdStep(emp) {
+        document.querySelector("#FirstStep").nextElementSibling.style.display = "none";
+        document.querySelector("#SecondStep").nextElementSibling.style.display = "none";
+        document.querySelector("#ThirdStep").nextElementSibling.style.display = "none";
+
+    }
+
+    function postData(url, data) {
+        //Default options are marked with *
+        console.log(data);
+        console.log(JSON.stringify(data));
+        return fetch(url, {
+            body: JSON.stringify(data), //must match 'Content-Type' header
+            cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', //include, same-origin, *omit
+            headers: {
+                'Accept': 'application/json',
+                'user-agent': 'Mozilla/4.0 MDN Example',
+                'content-type': 'application/json'
+            },
+            method: 'Post', //*GET, POST, PUT, DELETE, etc...
+            mode: 'same-origin', //no-cors, cors, *same-origin
+            redirect: 'follow', //manual, *follow, error
+            referrer: 'no-referrer', //*client, no-referrer
+        }).then(res => res.json())
+            .then(response => console.log('Success:', JSON.stringify(response)))
+            .catch(error => console.error('Error:', error));
+        //.then(Response => {
+        //    console.log(Response);
+        //    Response.json();
+        //}) //parses response to JSON
+    }
+</script>
+
+
+

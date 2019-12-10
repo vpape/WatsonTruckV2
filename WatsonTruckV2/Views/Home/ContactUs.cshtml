@@ -1,0 +1,270 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Contact Us</title>
+</head>
+
+<body>
+    <div id="sidebar">
+        <div class="toggle-btn" onclick="toggleSidebar()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul>
+            <li>
+                <label>Watson Truck & Supply</label><br />
+                <label style="display:table-cell">Oil Field Supply & Int'l Parts</label>
+                <div>1501 N Grimes</div>
+                <div>Hobbs, NM 88240</div><br />
+                <label style="display:table-cell">Contact:</label>
+                <div>Bruce Dew</div>
+                <div>575-397-2411 ext.227</div>
+                <a href="mailto:bdew@watsontruck.com">bdew@watsontruck.com</a>
+            </li>
+            <li>
+                <label>Watson Hopper, Inc.</label><br />
+                <div>1700 West Marland</div>
+                <div>Hobbs, NM 88240</div><br />
+                <label style="display:table-cell">Contact:</label>
+                <div>Mike Slaugh</div>
+                <div>575-397-2411 ext.425</div>
+                <a href="mailto:mslaugh@watsonhopper.com">mslaugh@watsonhopper.com</a>
+            </li>
+            <li>
+                <label>Unit Shop</label><br />
+                <div>1501 N Grimes</div>
+                <div>Hobbs, NM 88240</div><br />
+                <label style="display:table-cell">Contact:</label>
+                <div>Dale May</div>
+                <div>575-397-2411 ext.335</div>
+                <a href="mailto:dmay@watsontruck.com">dmay@watsontruck.com</a>
+            </li>
+            <li>
+                <label>Truck Sales</label><br />
+                <div>1501 N Grimes</div>
+                <div>Hobbs, NM 88240</div><br />
+                <label style="display:table-cell">Contact:</label>
+                <div>Brad Hawkins</div>
+                <div>575-397-2411 ext.401</div>
+                <a href="mailto:bhawkins@watsontruck.com">bhawkins@watsontruck.com</a>
+            </li>
+            <li>
+                <label>Truck Shop</label><br />
+                <div>1501 N Grimes</div>
+                <div>Hobbs, NM 88240</div><br />
+                <label style="display:table-cell">Contact:</label>
+                <div>Dan Wharff</div>
+                <div>575-397-2411 ext.272</div>
+                <a href="mailto:dwharff@watsontruck.com">dwharff@watsontruck.com</a>
+            </li>
+        </ul>
+    </div>
+    <hr />
+    <div class="container">
+        <div class="body-content" style="margin-left:15%">
+            <div class="mapouter" style="padding-left: 10px">
+                <div class="gmap_canvas">
+                    <iframe width="600" height="400" id="gmap_canvas"
+                            src="https://maps.google.com/maps?q=1501%20n%20grimes%20hobbs%20new%20mexico&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>Google Maps Generator by <a href="https://www.embedgooglemap.net"></a>
+                </div>
+            </div>
+            <p></p>
+            <div class="col-md-4">
+                <div id="divFirstName" class="form-group">
+                    <input type="text" class="form-control" id="txtFirstName" name="FirstName" placeholder="First Name" />
+                </div>
+                <div id="divLastName" class="form-group">
+                    <input type="text" class="form-control" id="txtLastName" name="LastName" placeholder="Last Name" />
+                </div>
+                <div id="divEmail" class="form-group">
+                    <input type="text" class="form-control" id="txtEmail" name="Email" placeholder="Email" />
+                </div>
+                <div id="divPhoneNumber" class="form-group">
+                    <input type="text" class="form-control" id="txtPhoneNumber" name="PhoneNumber" placeholder="Phone Number" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="divSubject" class="form-group">
+                    <input type="text" class="form-control" id="txtSubject" name="Subject" placeholder="Subject" />
+                </div>
+                <div id="divCommentBox" class="form-group">
+                    <textarea class="form-control" id="txtComment" name="Comment" placeholder="Please leave comment here!"></textarea>
+                </div>
+                <div class="divSubmit">
+                    <input type="submit" value="Submit" class="btn">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<style>
+    .mapouter {
+        position: relative;
+        text-align: right;
+        height: 400px;
+        width: 650px;
+    }
+
+    .gmap_canvas {
+        overflow: hidden;
+        background: none !important;
+        height: 400px;
+        width: 650px;
+    }
+
+    .btn:hover {
+        background-color: #2e4593;
+        color: white;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        text-decoration: none;
+        box-sizing: border-box;
+        list-style: none;
+    }
+
+    html, body {
+        height: 100%;
+    }
+
+    /*.container {
+        position: relative;
+        width: 1200px;
+    }*/
+
+    #sidebar {
+        position: fixed;
+        width: 200px;
+        height: 100%;
+        background: #2e4593;
+        left: -200px;
+        transition: all 500ms linear;
+    }
+
+        #sidebar.active {
+            left: 0px;
+        }
+
+        #sidebar ul li {
+            color: rgba(230,230,230,0.9);
+            list-style: none;
+            padding: 15px 10px;
+            border-bottom: 1px solid rgba(100,100,100,0.3)
+        }
+
+        #sidebar .toggle-btn {
+            position: absolute;
+            left: 230px;
+            top: 20px;
+        }
+
+            #sidebar .toggle-btn span {
+                display: block;
+                width: 30px;
+                height: 5px;
+                background: #2e4593;
+                margin: 5px 0px;
+            }
+
+    .container .box {
+        position: relative;
+        width: calc(400px - 60px);
+        height: calc(300px - 50px);
+        background: #2e4593;
+        float: left;
+        margin: 10px;
+        box-sizing: border-box;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+</style>
+
+<script>
+
+    function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle('active');
+    }
+
+
+    var JobApplicant_id;
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("#divSubmit").addEventListener("click", function () {
+            FirstName = document.getElementById("txtFirstName").value;
+            LastName = document.getElementById("txtLastName").value;
+            Email = document.getElementById("txtEmail").value;
+            PhoneNumber = document.getElementById("txtPhoneNumber").value;
+            Subject = document.getElementById("txtSubject").value;
+            Comments = document.getElementById("txtComment").value;
+
+            var data = {
+                "JobApplicant_id": JobApplicant_id,
+                "FirstName": FirstName,
+                "LastName": LastName,
+                "Email": Email,
+                "PhoneNumber": PhoneNumber,
+                "Subject": Subject,
+                "Comments": Comments,
+            }
+
+            var ret = postData('ContactUs', data)
+                .then(data => {
+                    console.log(data);
+                    FirstStep(data);
+                })
+                .catch(error => console.error(error))
+
+        })
+    })
+
+    function postData(url, data) {
+        //Default options are marked with *
+        console.log(data);
+        console.log(JSON.stringify(data));
+        return fetch(url, {
+            body: JSON.stringify(data), //must match 'Content-Type' header
+            cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', //include, same-origin, *omit
+            headers: {
+                'Accept': 'application/json',
+                'user-agent': 'Mozilla/4.0 MDN Example',
+                'content-type': 'application/json'
+            },
+            method: 'Post', //*GET, POST, PUT, DELETE, etc...
+            mode: 'same-origin', //no-cors, cors, *same-origin
+            redirect: 'follow', //manual, *follow, error
+            referrer: 'no-referrer', //*client, no-referrer
+        }).then(res => res.json())
+            .then(response => console.log('Success:', JSON.stringify(response)))
+            .catch(error => console.error('Error:', error));
+        //.then(Response => {
+        //    console.log(Response);
+        //    Response.json();
+        //})
+    }
+
+    function FirstStep(emp) {
+        JobApplicant_id = emp.data;
+    }
+</script>
+
+
+
+
+

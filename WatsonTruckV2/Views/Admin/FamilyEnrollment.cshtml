@@ -1,0 +1,147 @@
+﻿@model WatsonTruckV2.Models.Family_Info
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Admin-Family Enrollment</title>
+</head>
+<body>
+    <div class="form-horizontal">
+        <input type="hidden" id="Employee_id" class="form-control" name="Employee_id" value="@ViewBag.Employee_id" />
+        <input type="hidden" id="FamilyMember_id" class="form-control" name="FamilyMember_id" value="@ViewBag.FamilyMember_id" />
+        <input type="hidden" id="MaritalStatus" class="form-control" name="MaritalStatus" value="@ViewBag.RelationshipToInsured" />
+        <h3>Admin-Family Enrollment</h3>
+        <table class="table table-condensed">
+            <tr>
+                <td>
+                    <div id="SpouseEnrollment">
+                        <button type="button" class="button" onclick="return SpouseEnrollment()">Spouse</button>
+                        @*@if (ViewBag.spouseExist == true)
+                            {
+                                hide if employee is single
+                                otherwise show
+                            }
+                            else
+                            {
+
+                            }*@
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="AddDependent">
+                        <button type="button" class="button" onclick="return AddDependent()">Dependent</button>
+                        @*@if (ViewBag.spouseExist == false)
+                            {
+                                hide if single w/o dep
+                                otherwise show
+                            }
+                            else
+                            {
+
+                            }*@
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <p>
+            @Html.ActionLink("Back to Selection", "EnrollmentSelection")
+        </p>
+    </div>
+
+</body>
+</html>
+
+<style>
+    .button, hidden {
+        background-color: #2e4593;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: center;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .button:hover {
+            background-color: #2e4593;
+        }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 8px 8px;
+    }
+
+        a:hover {
+            background-color: #ddd;
+            color: #2e4593;
+        }
+
+    table {
+        border-collapse: collapse;
+        width: 75%;
+    }
+
+    /*div {
+        text-align: center;
+    }*/
+</style>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var maritalStatus = document.getElementById("MaritalStatus").value;
+        var spouse = document.getElementById("SpouseEnrollment");
+        var dependent = document.getElementById("AddDependent");
+
+        if (maritalStatus.value == "Single")
+        {
+            spouse.style.display = 'hidden';
+            dependent.style.display = 'hidden';
+        }
+        if (maritalStatus.value == "SinglewDep")
+        {
+            spouse.style.display = 'hidden';
+            dependent.style.display = 'visible';
+        }
+        if (maritalStatus.value == "Married")
+        {
+            spouse.style.display = 'visible';
+            dependent.style.display = 'hidden';
+        }
+        if (maritalStatus.value == "MarriedwDep")
+        {
+            spouse.style.display = 'visible';
+            dependent.style.display = 'visible';
+        }
+    })
+
+    function SpouseEnrollment() {
+        window.location.href = "/Admin/SpouseEnrollment?Employee_id=@ViewBag.Employee_id" @*+ "&FamilyMember_id=@ViewBag.FamilyMember_id"*@;
+    }
+
+    function AddDependent() {
+        @*window.location.href = "/Employee/NewDependentEnrollment?Employee_id=@ViewBag.Employee_id"*@   @*+ "&FamilyMember_id=@ViewBag.FamilyMember_id"*@;
+         window.location.href = "/Admin/AddDependent?Employee_id=@ViewBag.Employee_id" @*+"&FamilyMember_id="+ @ViewBag.FamilyMember_id*@;
+    }
+
+</script>
+
+
+

@@ -1,0 +1,168 @@
+﻿@model WatsonTruckV2.Models.JobApplicantVM
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Job Description</title>
+</head>
+<body>
+    <input type="hidden" id="JobApplicant_id" class="form-control" name="JobApplicant_id" value="@ViewBag.JobApplicant_id" />
+    <input type="hidden" id="Employee_id" class="form-control" name="Employee_id" />
+    <hr />
+    <div class="modal-content">
+        <p></p>
+        <embed src="~/App_Files/images/WatsonTruckImage.jpg" width="200" height="80" style="margin-left:460px;" />
+        <div id="divJobDescription">
+            <div class="jobInfo">
+                <div>
+                    <div class="table table-bordered">
+                        <table class="table table-condensed" id="jobDescriptionTable">
+                            <tr>
+                                <td>
+                                    <h3 class="departmentTite" id="department">Unit Shop</h3>
+                                    <h4 class="jobTitle" id="job">Field Mechanic</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>City:</label>
+                                    <div>
+                                        <input type="text" class="form-control" placeholder="City" value="" disabled />
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <label>State:</label>
+                                    <div>
+                                        <input type="text" class="form-control" placeholder="State" value="" disabled />
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <label>Posted Date:</label>
+                                    <div>
+                                        <input type="date" class="form-control" placeholder="Posted Date" value="" disabled />
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="text-justify" id="divJobDescriptionInfo">
+                            <p class="jobDescription">
+                                <label>Objective:</label><br />
+                                • Take service truck into field to replace and/or repair service unti or equipment by mechanical means as instructed by customer<br />
+                                <br />
+                                <label>Essential Responsibilites:</label><br />
+                                • Service and repair of units and equipment by mechanical means in the shop<br />
+                                • Diagnose and repair any and all electrical, pneumatic, hydraulic, and mechanical systems in field<br />
+                                <br />
+                                <label>Occasional Responsibilities:</label><br />
+                                • Use of welding/cutting equipment<br />
+                                <br />
+                                <label>Essential Responsibilites:</label><br />
+                                • Service and repair of units and equipment by mechanical means in the shop<br />
+                                • Diagnose and repair any and all electrical, pneumatic, hydraulic, and mechanical systems in field<br />
+                                <br />
+                                <label>Education:</label><br />
+                                • High School Diploma/GED Equivalent<br />
+                                • Minimum 2 years experience in trade<br />
+                                <br />
+                                <label>Job Knowledge:</label><br />
+                                • Knowledge of work hazards and safe work practices<br />
+                                • Knowledge of standard methods, materials and equipment used in the trade such as: drill press, lathe, band saw, calibrating equipment, grinder and welding machine<br />
+                                • Knowledge of units and equipment being service to generate a diagnosis<br />
+                                <br />
+                                <label>Related Skills:</label><br />
+                                • The operation and use of hand tools and the safe operations of such<br />
+                                • Department of Transportation (DOT) regulations<br />
+                                • Require skills in customer service and customer relations<br />
+                                • Background in oil field<br />
+                                • Ability to fabricate/modify parts and/or equipment to meet each job as instructed by the customer />
+                                <br />
+                                <label>Personal Skills:</label><br />
+                                • Should be able to work unsupervised<br />
+                                • Should be able to understand and carry out oral and written directions with little or no supervision<br />
+                                • Should be able to set goals and develop techniques to achieve those goals<br />
+                                • Good overall customer service and communication skills<br />
+                                <br />
+                                <label>Work Conditions:</label><br />
+                                • Field or standard shop facility<br />
+                                • Must be able to lift 100 lbs.<br />
+                                • Must be able to pull torque 300 to 400 ft. lbs.<br />
+                                • Must be able to climb, stand, stoop, crouch, drive for long periods of time<br />
+                                • Exposures to dust, grease, noise, and odors<br />
+                                • Position involves being on call 24 hours a day<br />
+                                <br />
+                                <label>Special Requirements:</label><br />
+                                • Valid US Drivers License<br />
+                                <br />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-offset-11">
+                <button id="jobApplication" onclick="return Apply()" class="btn">Apply</button>
+            </div>
+        </div>
+        <p>
+            @Html.ActionLink("Back to Home", "Index", "Home")
+        </p>
+    </div>
+</body>
+</html>
+
+<script>
+    function Apply() {
+
+        @*window.location.href = "/CareerCenter/JobDescription?JobApplicant_id=@ViewBag.JobApplicant_id"*@
+        window.location.href = "/CareerCenter/CreateApplicant";
+    }
+</script>
+
+
+<style>
+
+    .btn {
+        background-color: #333;
+        color: white;
+    }
+
+        .btn:hover {
+            background-color: blue;
+            color: white;
+        }
+
+    p {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+
+    #empInitials1, #empInitials2,
+    #empInitials3, #empInitials4,
+    #empInitials5 {
+        width: 5%;
+        border: 0px;
+        border-bottom: 1px solid black;
+        height: 20px;
+        text-align: center;
+    }
+
+    #signature {
+        width: 100%;
+        border: 0px;
+        border-bottom: 1px solid black;
+        height: 20px;
+    }
+
+    #signatureDate {
+        width: 15%;
+        border: 0px;
+        border-bottom: 1px solid black;
+        height: 20px;
+    }
+</style>
+
+

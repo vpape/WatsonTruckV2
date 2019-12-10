@@ -1,0 +1,281 @@
+﻿@model WatsonTruckV2.Models.EmployeeAndInsuranceVM
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Admin-Add Beneficiary</title>
+</head>
+<body>
+    <input type="hidden" id="Employee_id" class="form-control" name="Employee_id" value="@ViewBag.Employee_id" />
+    <div class="collapsible" id="BeneficiaryEnrollment">Admin-Add Beneficiary</div>
+    <div class="content">
+        <div id="divBeneficiaryInfo">
+            <div class="form-group">
+                <table class="table table-condensed">
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="checkbox-inline" id="PrimaryBeneficiary" name="PrimaryBeneficiary" value="" /><label for="Primary">Primary</label>
+                            <input type="checkbox" class="checkbox-inline" id="ContingentBeneficiary" name="ContingentBeneficiary" value="" /><label for="Contingent">Contingent</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" id="FirstName" class="form-control" name="FirstName" placeholder="First Name" value="" />
+                        </td>
+                        <td>
+                            <input type="text" id="LastName" class="form-control" name="LastName" placeholder="Last Name" value="" />
+                        </td>
+                        <td>
+                            <input type="text" id="SSN" class="form-control" name="SSN" placeholder="SSN" value="" />
+                        </td>
+                        <td>
+                            <input type="text" id="RelationshipToEmployee" class="form-control" name="RelationshipToEmployee" placeholder="Relationship to Employee" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label style="display:table-cell">Date of Birth:</label>
+                            <input type="date" id="DOB" class="form-control" name="DOB" value="" />
+                        </td>
+                        <td>
+                            <label style="display:table-cell">Phone Number:</label>
+                            <input type="text" id="PhoneNumber" class="form-control" name="PhoneNumber" placeholder="" value="" />
+                        </td>
+                        <td>
+                            <label style="display:table-cell">Percentage Of Benefits:</label>
+                            <input type="number" id="PercentageOfBenefits" class="form-control" name="PercentageOfBenefits" placeholder="" value="" />
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" id="MailingAddress" class="form-control" name="Address" placeholder="Mailing Address" value="" />
+                        </td>
+                        <td>
+                            <input type="text" id="City" class="form-control" name="City" placeholder="City" value="" />
+                        </td>
+                        <td>
+                            <input type="text" id="State" class="form-control" name="State" placeholder="State" value="" />
+                        </td>
+                        <td>
+                            <input type="text" id="ZipCode" class="form-control" name="ZipCode" placeholder="Zip Code" value="" />
+                        </td>
+                    </tr>
+
+                </table>
+                <div class="form-group">
+                    <div class="col-md-offset-11">
+                        <button type="submit" id="submitBeneficiary" class="btn">Save</button>
+                    </div>
+                </div>
+                <p>
+                    @Html.ActionLink("Back to Life Insurance", "LifeInsuranceEnrollment", "Admin", new { Employee_id = ViewBag.Employee_id }, null)
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+<style>
+    .collapsible {
+        background-color: #2e4593;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: center;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #2e4593;
+        }
+
+    .content {
+        padding: 0 10px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+
+    .button {
+        text-align: right;
+    }
+
+    .btn:hover {
+        background-color: #2e4593;
+        color: white;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 8px 8px;
+    }
+</style>
+
+<script>
+    var col = document.querySelectorAll(".collapsible");
+    var i;
+
+    var Employee_id;
+
+    for (i = 0; i < col.length; i++) {
+        col[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+
+        });
+    }
+
+    $(document).ready(function () {
+        $('.radio-inline').click(function () {
+            $('.radio-inline').not(this).prop('checked', false);
+        });
+    });
+
+
+
+    document.querySelector("#submitBeneficiary").addEventListener("click", function () {
+
+        var message;
+        alert = confirm("Beneificiary information has been saved. Thank you!")
+
+        if (alert == true) {
+            message = "Please proceed to Life Insurance edit page to review information. Thank you!!";
+            var alert = confirm(message)
+            if (alert == true) {
+
+                window.location.href = "/Admin/EditLifeInsurance/?Employee_id=" + @ViewBag.Employee_id;
+
+            }
+            else {
+                window.location.href = "/Admin/EmpOverview/?Employee_id=" + @ViewBag.Employee_id;
+            }
+        }
+        else {
+            if (alert == false) {
+
+                window.location.href = "/Admin/EmpOverview/?Employee_id=" + @ViewBag.Employee_id;
+            }
+        }
+    })
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("#submitBeneficiary").addEventListener("click", function () {
+            Employee_id = document.getElementById("Employee_id").value;
+            PrimaryBeneficiary = document.getElementById("PrimaryBeneficiary").checked;
+            ContingentBeneficiary = document.getElementById("ContingentBeneficiary").checked;
+            RelationshipToEmployee = document.getElementById("RelationshipToEmployee").value;
+            SSN = document.getElementById("SSN").value;
+            FirstName = document.getElementById("FirstName").value;
+            LastName = document.getElementById("LastName").value;
+            DateOfBirth = document.getElementById("DOB").value;
+            PhoneNumber = document.getElementById("PhoneNumber").value;
+            PercentageOfBenefits = document.getElementById("PercentageOfBenefits").value;
+            MailingAddress = document.getElementById("MailingAddress").value;
+            City = document.getElementById("City").value;
+            State = document.getElementById("State").value;
+            ZipCode = document.getElementById("ZipCode").value;
+
+            var data = {
+                "Employee_id": Employee_id,
+                //"Beneficiary_id": Beneficiary_id,
+                "PrimaryBeneficiary": PrimaryBeneficiary,
+                "ContingentBeneficiary": ContingentBeneficiary,
+                "FirstName": FirstName,
+                "LastName": LastName,
+                "SSN": SSN,
+                "RelationshipToEmployee": RelationshipToEmployee,
+                "DateOfBirth": DateOfBirth,
+                "PhoneNumber": PhoneNumber,
+                "PercentageOfBenefits": PercentageOfBenefits,
+                "MailingAddress": MailingAddress,
+                "City": City,
+                "State": State,
+                "ZipCode": ZipCode,
+            }
+
+            var ret = postData('/Admin/AddBeneficiaryUpdate', data)
+                .then(data => {
+                    console.log(data);
+                    FirstStep(data);
+                })
+                .catch(error => console.error(error))
+
+            //fetch('AddBeneficiaryUpdate', {
+            //    body: JSON.stringify(data), //must match 'Content-Type' header
+            //    cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+            //    credentials: 'same-origin', //include, same-origin, *omit
+            //    headers: {
+            //        'Accept': 'application/json',
+            //        'user-agent': 'Mozilla/4.0 MDN Example',
+            //        'content-type': 'application/json'
+            //    },
+            //    method: 'Post', //*GET, POST, PUT, DELETE, etc...
+            //    mode: 'same-origin', //no-cors, cors, *same-origin
+            //    redirect: 'follow', //manual, *follow, error
+            //    referrer: 'no-referrer', //*client, no-referrer
+            //}).then(res => res.json())
+            //    //.then(response => console.log('Success:', JSON.stringify(response)))
+            //    .then(response => FirstStep(response))
+            //    .catch(error => console.error('Error:', error));
+        })
+
+    })
+
+    function FirstStep(emp) {
+        Employee_id = emp.data;
+    }
+
+    function postData(url, data) {
+        //Default options are marked with *
+        console.log(data);
+        console.log(JSON.stringify(data));
+        return fetch(url, {
+            body: JSON.stringify(data), //must match 'Content-Type' header
+            cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', //include, same-origin, *omit
+            headers: {
+                'Accept': 'application/json',
+                'user-agent': 'Mozilla/4.0 MDN Example',
+                'content-type': 'application/json'
+            },
+            method: 'Post', //*GET, POST, PUT, DELETE, etc...
+            mode: 'same-origin', //no-cors, cors, *same-origin
+            redirect: 'follow', //manual, *follow, error
+            referrer: 'no-referrer', //*client, no-referrer
+        }).then(res => res.json())
+            .then(response => console.log('Success:', JSON.stringify(response)))
+            .catch(error => console.error('Error:', error));
+        //.then(Response => {
+        //    console.log(Response);
+        //    Response.json();
+        //}) //parses response to JSON
+    }
+</script>
+
+
+
+
+
+
+
+
+
+

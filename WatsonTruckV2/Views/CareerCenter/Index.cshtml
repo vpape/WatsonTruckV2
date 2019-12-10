@@ -1,0 +1,133 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <h3>Career Center</h3>
+        <button onclick="return ListJobs()" class="btn">View Open Positions</button>
+    </div>
+
+    <script>
+    function ListJobs() {
+        window.location.href = "/CareerCenter/JobList";
+    }
+    </script>
+
+
+    <div class="">
+        <footer>
+            <div class="footer_container" id="footerTop">
+                <div class="inner_footer">
+                    <div>
+                        <div class="logo_container">
+                            <img src="@Url.Content("~/App_Files/images/WatsonTruckImage.jpg")" width="155" height="54"><br>
+                            <img src="@Url.Content("~/App_Files/images/WatsonHopperImage.jpg")" width="155" height="120" style="padding-top:20px;">
+                        </div>
+                        <div id="footerWatsonTruck" class="footer_third">
+                            <label>Watson Truck & Supply</label><br />
+                            <div>1501 N Grimes</div>
+                            <div>Hobbs, NM 88240</div><br />
+                            <label style="display:table-cell">Contact:</label>
+                            <div>Jerry Elliott</div>
+                            <div>575-397-2411</div>
+                            <a href="mailto:jerryelliot@watsontruck.com">jerryelliot@watsontruck.com</a>
+                        </div>
+                        <div id="footerWatsonHopper" class="footer_third">
+                            <label>Watson Hopper, Inc.</label><br />
+                            <div>1700 West Marland</div>
+                            <div>Hobbs, NM 88240</div><br />
+                            <label style="display:table-cell">Contact:</label>
+                            <div>Mike Slaugh</div>
+                            <div>575-397-2411</div>
+                            <a href="mailto:mslaugh@watsonhopper.com">mslaugh@watsonhopper.com</a>
+                        </div>
+                        <div id="footerUnitShop" class="footer_third">
+                            <label>Unit Shop, LLC</label><br />
+                            <div>1501 N Grimes</div>
+                            <div>Hobbs, NM 88240</div><br />
+                            <label style="display:table-cell">Contact:</label>
+                            <div>Dale May</div>
+                            <div>575-397-2411</div>
+                            <a href="mailto:dmay@watsontruck.com">dmay@watsontruck.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
+
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        text-decoration: none;
+    }
+
+    html, body {
+        height: 100%;
+    }
+
+    #footerTop {
+        border-top: 10px solid #2e4593;
+        padding-top: 35px;
+    }
+
+    .footer_container {
+        display: flex;
+        overflow: hidden;
+        padding: 30px 0;
+        box-sizing: border-box;
+        position: fixed;
+        bottom: 0;
+        clear: both;
+    }
+
+
+
+    .inner_footer {
+        display: block;
+        margin: 0 auto;
+        width: 1100px;
+        height: 100%;
+    }
+
+        .inner_footer .logo_container {
+            width: 30%;
+            float: left;
+            height: 100%;
+            display: block;
+        }
+
+            .inner_footer .logo_container img {
+                width: 50%;
+                height: auto;
+            }
+
+        .inner_footer .footer_third {
+            width: 21%;
+            margin-right: 10px;
+            float: left;
+            height: 100%;
+        }
+
+
+            .inner_footer .footer_third:last-child {
+                margin-right: 0;
+            }
+
+    #footerWatsonTruck, #footerWatsonHopper, #UnitShop {
+        border-right: 1px solid;
+        border-right-style: solid;
+        border-right-color: #2e4593;
+    }
+</style>
+

@@ -1,0 +1,138 @@
+﻿@model WatsonTruckV2.Models.JobApplicantVM
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Available Positions</title>
+</head>
+<body>
+    <input type="hidden" id="JobApplicant_id" class="form-control" name="JobApplicant_id" value="@ViewBag.JobApplicant_id" />
+    <hr />
+    <div class="form-horizontal">
+        <div class="modal-content">
+            <p></p>
+            <embed src="~/App_Files/images/WatsonTruckImage.jpg" width="200" height="80" style="margin-left:460px;" />
+            <div id="divListJobs">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="jobHeader col-md-12">
+                                    <h3 class="jobsHeaderTitle"><b>Available Positions</b></h3>
+                                </div>
+                                <div class="department col-md-12">
+                                    <h4 class="departmentTite">Diesel Shop</h4>
+                                </div>
+                                <div class="row jobListing">
+                                    <div class="col-md-12 col-md-8 va-middle">
+                                        <div class="jobInfo" style="padding-left: 8px;">
+                                            <h4 class="jobTitle">
+                                                <a href="#" onclick="return JobDescription()"><text>Diesel Technician - Hobbs, NM • Full-time • 90k-130k</text></a>
+                                            </h4>
+                                            <p class="details inline">
+
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-md-4 text-right va-middle">
+                                        <div class="more-info" id="0">
+                                            <button class="btn" id="moreInfo" onclick="return JobDescription()">
+                                                More Info
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="department col-md-12">
+                                    <h4 class="departmentTite">Unit Shop</h4>
+                                </div>
+                                <div class="row jobListing">
+                                    <div class="col-md-12 col-md-8 va-middle">
+                                        <div class="jobInfo" style="padding-left: 8px;">
+                                            <h4 class="jobTitle">
+                                                <a href="#" onclick="return JobDescription()"><text>Shop Foreman - Hobbs, NM • Full-time • 90k-130k</text></a>
+                                            </h4>
+                                            <p class="details inline">
+
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-md-4 text-right va-middle">
+                                        <div class="more-info" id="0">
+                                            <button class="btn" id="moreInfo" onclick="return JobDescription()">
+                                                More Info
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <input type="submit" onclick="addInputSelection()" id="addPostion" value="Add Position" class="btn">
+                </div>
+
+            </div>
+            <p>
+                @Html.ActionLink("Back to Home", "Index", "Home")
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+    .btn:hover {
+        background-color: blue;
+        color: white;
+    }
+
+    .button {
+        text-align: right;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 8px 8px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        table tr {
+            border-bottom: 1px dotted black;
+        }
+</style>
+
+<script>
+    function JobDescription() {
+
+        @*window.location.href = "/CareerCenter/JobDescription?JobApplicant_id=@ViewBag.JobApplicant_id"*@
+        window.location.href = "/CareerCenter/JobDescription";
+    }
+
+    function addInputSelection() {
+        window.location.href = "/CareerCenter/CreateJobPosition";
+    }
+</script>
+
+
+
+
+
+

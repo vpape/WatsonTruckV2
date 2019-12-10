@@ -1,0 +1,582 @@
+﻿@model WatsonTruckV2.Models.EmployeeAndInsuranceVM
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Admin-Employee Enrollment</title>
+</head>
+<body>
+    <div class="form-horizontal">
+        <hr />
+        <div class="collapsible" id="FirstStep">Admin-Employee Enrollment</div>
+        <div id="divEmpEnrollment" class="content">
+            <p></p>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Employee Role:</label>
+                <div class="col-md-10">
+                    <select id="Role" class="form-control">
+                        <option value="">Select Option</option>
+                        <option id="ManagerRole" value="Manager">Manger</option>
+                        <option id="EmployeeRole" value="Employee">Employee</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Hire Date:</label>
+                <div class="col-md-10">
+                    <input type="date" id="HireDate" class="form-control" name="HireDate" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="CurrentEmployer" class="col-md-2 control-label">Current Employer:</label>
+                <div class="col-md-10">
+                    <input type="text" id="CurrentEmployer" class="form-control" name="CurrentEmployer" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="JobTitle" class="col-md-2 control-label">Job Title:</label>
+                <div class="col-md-10">
+                    <input type="text" id="JobTitle" class="form-control" name="JobTitle" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="EmpNumber" class="col-md-2 control-label">Employee Number:</label>
+                <div class="col-md-10">
+                    <input type="text" id="EmpNumber" class="form-control" name="SSN" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Marital Status:</label>
+                <div class="col-md-10">
+                    <select id="MaritalStatus" class="form-control">
+                        <option value="">Select Option</option>
+                        <option value="MarriedwDep">Married with Dependents</option>
+                        <option value="Married">Married</option>
+                        <option value="SinglewDep">Single with Dependents</option>
+                        <option value="Single">Single</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="FirstName" class="col-md-2 control-label">First Name:</label>
+                <div class="col-md-10">
+                    <input type="text" id="FirstName" class="form-control" name="FirstName" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="LastName" class="col-md-2 control-label">Last Name:</label>
+                <div class="col-md-10">
+                    <input type="text" id="LastName" class="form-control" name="LastName" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Date of Birth:</label>
+                <div class="col-md-10">
+                    <input type="date" id="DateOfBirth" class="form-control" name="DateOfBirth" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Gender:</label>
+                <div class="col-md-10">
+                    <select id="Gender" class="form-control">
+                        <option value="">Select Option</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkboxes">
+                    <label style="margin-left: 7em;">Work Status:</label>
+                    <input type="checkbox" class="checkbox-inline" id="Active" name="Active" value="Active" /><label for="Active">Active</label>
+                    <input type="checkbox" class="checkbox-inline" id="Retired" name="Retired" value="Retired" /><label label for="Retired">Retired</label>
+                    <input type="checkbox" class="checkbox-inline" id="Cobra" name="CobraStateContinuation" value="Cobra/State Continuation" /><label label for="Cobra">Cobra/State</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-11">
+                    <button id="EmployeeEnrollmentUpdate" class="btn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Contact Info *@
+    <div class="form-horizontal">
+        <p></p>
+        <div class="collapsible" id="SecondStep">Employee Contact</div>
+        <div id="divEmpEnrollment" class="content">
+            <p></p>
+            <div id="divMailingAddress">
+                <div class="form-group">
+                    <label for="MailingAddress" class="col-md-2 control-label">Mailing Address:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="MailingAddress" class="form-control" placeholder="Street" name="MailingAddress" value="" />
+                        <input type="text" id="PObox" class="form-control" placeholder="PO Box" name="PObox" value="" />
+                        <input type="text" id="City" class="form-control" placeholder="City" name="City" value="" />
+                        <input type="text" id="State" class="form-control" placeholder="State" name="State" value="" />
+                        <input type="text" id="ZipCode" class="form-control" placeholder="Zip Code" name="ZipCode" value="" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Within City Limits?</label>
+                <div class="col-md-10">
+                    <select id="CityLimits" class="form-control">
+                        <option value="">Select Option</option>
+                        <option value="True">Yes</option>
+                        <option value="False">No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="County" class="col-md-2 control-label">County:</label>
+                <div class="col-md-10">
+                    <input type="text" id="County" class="form-control" placeholder="County" name="County" value="" />
+                </div>
+            </div>
+            <div class="form-group" id="divMailingAddress">
+                <label class="col-md-2 control-label">Physical Address same as Mailing Address?</label>
+                <div class="col-md-10">
+                    <label class="radio-inline"><input type="radio" id="mailingAddr" class="radio-inline" onclick="showHidePhysicalAddress()" name="Address" value="True" />Yes</label>
+                    <label class="radio-inline"><input type="radio" id="mailingAddr" class="radio-inline" onclick="showHidePhysicalAddress()" name="Address" value="False" />No</label>
+                </div>
+            </div>
+            <div id="divPhysicalAddress">
+                <div class="form-group">
+                    <label for="PhysicalAddress" class="col-md-2 control-label">Physical Address:</label>
+                    <div class="col-md-10">
+                        <input type="text" id="PhysicalAddress" class="form-control" placeholder="Street" name="PhysicalAddress" value="" />
+                        <input type="text" id="City2" class="form-control" placeholder="City" name="CityTwo" value="" />
+                        <input type="text" id="State2" class="form-control" placeholder="State" name="StateTwo" value="" />
+                        <input type="text" id="ZipCode2" class="form-control" placeholder="Zip Code" name="ZipCodeTwo" value="" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="EmailAddress" class="col-md-2 control-label">Email Address:</label>
+                <div class="col-md-10">
+                    <input type="text" id="EmailAddress" class="form-control" placeholder="Email" name="EmailAddress" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="PhoneNumber" class="col-md-2 control-label">Phone Number:</label>
+                <div class="col-md-10">
+                    <input type="text" id="PhoneNumber" class="form-control" placeholder="Phone #" name="PhoneNumber" maxlength="14" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="CellPhone" class="col-md-2 control-label">Cell Phone:</label>
+                <div class="col-md-10">
+                    <input type="text" id="CellPhone" class="form-control" placeholder="Cell Phone #" name="CellPhone" maxlength="14" value="" />
+                </div>
+            </div>
+            <div class="form-group" id="divRedirect">
+                <div class="col-md-offset-11">
+                    <button id="EmployeeEnrollmentUpdateStepTwo" class="btn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <p></p>
+        <div class="collapsible" id="ThirdStep">Employee Insurance</div>
+        <div id="divEmpIns" class="content">
+            <p></p>
+            <div id="empCovered">
+                <div class="form-group">
+                    <label>Are you covered by any other insurance, including Medicare?</label>
+                    @*@Html.RadioButtonFor(model => model.grpHealth.OtherInsuranceCoverage, "No", false)*@
+                    <label class="radio-inline"><input type="radio" id="empOtherGrpHinsCoverage" class="radio-inline" onclick="showHidEmpOtherInsCoverage()" name="OtherInsuranceCoverage" value="True" checked />Yes</label>
+                    <label class="radio-inline"><input type="radio" id="empOtherGrpHinsCoverage" class="radio-inline" onclick="showHidEmpOtherInsCoverage()" name="OtherInsuranceCoverage" value="False" />No</label>
+                </div>
+                <p></p>
+                <div id="empInsInfo">
+                    <div class="form-group col-md-3">
+                        <input type="text" id="empInsCarrier" class="form-control" placeholder="Insurance Company" name="InsuranceCarrier" value="" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" id="empInsPolicyNumber" class="form-control" placeholder="Policy #" name="PolicyNumber" value="" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="tel" id="empInsPhoneNumber" class="form-control" placeholder="Phone #" name="PhoneNumber" size="3" maxlength="14" value="" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" id="divRedirect">
+                <div class="col-md-offset-11">
+                    <button id="EmployeeInsEnrollmentStepThree" onclick="return redirect()" class="btn">Save</button>
+                </div>
+            </div>
+            <p>
+                @Html.ActionLink("Back to Enrollment Selection", "EnrollmentSelection")
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+    .collapsible {
+        background-color: #2e4593;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: center;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #2e4593;
+        }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+
+    .button {
+        text-align: right;
+    }
+
+    .btn:hover {
+        background-color: #2e4593;
+        color: white;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 8px 8px;
+    }
+
+        a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    .checkboxes input {
+        margin: 0em 0em 0em 1em;
+    }
+
+    .phone-number .col-xs-3::after {
+        content: "-";
+        position: absolute;
+        right: 5px;
+        color: black;
+        border: 0px solid;
+        top: 8px;
+    }
+</style>
+
+<script>
+    var col = document.querySelectorAll(".collapsible");
+    var i;
+    var Employee_id;
+
+    for (i = 0; i < col.length; i++) {
+        col[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+
+        });
+    }
+
+    function showHidePhysicalAddress() {
+        document.addEventListener("click", function () {
+            var selection = document.getElementById("mailingAddr");
+
+            if (selection.checked == false) {
+                document.getElementById("divPhysicalAddress").style.display = "block";
+            }
+            else {
+                document.getElementById("divPhysicalAddress").style.display = "none";
+            }
+        });
+    }
+
+    //use for radio button
+    function showHidEmpOtherInsCoverage() {
+        document.addEventListener("click", function () {
+            var selection = document.getElementById("empOtherGrpHinsCoverage");
+
+            if (selection.checked == true) {
+                document.getElementById("empInsInfo").style.display = "block";
+            }
+            else {
+                document.getElementById("empInsInfo").style.display = "none";
+            }
+        })
+    }
+
+    function redirect() {
+        var maritalStatus = document.querySelector("#MaritalStatus").value;
+
+        var message;
+        var alert = confirm("Would you like to proceed to the next page? If yes, click the OK button to continue")
+
+        if (maritalStatus == "Single") {
+            if (alert == true) {
+
+                message = "Please proceed to the Group Health Enrollment, Thank you!!";
+                var alert = confirm(message)
+                if (alert == true) {
+
+                    window.location.href = "/Admin/GrpHealthEnrollment/?Employee_id=" + Employee_id;
+
+                }
+                else {
+                    window.location.href = "/Admin/EmpOverview/?Employee_id=" + Employee_id;
+                }
+            }
+        }
+        else {
+            if (alert == false) {
+
+                window.location.href = "/Admin/EmpOverview/?Employee_id=" + Employee_id;
+            }
+            else {
+
+                message = "Please proceed to the Family Enrollment, Thank you!!";
+                var alert = confirm(message)
+
+                if (alert == true) {
+
+                    window.location.href = "/Admin/FamilyEnrollment/?Employee_id=" + Employee_id
+
+                }
+                else {
+
+                    window.location.href = "/Admin/EmpOverview/?Employee_id=" + Employee_id;
+                }
+
+            }
+
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("#EmployeeEnrollmentUpdate").addEventListener("click", function () {
+            Role = document.getElementById("Role").value;
+            Active = document.getElementById("Active").value;
+            Retired = document.getElementById("Retired").value;
+            Cobra = document.getElementById("Cobra").value;
+            CurrentEmployer = document.getElementById("CurrentEmployer").value;
+            JobTitle = document.getElementById("JobTitle").value;
+            EmpNumber = document.getElementById("EmpNumber").value;
+            HireDate = document.getElementById("HireDate").value;
+            FirstName = document.getElementById("FirstName").value;
+            LastName = document.getElementById("LastName").value;
+            DateOfBirth = document.getElementById("DateOfBirth").value;
+            MaritalStatus = document.getElementById("MaritalStatus").value;
+            Gender = document.getElementById("Gender").value;
+            Active = document.getElementById("Active").checked;
+            Retired = document.getElementById("Retired").checked;
+            CobraState = document.getElementById("Cobra").checked;
+
+            var data = {
+                "Role": Role,
+                "Active": Active,
+                "Retired": Retired,
+                "Cobra": Cobra,
+                "CurrentEmployer": CurrentEmployer,
+                "JobTitle": JobTitle,
+                "EmpNumber": EmpNumber,
+                "HireDate": HireDate,
+                "MaritalStatus": MaritalStatus,
+                "FirstName": FirstName,
+                "LastName": LastName,
+                "DateOfBirth": DateOfBirth,
+                "Gender": Gender,
+                "Active": Active,
+                "Retired": Retired,
+                "CobraState": CobraState,
+            }
+
+            //var ret = postData('EmployeeEnrollmentNew', data)
+            //    .then(data => {
+            //        console.log(data);
+            //        FirstStep(data); })
+            //    .catch(error => console.error(error))
+
+            fetch('EmployeeEnrollmentNew', {
+                body: JSON.stringify(data), //must match 'Content-Type' header
+                cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', //include, same-origin, *omit
+                headers: {
+                    'Accept': 'application/json',
+                    'user-agent': 'Mozilla/4.0 MDN Example',
+                    'content-type': 'application/json'
+                },
+                method: 'Post', //*GET, POST, PUT, DELETE, etc...
+                mode: 'same-origin', //no-cors, cors, *same-origin
+                redirect: 'follow', //manual, *follow, error
+                referrer: 'no-referrer', //*client, no-referrer
+            }).then(res => res.json())
+                .then(response => FirstStep(response))
+                .catch(error => console.error('Error:', error));
+        })
+
+        document.querySelector("#EmployeeEnrollmentUpdateStepTwo").addEventListener("click", function () {
+            MailingAddress = document.getElementById("MailingAddress").value;
+            PObox = document.getElementById("PObox").value;
+            City = document.getElementById("City").value;
+            State = document.getElementById("State").value;
+            ZipCode = document.getElementById("ZipCode").value;
+            CityLimits = document.getElementById("CityLimits").value;
+            County = document.getElementById("County").value;
+            PhysicalAddress = document.getElementById("PhysicalAddress").value;
+            City2 = document.getElementById("City2").value;
+            State2 = document.getElementById("State2").value;
+            ZipCode2 = document.getElementById("ZipCode2").value;
+            EmailAddress = document.getElementById("EmailAddress").value;
+            PhoneNumber = document.getElementById("PhoneNumber").value;
+            CellPhone = document.getElementById("CellPhone").value;
+
+
+            var data = {
+                "Employee_id": Employee_id,
+                "MailingAddress": MailingAddress,
+                "PObox": PObox,
+                "City": City,
+                "State": State,
+                "ZipCode": ZipCode,
+                "CityLimits": CityLimits,
+                "County": County,
+                "PhysicalAddress": PhysicalAddress,
+                "City2": City2,
+                "State2": State2,
+                "ZipCode2": ZipCode2,
+                "EmailAddress": EmailAddress,
+                "PhoneNumber": PhoneNumber,
+                "CellPhone": CellPhone,
+            }
+
+            //var ret = postData('EmpEnrollmentContact', data)
+            //    .then(data => {
+            //        console.log(data);
+            //        SecondStep(data);
+            //    })
+            //    .catch(error => console.error(error))
+
+            fetch('EmpEnrollmentContact', {
+                body: JSON.stringify(data), //must match 'Content-Type' header
+                cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', //include, same-origin, *omit
+                headers: {
+                    'Accept': 'application/json',
+                    'user-agent': 'Mozilla/4.0 MDN Example',
+                    'content-type': 'application/json'
+                },
+                method: 'Post', //*GET, POST, PUT, DELETE, etc...
+                mode: 'same-origin', //no-cors, cors, *same-origin
+                redirect: 'follow', //manual, *follow, error
+                referrer: 'no-referrer', //*client, no-referrer
+            }).then(res => res.json())
+                .then(response => SecondStep(response))
+                .catch(error => console.error('Error:', error));
+        })
+
+        document.querySelector("#EmployeeInsEnrollmentStepThree").addEventListener("click", function () {
+            empOtherGrpHinsCoverage = document.getElementById("empOtherGrpHinsCoverage").value
+            empInsCarrier = document.getElementById("empInsCarrier").value
+            empInsPolicyNumber = document.getElementById("empInsPolicyNumber").value
+            empInsPhoneNumber = document.getElementById("empInsPhoneNumber").value
+
+            var data = {
+                "Employee_id": Employee_id,
+                "empOtherGrpHinsCoverage": empOtherGrpHinsCoverage,
+                "empInsCarrier": empInsCarrier,
+                "empInsPolicyNumber": empInsPolicyNumber,
+                "empInsPhoneNumber": empInsPhoneNumber,
+            }
+
+            var ret = postData('OtherInsuranceNew', data)
+                .then(data => {
+                    console.log(data);
+                    ThirdStep(data);
+                })
+                .catch(error => console.error(error))
+
+            //fetch('OtherInsuranceNew', {
+            //    body: JSON.stringify(data), //must match 'Content-Type' header
+            //    cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+            //    credentials: 'same-origin', //include, same-origin, *omit
+            //    headers: {
+            //        'Accept': 'application/json',
+            //        'user-agent': 'Mozilla/4.0 MDN Example',
+            //        'content-type': 'application/json'
+            //    },
+            //    method: 'Post', //*GET, POST, PUT, DELETE, etc...
+            //    mode: 'same-origin', //no-cors, cors, *same-origin
+            //    redirect: 'follow', //manual, *follow, error
+            //    referrer: 'no-referrer', //*client, no-referrer
+            //}).then(res => res.json())
+            //    .then(response => ThirdStep(response))
+            //    .catch(error => console.error('Error:', error));
+        })
+    })
+
+    function FirstStep(emp) {
+        document.querySelector("#FirstStep").nextElementSibling.style.display = "none";
+        document.querySelector("#SecondStep").nextElementSibling.style.display = "block";
+        Employee_id = emp.data;
+    }
+
+    function SecondStep(emp) {
+        document.querySelector("#FirstStep").nextElementSibling.style.display = "none";
+        document.querySelector("#SecondStep").nextElementSibling.style.display = "none";
+        document.querySelector("#ThirdStep").nextElementSibling.style.display = "block";
+
+    }
+
+    function ThirdStep(emp) {
+        document.querySelector("#FirstStep").nextElementSibling.style.display = "none";
+        document.querySelector("#SecondStep").nextElementSibling.style.display = "none";
+        document.querySelector("#ThirdStep").nextElementSibling.style.display = "none";
+
+    }
+
+    function postData(url, data) {
+        //Default options are marked with *
+        console.log(data);
+        console.log(JSON.stringify(data));
+        return fetch(url, {
+            body: JSON.stringify(data), //must match 'Content-Type' header
+            cache: 'no-cache', //*default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', //include, same-origin, *omit
+            headers: {
+                'Accept': 'application/json',
+                'user-agent': 'Mozilla/4.0 MDN Example',
+                'content-type': 'application/json'
+            },
+            method: 'Post', //*GET, POST, PUT, DELETE, etc...
+            mode: 'same-origin', //no-cors, cors, *same-origin
+            redirect: 'follow', //manual, *follow, error
+            referrer: 'no-referrer', //*client, no-referrer
+        }).then(res => res.json())
+            .then(response => console.log('Success:', JSON.stringify(response)))
+            .catch(error => console.error('Error:', error));
+        //.then(Response => {
+        //    console.log(Response);
+        //    Response.json();
+        //}) //parses response to JSON
+    }
+</script>
+
+
+

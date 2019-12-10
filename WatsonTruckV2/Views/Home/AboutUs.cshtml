@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    @*<script src="https://kit.fontawesome.com/2987c70fa3.js" crossorigin="anonymous"></script>*@
+</head>
+
+<body>
+    <div class="jumbotron">
+        <h1>About US</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
+                a broad range of clients, including browsers and mobile devices. ASP.NET Web API
+                is an ideal platform for building RESTful applications on the .NET Framework.
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+        </div>
+    </div>
+
+    <div class="">
+        <footer>
+            <div class="footer_container" id="footerTop">
+                <div class="inner_footer">
+                    <div>
+                        <div class="logo_container">
+                            <img src="@Url.Content("~/App_Files/images/WatsonTruckImage.jpg")" width="155" height="54"><br>
+                            <img src="@Url.Content("~/App_Files/images/WatsonHopperImage.jpg")" width="155" height="120" style="padding-top:20px;">
+                        </div>
+                        <div id="footerWatsonTruck" class="footer_third">
+                            <label>Watson Truck & Supply</label><br />
+                            <div>1501 N Grimes</div>
+                            <div>Hobbs, NM 88240</div><br />
+                            <label style="display:table-cell">Contact:</label>
+                            <div>Jerry Elliott</div>
+                            <div>575-397-2411</div>
+                            <a href="mailto:jerryelliot@watsontruck.com">jerryelliot@watsontruck.com</a>
+                        </div>
+                        <div id="footerWatsonHopper" class="footer_third">
+                            <label>Watson Hopper, Inc.</label><br />
+                            <div>1700 West Marland</div>
+                            <div>Hobbs, NM 88240</div><br />
+                            <label style="display:table-cell">Contact:</label>
+                            <div>Mike Slaugh</div>
+                            <div>575-397-2411</div>
+                            <a href="mailto:mslaugh@watsonhopper.com">mslaugh@watsonhopper.com</a>
+                        </div>
+                        <div id="footerUnitShop" class="footer_third">
+                            <label>Unit Shop, LLC</label><br />
+                            <div>1501 N Grimes</div>
+                            <div>Hobbs, NM 88240</div><br />
+                            <label style="display:table-cell">Contact:</label>
+                            <div>Dale May</div>
+                            <div>575-397-2411</div>
+                            <a href="mailto:dmay@watsontruck.com">dmay@watsontruck.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
+
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        text-decoration: none;
+    }
+
+    html, body {
+        height: 100%;
+    }
+
+    /*.container {
+        position: relative;
+        width: 1200px;
+    }*/
+
+    #footerTop {
+        border-top: 10px solid #2e4593;
+        padding-top: 35px;
+    }
+
+    .footer_container {
+        display: flex;
+        overflow: hidden;
+        padding: 30px 0;
+        box-sizing: border-box;
+        position: fixed;
+        bottom: 0;
+        clear: both;
+    }
+
+
+
+    .inner_footer {
+        display: block;
+        margin: 0 auto;
+        width: 1100px;
+        height: 100%;
+    }
+
+        .inner_footer .logo_container {
+            width: 30%;
+            float: left;
+            height: 100%;
+            display: block;
+        }
+
+            .inner_footer .logo_container img {
+                width: 50%;
+                height: auto;
+            }
+
+        .inner_footer .footer_third {
+            width: 21%;
+            margin-right: 10px;
+            float: left;
+            height: 100%;
+        }
+
+
+            .inner_footer .footer_third:last-child {
+                margin-right: 0;
+            }
+
+    #footerWatsonTruck, #footerWatsonHopper, #UnitShop {
+        border-right: 1px solid;
+        border-right-style: solid;
+        border-right-color: #2e4593;
+    }
+</style>
+
