@@ -13,15 +13,14 @@ using System.Data;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Net.Http;
-using System.Web.Http;
+//using System.Web.Http;
 using System.Web.Mvc;
 using WatsonTruckV2.Models;
-//using WatsonTruckV2.ViewModels;
-
 
 namespace WatsonTruckV2.Controllers
 {
-    //[System.Web.Mvc.Authorize]
+    //[System.Web.Mvc.Authorize = "Employee, Manager"]
+    //[Authorize(Roles = "Employee, Manager")]
     public class EmployeeController : Controller
     {
         private WatsonTruckEntities db = new WatsonTruckEntities();
@@ -699,10 +698,11 @@ namespace WatsonTruckV2.Controllers
 
             db.DeleteEmployeeAndDependents(FamilyMember_id);
 
-            db.Family_Info.Remove(sp);
+            //db.Family_Info.Remove(sp);
             //db.Other_Insurance.Remove(other);
 
             return RedirectToAction("FamilyOverview", new { sp.Employee_id });
+         
         }
 
 
@@ -943,7 +943,7 @@ namespace WatsonTruckV2.Controllers
             //Other_Insurance other = db.Other_Insurance.Find(FamilyMember_id);
 
             db.DeleteEmployeeAndDependents(FamilyMember_id);
-            db.Family_Info.Remove(dep);
+            //db.Family_Info.Remove(dep);
             //db.Other_Insurance.Remove(other);
 
             return RedirectToAction("FamilyOverview", new { dep.Employee_id });

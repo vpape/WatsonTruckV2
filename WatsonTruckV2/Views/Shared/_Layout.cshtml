@@ -17,13 +17,33 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Watson Truck", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" href="~/Views/Home/AboutUs.cshtml" data-toggle="dropdown">About</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Our Team", "OurTeam", "Home", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Watson Truck History", "AboutUs", "Home", new { area = "" }, null)</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" href="~/Views/Home/Services.cshtml" data-toggle="dropdown">Services</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                            <a href=""></a>
+                            </li>
+                            <li>
+                            <a href=""></a>
+                            </li>
+                            <li>
+                            <a href=""></a>
+                            </li>
+                        </ul>
+                    </li>
+                    @*<li>@Html.ActionLink("Contact", "ContactUs", "Home")</li>*@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -42,3 +62,7 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<script>
+    
+</script>

@@ -189,8 +189,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CareerCenterController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\Group_HealthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Life_InsuranceController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -255,6 +259,7 @@
     <Compile Include="Models\Other_Insurance.cs">
       <DependentUpon>WatsonTruckEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SelectPdfParameters.cs" />
     <Compile Include="Models\SpouseAndDependentInsVM.cs" />
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>WatsonTruckEF.tt</DependentUpon>
@@ -336,8 +341,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -375,10 +378,68 @@
     <Content Include="Views\Employee\EditDependent.cshtml" />
     <Content Include="Views\Employee\DependentDetail.cshtml" />
     <Content Include="Views\Employee\DeleteDep.cshtml" />
+    <Content Include="Views\CareerCenter\Index.cshtml" />
+    <Content Include="Views\CareerCenter\JobList.cshtml" />
+    <Content Include="Views\CareerCenter\JobDescription.cshtml" />
+    <Content Include="Views\CareerCenter\CreateJobPosition.cshtml" />
+    <Content Include="Views\CareerCenter\ApplicantDetails.cshtml" />
+    <Content Include="Views\CareerCenter\CreateApplicant.cshtml" />
+    <Content Include="Views\CareerCenter\EditApplicant.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
+    <Content Include="Views\Home\AboutUs.cshtml" />
+    <Content Include="Views\Home\OurTeam.cshtml" />
+    <Content Include="Views\Group_Health\GrpHealthEnrollment.cshtml" />
+    <Content Include="Views\Group_Health\EditGroupHealthIns.cshtml" />
+    <Content Include="Views\Group_Health\SalaryRedirection.cshtml" />
+    <Content Include="Views\Group_Health\EditSalaryRedirection.cshtml" />
+    <Content Include="Views\Group_Health\AuthorizationForm.cshtml" />
+    <Content Include="Views\Group_Health\EditAuthorizationForm.cshtml" />
+    <Content Include="Views\Group_Health\DeleteGrpHealthIns.cshtml" />
+    <Content Include="Views\Life_Insurance\LifeInsuranceEnrollment.cshtml" />
+    <Content Include="Views\Life_Insurance\EditLifeInsurance.cshtml" />
+    <Content Include="Views\Life_Insurance\AddBeneficiary.cshtml" />
+    <Content Include="Views\Life_Insurance\EditBeneficiary.cshtml" />
+    <Content Include="Views\Life_Insurance\DeleteBeneficiary.cshtml" />
+    <Content Include="Views\Admin\EmpOverview.cshtml" />
+    <Content Include="Views\Admin\EnrollmentSelection.cshtml" />
+    <Content Include="Views\Admin\NewEmployeeEnrollment.cshtml" />
+    <Content Include="Views\Admin\EditEmployee.cshtml" />
+    <Content Include="Views\Admin\EmployeeDetail.cshtml" />
+    <Content Include="Views\Admin\DeleteEmp.cshtml" />
+    <Content Include="Views\Admin\FamilyOverview.cshtml" />
+    <Content Include="Views\Admin\FamilyEnrollment.cshtml" />
+    <Content Include="Views\Admin\SpouseEnrollment.cshtml" />
+    <Content Include="Views\Admin\EditSpouse.cshtml" />
+    <Content Include="Views\Admin\SpouseDetail.cshtml" />
+    <Content Include="Views\Admin\DeleteSp.cshtml" />
+    <Content Include="Views\Admin\AddDependent.cshtml" />
+    <Content Include="Views\Admin\EditDependent.cshtml" />
+    <Content Include="Views\Admin\DependentDetail.cshtml" />
+    <Content Include="Views\Admin\DeleteDep.cshtml" />
+    <Content Include="Views\Admin\GrpHealthEnrollment.cshtml" />
+    <Content Include="Views\Admin\EditGroupHealthIns.cshtml" />
+    <Content Include="Views\Admin\SalaryRedirection.cshtml" />
+    <Content Include="Views\Admin\EditSalaryRedirection.cshtml" />
+    <Content Include="Views\Admin\AuthorizationForm.cshtml" />
+    <Content Include="Views\Admin\EditAuthorizationForm.cshtml" />
+    <Content Include="Views\Admin\DeleteGrpHealthIns.cshtml" />
+    <Content Include="Views\Admin\LifeInsuranceEnrollment.cshtml" />
+    <Content Include="Views\Admin\EditLifeInsurance.cshtml" />
+    <Content Include="Views\Admin\AddBeneficiary.cshtml" />
+    <Content Include="Views\Admin\EditBeneficiary.cshtml" />
+    <Content Include="Views\Admin\DeleteBeneficiary.cshtml" />
+    <Content Include="Views\Admin\DeleteLifeInsurance.cshtml" />
+    <Content Include="Views\Admin\CareerCenter.cshtml" />
+    <Content Include="Views\Admin\JobList.cshtml" />
+    <Content Include="Views\Admin\JobDescription.cshtml" />
+    <Content Include="Views\Admin\CreateJobPosition.cshtml" />
+    <Content Include="Views\Admin\ApplicantDetails.cshtml" />
+    <Content Include="Views\Admin\CreateApplicant.cshtml" />
+    <Content Include="Views\Admin\EditApplicant.cshtml" />
+    <Content Include="Views\Admin\DeleteApplicant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
