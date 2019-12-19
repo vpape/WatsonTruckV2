@@ -25,7 +25,6 @@ namespace WatsonTruckV2.Models
             this.JobApplicants = new HashSet<JobApplicant>();
             this.Life_Insurance = new HashSet<Life_Insurance>();
             this.Other_Insurance = new HashSet<Other_Insurance>();
-            this.Vacations = new HashSet<Vacation>();
         }
     
         public int Employee_id { get; set; }
@@ -83,7 +82,5 @@ namespace WatsonTruckV2.Models
         public virtual ICollection<Life_Insurance> Life_Insurance { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Other_Insurance> Other_Insurance { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vacation> Vacations { get; set; }
     }
 }

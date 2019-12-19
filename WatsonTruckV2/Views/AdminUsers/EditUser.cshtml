@@ -1,0 +1,108 @@
+﻿@model WatsonTruckV2.Models.EditUserViewModel
+@{
+    ViewBag.Title = "Edit User";
+}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<h2>Edit User</h2>
+
+@using (Html.BeginForm("EditUser", "AdminUsers", FormMethod.Post, new { @class = "form-horizontal", user = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Id, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Id, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    @*<div class="form-group">
+        @Html.Label("Roles", new { @class = "control-label col-md-2" })
+        <span class=" col-md-10">
+            @foreach (var item in Model.Roles)
+            {
+                <input type="checkbox" name="Role" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />
+                @Html.Label(item.Value, new { @class = "control-label" })
+            }
+        </span>
+    </div>*@
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" value="Update" class="btn btn-primary" />
+            <button type="button" onclick="return Cancel()" class="btn btn-primary">Cancel</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3>User Roles</h3>
+        </div>
+        <div class="card-body">
+            @if (Model.Roles.Any())
+            {
+                foreach (var role in Model.Roles)
+                {
+                    <h5 class="card-title">@role</h5>
+                }
+            }
+            else
+            {
+                <h5 class="card-title">None at the moment</h5>
+            }
+            <div class="card-footer">
+                <input type="button" value="Manage Roles" onclick="location.href='@Url.Action("ManageUserRoles", "AdminUsers", new { Id = Model.Id })'" />
+                @*<a class="btn btn-primary" onclick="return EditUsersInRole()" style="width:auto">Add or Remove users</a>*@
+                @Html.ActionLink("Manage Roles", "ManageUserRoles", "AdminRoles", new { Id = Model.Id }, null)
+            </div>
+        </div>
+        @* <div class="card-header">
+                <h3>User Claims</h3>
+            </div>
+            <div class="card-body">
+                @if (Model.Claims.Any())
+                {
+                    foreach (var claims in Model.Claims)
+                    {
+                        <h5 class="card-title">@claims</h5>
+                    }
+                }
+                else
+                {
+                    <h5 class="card-title">None at the moment</h5>
+                }
+            </div>
+            }*@
+        @*<div class="card-footer">*@
+        @*<input type="button" value="Manage Claims" onclick="location.href='@Url.Action("EditUser", "AdminUsers", new { Id = Model.Id })'" />*@
+        @*<a class="btn btn-primary" onclick="return EditUsersInRole()" style="width:auto">Add or Remove users</a>*@
+        @*@Html.ActionLink("ManageClaims", "EditUsersInRole", "AdminRoles", new { Id = Model.Id }, null)*@
+        @*</div>*@
+    </div>
+
+}
+
+
+    <script>
+        function Cancel() {
+            window.location.href = "/AdminUsers/ListUsers";
+        }
+    </script>

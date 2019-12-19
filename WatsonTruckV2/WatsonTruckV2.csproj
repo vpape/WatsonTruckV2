@@ -190,6 +190,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminRolesController.cs" />
+    <Compile Include="Controllers\AdminUsersController.cs" />
     <Compile Include="Controllers\CareerCenterController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\Group_HealthController.cs" />
@@ -199,10 +201,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Address.cs">
-      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>WatsonTruckEF.tt</DependentUpon>
     </Compile>
@@ -221,12 +221,12 @@
     <Compile Include="Models\Beneficiary.cs">
       <DependentUpon>WatsonTruckEF.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\CreateRoleViewModel.cs" />
     <Compile Include="Models\Deduction.cs">
       <DependentUpon>WatsonTruckEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EditRoleViewModel.cs" />
+    <Compile Include="Models\EditUserViewModel.cs" />
     <Compile Include="Models\Employee.cs">
       <DependentUpon>WatsonTruckEF.tt</DependentUpon>
     </Compile>
@@ -267,12 +267,7 @@
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>WatsonTruckEF.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Vacation.cs">
-      <DependentUpon>WatsonTruckEF.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\UserRoleViewModel.cs" />
     <Compile Include="Models\WatsonTruckEF.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -437,6 +432,20 @@
     <Content Include="Views\Admin\CreateApplicant.cshtml" />
     <Content Include="Views\Admin\EditApplicant.cshtml" />
     <Content Include="Views\Admin\DeleteApplicant.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
+    <Content Include="Views\AdminRoles\Index.cshtml" />
+    <Content Include="Views\AdminRoles\CreateRole.cshtml" />
+    <Content Include="Views\AdminRoles\ListRoles.cshtml" />
+    <Content Include="Views\AdminRoles\EditRole.cshtml" />
+    <Content Include="Views\AdminRoles\EditUsersInRole.cshtml" />
+    <Content Include="Views\AdminRoles\DeleteRole.cshtml" />
+    <Content Include="Views\AdminUsers\Index.cshtml" />
+    <Content Include="Views\AdminUsers\ListUsers.cshtml" />
+    <Content Include="Views\AdminUsers\EditUser.cshtml" />
+    <Content Include="Views\AdminUsers\CreateUser.cshtml" />
+    <Content Include="Views\AdminUsers\DeleteUser.cshtml" />
+    <Content Include="Views\AdminUsers\ManageUserRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

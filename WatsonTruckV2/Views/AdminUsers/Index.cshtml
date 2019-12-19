@@ -1,0 +1,27 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        @if (ViewBag.displayMenu == "Yes")
+        {
+            <h2>Welcome Admin-<strong>@ViewBag.Name</strong>!</h2>
+            <h4>
+                Please click @Html.ActionLink("Home Page", "AdminRoles", "Index") to continue.
+            </h4>
+        }
+        else
+        {
+            <h2>Welcome <strong>@ViewBag.Name</strong></h2>
+            <h4>
+                Please click @Html.ActionLink("Employee Overview", "Employee", "EmpOverview") to continue.
+            </h4>
+        }
+    </div>
+</body>
+</html>

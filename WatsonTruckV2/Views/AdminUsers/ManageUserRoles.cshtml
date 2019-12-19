@@ -1,0 +1,69 @@
+﻿@model List<WatsonTruckV2.Models.UserRoleViewModel>
+@{
+    var userId = ViewBag.userId;
+}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<h2>Manage User Role</h2>
+
+@using (Html.BeginForm("ManageUserRoles", "AdminUsers", FormMethod.Post, new { @class = "form-horizontal", user = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary(true)
+    <div class="card">
+        <div class="card-header">
+            <h3>Manager User Roles</h3>
+        </div>
+        <div class="card-body">
+            @*@foreach (var role in Model)
+            {
+                <div class="form-check col-md-2">
+                    <input type="hidden" id="@role.RoleId" name="@role.RoleId" />
+                    <input type="hidden" id="@role.RoleName" name="@role.RoleName" />
+                    <input class="form-check-input" id="@role.isSelected" name="@role.isSelected" />
+                    <label class="form-check-label" for="@role.isSelected">
+                        @role.RoleName
+                    </label>
+                </div>
+            }*@
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="form-check col-md-2">
+                    <input type="hidden" class="" id="@Model[i].RoleId" name="@Model[i].RoleId" />
+                    <input type="hidden" class="" id="@Model[i].RoleName" name="@Model[i].RoleName" />
+                    <input class="form-check-input" id="@Model[i].isSelected" name="@Model[i].isSelected" />
+                    <label class="form-check-label" for="@Model[i].isSelected">
+                        @Model[i].RoleName
+                    </label>
+                </div>
+            }
+
+            <div class="card-footer">
+                <input type="submit" value="Update" id="@ViewBag.userId" onclick="location.href='@Url.Action("ManageUserRoles", "AdminUsers", new { })'" />
+                @*<button type="button" id="@ViewBag.userId" onclick="return Cancel()">Cancel</button>*@
+                @Html.ActionLink("Edit User", "EditUser", "AdminUsers", new { }, null)
+            </div>
+        </div>
+    </div>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    function Cancel() {
+        window.location.href = "/AdminUser/EditUser";
+    }
+</script>

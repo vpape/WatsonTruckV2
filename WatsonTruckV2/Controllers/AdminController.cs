@@ -1,19 +1,27 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.ModelConfiguration;
+using System.Data.Entity.ModelConfiguration.Configuration;
+using System.Data.Entity.Validation;
+using System.Globalization;
 using System.Linq;
-using System.Web;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Dynamic;
 using System.Data;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Net.Http;
-//using System.Web.Http;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using System.Web.Mvc;
 using WatsonTruckV2.Models;
 
@@ -23,8 +31,8 @@ namespace WatsonTruckV2.Controllers
     /// <summary>
     /// This is where I give you all the information about my employees
     /// </summary>
-     //[System.Web.Mvc.Authorize ="Admin"]
-     //[Authorize(Roles = "Admin")]
+
+    //[Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private WatsonTruckEntities db = new WatsonTruckEntities();
@@ -40,6 +48,9 @@ namespace WatsonTruckV2.Controllers
 
         }
 
+        //====================================
+        // GET: EmpOverview 
+        //==================================== 
         public ActionResult EmpOverview(int? Employee_id)
         {
             ViewBag.Employee_id = Employee_id;
@@ -64,6 +75,7 @@ namespace WatsonTruckV2.Controllers
         {
             return View();
         }
+
         //====================================
         //Create-EmpEnrollment
         //====================================

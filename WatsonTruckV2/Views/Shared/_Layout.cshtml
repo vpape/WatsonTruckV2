@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@*@using Microsoft.AspNet.Identity.EntityFramework*@
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -22,28 +24,36 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" role="button" href="~/Views/Home/AboutUs.cshtml" data-toggle="dropdown">About</a>
-                        <ul class="dropdown-menu" role="menu">
+                    <li class="nav-item dropdown">
+                        <a class="navbar-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            About
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li>@Html.ActionLink("Our Team", "OurTeam", "Home", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("Watson Truck History", "AboutUs", "Home", new { area = "" }, null)</li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" role="button" href="~/Views/Home/Services.cshtml" data-toggle="dropdown">Services</a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                            <a href=""></a>
-                            </li>
-                            <li>
-                            <a href=""></a>
-                            </li>
-                            <li>
-                            <a href=""></a>
-                            </li>
+                    <li class="nav-item dropdown">
+                        <a class="navbar-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li>@Html.ActionLink("Parts", "OurTeam", "Home", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sales", "AboutUs", "Home", new { area = "" }, null)</li>
                         </ul>
                     </li>
-                    @*<li>@Html.ActionLink("Contact", "ContactUs", "Home")</li>*@
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="navbar-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Manage
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li>@Html.ActionLink("Users", "ListUsers", "AdminUsers", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Roles", "ListRoles", "AdminRoles", new { area = "" }, null)</li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -53,8 +63,8 @@
         @RenderBody()
         @*<hr />*@
         @*<footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>*@
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>*@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
@@ -64,5 +74,5 @@
 </html>
 
 <script>
-    
+
 </script>

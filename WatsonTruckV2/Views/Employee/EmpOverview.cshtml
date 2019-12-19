@@ -15,6 +15,23 @@
     <hr />
     <h4>Employee Overview</h4>
     <table class="table table-condensed">
+        @*<tr>
+            <td>
+                <div>
+                    @if (ViewBag.displayMenu == "Yes")
+                    {
+                        <h1>Welcome Admin-<strong>@ViewBag.Name</strong>!</h1>
+                        <h3>
+                            @Html.ActionLink("Employee Overview", "Employee", "EmpOverview")
+                        </h3>
+                    }
+                    else
+                    {
+                        <h2>Welcome <strong>@ViewBag.Name</strong></h2>
+                    }
+                </div>
+            </td>
+        </tr>*@
         <thead class="thead-dark">
             <tr>
                 <th></th>

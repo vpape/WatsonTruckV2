@@ -1,0 +1,97 @@
+﻿@model IEnumerable<WatsonTruckV2.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "All Users";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>List Users</title>
+</head>
+@using (Html.BeginForm("ListUsers", "AdminUsers", FormMethod.Post, new { @class = "form-horizontal", user = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <body>
+        <div>
+            @if (Model.Any())
+            {
+                <a class="btn btn-primary" style="width:auto">
+                    @Html.ActionLink("Add New User", "Register", "Account")
+                </a>
+
+                foreach (var user in Model)
+                {
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            User Id: @user.Id
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@user.UserName</h5>
+                        </div>
+                         <div class="card-body">
+                            <h5 class="card-title">@*@user.EmployeeNumber*@</h5>
+                        </div>
+                         <div class="card-body">
+                            <h5 class="card-title">@user.Email</h5>
+                        </div>
+
+                        <div class="card-footer">
+                            <form action="DeleteUser" id="@user.Id" method="post">
+                                @Html.ActionLink("Edit", "EditUser", "AdminUsers", new { UserId = user.Id }, null)
+                                @*<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete user @user.UserName')">Delete  </button>*@
+                                       
+                                <span id="confirmDeleteSpan_@user.Id" style="display: none;">
+                                    <span>Are you sure you want to delete?</span>
+                                    <button type="submit" class="btn btn-danger">Yes</button>
+                                    <a href="#" class="btn btn-primary" onclick="ConfirmDelete('@user.Id', false">No</a>
+                                </span>
+                                <span id="deleteSpan_@user.Id">
+                                    <a href="#" class="btn btn-danger" onclick="ConfirmDelete('@user.Id', true)">Delete</a>
+                                </span>
+                            </form>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="card">
+                    <div class="card-header">
+                        No users created yet
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Use the button below to create a user
+                        </h5>
+                    </div>
+                </div>
+            }
+        </div>
+    </body>
+}
+</html>
+
+<script>
+    function ConfirmDelete(id, isDeleteClicked) {
+        var deleteSpan = 'deleteSpan_' + id;
+        var confirmDeleteSpan = 'confirmDeletespan_' + id;
+
+        if (isDeleteClicked) {
+            $('#' + deleteSpan).hide();
+            $('#' + confirmDeleteSpan).show();
+
+        }
+        else {
+            $('#' + deleteSpan).show();
+            $('#' + confirmDeleteSpan).hide();
+        }
+    }
+</script>
+

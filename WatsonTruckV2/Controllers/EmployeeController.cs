@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,7 +21,6 @@ using WatsonTruckV2.Models;
 
 namespace WatsonTruckV2.Controllers
 {
-    //[System.Web.Mvc.Authorize = "Employee, Manager"]
     //[Authorize(Roles = "Employee, Manager")]
     public class EmployeeController : Controller
     {
@@ -28,20 +29,58 @@ namespace WatsonTruckV2.Controllers
         private static List<Family_Info> family = new List<Family_Info>();
         private static List<Other_Insurance> otherins = new List<Other_Insurance>();
 
-        //private IEmployeeRepository _employeeRepository;
-
-        //public EmployeeController(IEmployeeRepository employeeRepository)
-        //{
-        //    _employeeRepository = employeeRepository;
-        //}
-
+        ApplicationDbContext context;
         public EmployeeController()
         {
-
+            context = new ApplicationDbContext();
         }
 
-        //EmpOverview
-        public ActionResult EmpOverview(int? Employee_id)
+        //public ActionResult Index()
+        //{
+
+        //    if (User.Identity.IsAuthenticated)
+        //    {
+        //        var user = User.Identity;
+        //        ViewBag.Name = user.Name;
+
+        //        if (!isAdminUser())
+        //        {
+        //            return RedirectToAction("Index", "Home");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
+
+        //    var roles = context.Roles.ToList();
+        //    return View(roles);
+        //}
+
+        //public bool isAdminUser()
+        //{
+        //    if (User.Identity.IsAuthenticated)
+        //    {
+        //        var user = User.Identity;
+        //        ApplicationDbContext context = new ApplicationDbContext();
+        //        var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+        //        var s = UserManager.GetRoles(user.GetUserId());
+        //        if (s[0].ToString() == "Employee")
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return false;
+        //}
+    
+
+
+    //EmpOverview
+    public ActionResult EmpOverview(int? Employee_id)
         {
             ViewBag.Employee_id = Employee_id;
 
@@ -49,16 +88,19 @@ namespace WatsonTruckV2.Controllers
             {
                 //return View(db.Employees.Find(Employee_id));
                 return View(db.Employees.ToList());
+
             }
             else
             {
                 return View(db.Employees.Find(Employee_id));
+                //return View(db.Employees.ToList());
             }
+
         }
 
-        //----------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------
 
-        public ActionResult EnrollmentSelection()
+    public ActionResult EnrollmentSelection()
         {
             return View();
         }

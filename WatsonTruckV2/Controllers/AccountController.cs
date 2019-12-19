@@ -12,14 +12,17 @@ using WatsonTruckV2.Models;
 
 namespace WatsonTruckV2.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        //added context = new ApplicationDBContext() in constructor
+        ApplicationDbContext context;
         public AccountController()
         {
+            context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -75,7 +78,7 @@ namespace WatsonTruckV2.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, /*model.Email,*/ model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -136,9 +139,13 @@ namespace WatsonTruckV2.Controllers
 
         //
         // GET: /Account/Register
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult Register()
         {
+            //Add ViewBag
+            ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin")).ToList(), "Name", "Name");
+
             return View();
         }
 
@@ -151,20 +158,51 @@ namespace WatsonTruckV2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    /*UserRole = model.UserRole, 
+                    * EmployeeNumber = model.EmployeeNumber*/
+                };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("ListUsers", "AdminUsers");
+                    }
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
+                    //Assign Role to User
+                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+
                     return RedirectToAction("Index", "Home");
                 }
+                //else
+                //{
+                //    var errors = string.Join(",", result.Errors);
+                //    ModelState.AddModelError("", errors);
+                //}
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, result.Errors.First());
+                    //var errors = string.Join(",", result.Errors);
+                    //ModelState.AddModelError("", errors);
+                }
+
+                //added viewbag.Name
+                ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin")).ToList(), "Name", "Name");
+
                 AddErrors(result);
             }
 
@@ -449,7 +487,7 @@ namespace WatsonTruckV2.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Users");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

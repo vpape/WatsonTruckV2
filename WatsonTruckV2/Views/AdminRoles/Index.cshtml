@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (ViewBag.displayMenu == "Yes")
+{
+    <h2>Welcome Admin-<strong>@ViewBag.Name</strong>!</h2>
+    <h4>
+        To continue to Employee Overview, click the button below.
+    </h4>
+    <div class="form-group">
+        <div class="col-md-2">
+            @Html.ActionLink("Employee Overview", "Admin", "EmpOverview")
+        </div>
+    </div>
+}
+else
+{
+    <h2>Welcome <strong>@ViewBag.Name</strong></h2>
+    <h4>
+        To continue to Employee Overview, click the button below.
+    </h4>
+    <div class="form-group">
+        <div class="col-md-2">
+            @Html.ActionLink("Employee Overview", "Employee", "EmpOverview")
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditRole", new { id = item.Id }) |
+                @Html.ActionLink("Details", "RoleDetails", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteRole", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+<div class="form-group">
+    <div class="col-md-2">
+        <button onclick="return CreateRole()" class="btn">Create Role</button>
+        <button onclick="return ListRoles()" class="btn">List Roles</button>
+    </div>
+</div>
+
+<script>
+    function CreateRole() {
+        window.location.href = "/AdminRoles/CreateRole";
+
+    }
+
+    function ListRoles() {
+        window.location.href = "/AdminRoles/ListRoles";
+
+    }
+</script>
+@*<p>
+        @Html.ActionLink("Create Role", "CreateRole", "Admin")
+    </p>*@
+
