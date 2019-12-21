@@ -171,9 +171,10 @@ namespace WatsonTruckV2.Controllers
                 {
                     if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        return RedirectToAction("ListUsers", "AdminUsers");
-                    }
+                        return RedirectToAction("EmpOverview", "Admin");
 
+                    }
+                  
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -185,13 +186,8 @@ namespace WatsonTruckV2.Controllers
                     //Assign Role to User
                     await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
 
-                    return RedirectToAction("Index", "Home");
-                }
-                //else
-                //{
-                //    var errors = string.Join(",", result.Errors);
-                //    ModelState.AddModelError("", errors);
-                //}
+                    return RedirectToAction("EmpOverview", "Employee");
+                }                
 
                 foreach (var error in result.Errors)
                 {

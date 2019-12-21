@@ -109,15 +109,20 @@ namespace WatsonTruckV2
     {
         protected override void Seed(ApplicationDbContext context)
         {
-            InitializeRolesAndUsers(context);
+            InitializeRolesAndUsersForEF(context);
             base.Seed(context);
         }
 
         //Create User=Admin@Admin.com with password=Admin@123456 in the Admin role        
-        public static void InitializeRolesAndUsers(ApplicationDbContext db)
+        public static void InitializeRolesAndUsersForEF(ApplicationDbContext db)
         {
-            var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
+            var userManager = HttpContext
+                .Current.GetOwinContext()
+                .GetUserManager<ApplicationUserManager>();
+
+            var roleManager = HttpContext
+                .Current
+                .GetOwinContext().Get<ApplicationRoleManager>();
 
             const string UserRole = "Admin";
             const string UserName = "LyRichards";

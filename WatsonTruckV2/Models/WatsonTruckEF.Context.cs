@@ -27,7 +27,6 @@ namespace WatsonTruckV2.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AvailablePosition> AvailablePositions { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
@@ -40,9 +39,10 @@ namespace WatsonTruckV2.Models
         public virtual DbSet<InsurancePlan> InsurancePlans { get; set; }
         public virtual DbSet<InsurancePlanDetail> InsurancePlanDetails { get; set; }
         public virtual DbSet<InsurancePremium> InsurancePremiums { get; set; }
-        public virtual DbSet<JobApplicant> JobApplicants { get; set; }
         public virtual DbSet<Life_Insurance> Life_Insurance { get; set; }
         public virtual DbSet<Other_Insurance> Other_Insurance { get; set; }
+        public virtual DbSet<AvailablePosition> AvailablePositions { get; set; }
+        public virtual DbSet<JobApplicant> JobApplicants { get; set; }
     
         public virtual int DeleteEmployeeAndDependents(Nullable<int> empid)
         {

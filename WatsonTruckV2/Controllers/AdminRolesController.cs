@@ -363,7 +363,7 @@ namespace WatsonTruckV2.Controllers
             //}
     
 
-            return View("ListRoles");
+            return View(role);
 
         }
 

@@ -27,7 +27,6 @@ namespace WatsonTruckV2.Models
         public string CoveredByOtherInsurance { get; set; }
         public string PObox { get; set; }
     
-        public virtual Employee Employee { get; set; }
         public virtual Family_Info Family_Info { get; set; }
     }
 }

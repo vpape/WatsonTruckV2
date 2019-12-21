@@ -116,7 +116,7 @@ namespace WatsonTruckV2.Controllers
         {
             Employee e = new Employee();
 
-            e.EmployeeRole = Role;
+            e.UserRole = Role;
             e.CurrentEmployer = CurrentEmployer;
             e.JobTitle = JobTitle;
             e.SSN = EmpNumber;
@@ -262,7 +262,7 @@ namespace WatsonTruckV2.Controllers
                 .Where(i => i.Employee_id == Employee_id)
                 .Single();
 
-            e.EmployeeRole = EmpRole;
+            e.UserRole = EmpRole;
             e.CurrentEmployer = CurrentEmployer;
             e.JobTitle = JobTitle;
             e.SSN = EmpNumber;
@@ -303,7 +303,7 @@ namespace WatsonTruckV2.Controllers
             grph.PhoneNumber = InsPhoneNumber;
 
             ViewBag.Employee_id = e.Employee_id;
-            ViewBag.EmployeeRole = e.EmployeeRole;
+            ViewBag.EmployeeRole = e.UserRole;
 
             if (ModelState.IsValid)
             {
@@ -346,8 +346,6 @@ namespace WatsonTruckV2.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.Employee_id = Employee_id;
-
             return View(employeeAndInsuranceVM);
         }
 
@@ -380,14 +378,21 @@ namespace WatsonTruckV2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int? Employee_id)
         {
-            Employee e = db.Employees.Find(Employee_id);
+            var employee = db.Employees.Find(Employee_id);
+            if(employee == null)
+            {
+                ViewBag.ErrorMessage = $"Employee cannot be found";
+                return View("NotFound");
+                //return HttpNotFound();
+            }
 
-            db.DeleteEmployeeAndDependents(Employee_id);
+            db.Employees.Remove(db.Employees.FirstOrDefault(e => e.Employee_id == Employee_id));
+            db.SaveChanges();
 
-            db.Employees.Remove(e);
-            //db.SaveChanges();
+            //db.DeleteEmployeeAndDependents(Employee_id);
+            //db.Employees.Remove(e);
 
-            return RedirectToAction("EmpOverview", new { e.Employee_id });
+            return RedirectToAction("EmpOverview", new { employee.Employee_id });
         }
 
         //----------------------------------------------------------------------------------------
@@ -713,9 +718,6 @@ namespace WatsonTruckV2.Controllers
             spAndDepInsVM.family = db.Family_Info.FirstOrDefault(i => i.FamilyMember_id == FamilyMember_id);
             spAndDepInsVM.otherIns = db.Other_Insurance.FirstOrDefault(i => i.FamilyMember_id == FamilyMember_id);
 
-            ViewBag.FamilyMember_id = spAndDepInsVM.family.FamilyMember_id;
-            ViewBag.Employee_id = spAndDepInsVM.family.Employee_id;
-
             if (FamilyMember_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -735,11 +737,16 @@ namespace WatsonTruckV2.Controllers
         public ActionResult SpDeleteConfirmed(int? FamilyMember_id)
         {
             Family_Info sp = db.Family_Info.Find(FamilyMember_id);
+            if (sp == null)
+            {
+                return HttpNotFound();
+            }
+            
+            db.Family_Info.Remove(db.Family_Info.FirstOrDefault(f => f.FamilyMember_id == FamilyMember_id));
+            db.SaveChanges();
 
-            //Other_Insurance other = db.Other_Insurance.Find(FamilyMember_id);
-
-            db.DeleteEmployeeAndDependents(FamilyMember_id);
-
+            //db.Other_Insurance.Find(FamilyMember_id);
+            //db.DeleteEmployeeAndDependents(FamilyMember_id);
             //db.Family_Info.Remove(sp);
             //db.Other_Insurance.Remove(other);
 
@@ -960,9 +967,6 @@ namespace WatsonTruckV2.Controllers
             spAndDepInsVM.family = db.Family_Info.FirstOrDefault(i => i.FamilyMember_id == FamilyMember_id);
             spAndDepInsVM.otherIns = db.Other_Insurance.FirstOrDefault(i => i.FamilyMember_id == FamilyMember_id);
 
-            ViewBag.FamilyMember_id = spAndDepInsVM.family.FamilyMember_id;
-            ViewBag.Employee_id = spAndDepInsVM.family.Employee_id;
-
             if (FamilyMember_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -981,12 +985,18 @@ namespace WatsonTruckV2.Controllers
         public ActionResult DepDeleteConfirm(int? FamilyMember_id)
         {
             Family_Info dep = db.Family_Info.Find(FamilyMember_id);
+            if (dep == null)
+            {
+                return HttpNotFound();
+            }
 
-            //Other_Insurance other = db.Other_Insurance.Find(FamilyMember_id);
+            db.Family_Info.Remove(db.Family_Info.FirstOrDefault(f => f.FamilyMember_id == FamilyMember_id));
+            db.SaveChanges();
 
-            db.DeleteEmployeeAndDependents(FamilyMember_id);
-            //db.Family_Info.Remove(dep);
+            //db.Other_Insurance.Find(FamilyMember_id);
             //db.Other_Insurance.Remove(other);
+            //db.DeleteEmployeeAndDependents(FamilyMember_id);
+            //db.Family_Info.Remove(sp);
 
             return RedirectToAction("FamilyOverview", new { dep.Employee_id });
         }

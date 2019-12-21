@@ -22,13 +22,11 @@ namespace WatsonTruckV2.Models
             this.Family_Info = new HashSet<Family_Info>();
             this.Group_Health = new HashSet<Group_Health>();
             this.InsurancePlans = new HashSet<InsurancePlan>();
-            this.JobApplicants = new HashSet<JobApplicant>();
             this.Life_Insurance = new HashSet<Life_Insurance>();
-            this.Other_Insurance = new HashSet<Other_Insurance>();
+            this.JobApplicants = new HashSet<JobApplicant>();
         }
     
         public int Employee_id { get; set; }
-        public string EmployeeRole { get; set; }
         public string CurrentEmployer { get; set; }
         public string PreviousEmployer { get; set; }
         public string FirstName { get; set; }
@@ -65,6 +63,7 @@ namespace WatsonTruckV2.Models
         public string Active { get; set; }
         public string Retired { get; set; }
         public string CobraStateContinuation { get; set; }
+        public string UserRole { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Beneficiary> Beneficiaries { get; set; }
@@ -77,10 +76,8 @@ namespace WatsonTruckV2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InsurancePlan> InsurancePlans { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<JobApplicant> JobApplicants { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Life_Insurance> Life_Insurance { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Other_Insurance> Other_Insurance { get; set; }
+        public virtual ICollection<JobApplicant> JobApplicants { get; set; }
     }
 }

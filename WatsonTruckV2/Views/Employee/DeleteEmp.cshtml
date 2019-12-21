@@ -12,279 +12,288 @@
 </head>
 <body>
     <input type="hidden" id="Employee_id" class="form-control" name="Employee_id" value="@ViewBag.Employee_id" />
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
         <div class="form-horizontal">
-            <hr />
-            <div class="form-horizontal">
-                <div class="collapsible" id="FirstStep">Employee Information:</div>
-                <div class="content">
-                    <form action="/Employee/DeleteEmp" method="post">
-                        <p></p>
-                        <div id="divEmployeeInfo">
-                            <dl class="dl-horizontal">
-                                <dt>
-                                    <label class="col-md-offset-2">Employee Role:</label>
-                                </dt>
+            <div class="collapsible" id="FirstStep">Employee Information:</div>
+            <div class="content">
+                <form action="/Employee/DeleteEmp" method="post">
+                    @Html.AntiForgeryToken()
+                    <p></p>
+                    <div id="divEmployeeInfo">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                <label class="col-md-offset-2">Employee Role:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.EmployeeRole)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.UserRole)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Current Employer:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Current Employer:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.CurrentEmployer)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.CurrentEmployer)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Hire Date:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Hire Date:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Convert.ToDateTime(Model.employee.HireDate).ToString("yyyy-MM-dd")
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">Effective Date:</label>
-                                </dt>
-                                <dd class="form-group-sm">
+                            <dd class="form-group-sm">
+                                @Convert.ToDateTime(Model.employee.HireDate).ToString("yyyy-MM-dd")
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">Effective Date:</label>
+                            </dt>
+                            <dd class="form-group-sm">
 
-                                    @Convert.ToDateTime(Model.employee.EffectiveDate).ToString("yyyy-MM-dd")
+                                @Convert.ToDateTime(Model.employee.EffectiveDate).ToString("yyyy-MM-dd")
 
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">Eligibilty Date:</label>
-                                </dt>
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">Eligibilty Date:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Convert.ToDateTime(Model.employee.EligibilityDate).ToString("yyyy-MM-dd")
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">Job Title:</label>
-                                </dt>
+                            <dd class="form-group-sm">
+                                @Convert.ToDateTime(Model.employee.EligibilityDate).ToString("yyyy-MM-dd")
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">Job Title:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.JobTitle)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.JobTitle)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Employee Number:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Employee Number:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(Model => Model.employee.SSN)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(Model => Model.employee.SSN)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Marital Status:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Marital Status:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.MaritalStatus)
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">First Name:</label>
-                                </dt>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.MaritalStatus)
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">First Name:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.FirstName)
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">Last Name:</label>
-                                </dt>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.FirstName)
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">Last Name:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.LastName)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.LastName)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Date of Birth:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Date of Birth:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Convert.ToDateTime(Model.employee.DateOfBirth).ToString("yyyy-MM-dd")
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">Gender:</label>
-                                </dt>
+                            <dd class="form-group-sm">
+                                @Convert.ToDateTime(Model.employee.DateOfBirth).ToString("yyyy-MM-dd")
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">Gender:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    <label class="radio-inline"><input disabled type="radio" id="Male" class="radio-inline" name="Gender" value="Male" @((Model.employee.Gender) == "Male" ? "checked" : "") />Male</label>
-                                    <label class="radio-inline"><input disabled type="radio" id="Female" class="radio-inline" name="Gender" value="Female" @((Model.employee.Gender) == "Female" ? "checked" : "") />Female</label>
-                                </dd>
+                            <dd class="form-group-sm">
+                                <label class="radio-inline"><input disabled type="radio" id="Male" class="radio-inline" name="Gender" value="Male" @((Model.employee.Gender) == "Male" ? "checked" : "") />Male</label>
+                                <label class="radio-inline"><input disabled type="radio" id="Female" class="radio-inline" name="Gender" value="Female" @((Model.employee.Gender) == "Female" ? "checked" : "") />Female</label>
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Mailing Address:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Mailing Address:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.MailingAddress)
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.MailingAddress)
 
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">PO Box:</label>
-                                </dt>
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">PO Box:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.PObox)
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.PObox)
 
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">City:</label>
-                                </dt>
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.City)
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">City:</label>
+                            </dt>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.City)
 
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">State:</label>
-                                </dt>
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">State:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.State)
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.State)
 
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">Zip Code:</label>
-                                </dt>
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">Zip Code:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.ZipCode)
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.ZipCode)
 
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">Within City Limits:</label>
-                                </dt>
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">Within City Limits:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    <label class="radio-inline"><input disabled type="radio" id="YesCityLimits" class="radio-inline" name="CityLimits" value="True" @((Model.employee.CityLimits) == "True" ? "checked" : "") />Yes</label>
-                                    <label class="radio-inline"><input disabled type="radio" id="NoCityLimits" class="radio-inline" name="CityLimits" value="False" @((Model.employee.CityLimits) == "False" ? "checked" : "") />No</label>
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">County:</label>
-                                </dt>
+                            <dd class="form-group-sm">
+                                <label class="radio-inline"><input disabled type="radio" id="YesCityLimits" class="radio-inline" name="CityLimits" value="True" @((Model.employee.CityLimits) == "True" ? "checked" : "") />Yes</label>
+                                <label class="radio-inline"><input disabled type="radio" id="NoCityLimits" class="radio-inline" name="CityLimits" value="False" @((Model.employee.CityLimits) == "False" ? "checked" : "") />No</label>
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">County:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.County)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.County)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Physical Address:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Physical Address:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.PhysicalAddress)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.PhysicalAddress)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">City:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">City:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.CityTwo)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.CityTwo)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">State:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">State:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.StateTwo)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.StateTwo)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Zip Code:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Zip Code:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.ZipCodeTwo)
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">Email Address:</label>
-                                </dt>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.ZipCodeTwo)
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">Email Address:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.EmailAddress)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.EmailAddress)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Phone Number:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Phone Number:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.PhoneNumber)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.PhoneNumber)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Cell Phone:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Cell Phone:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.CellPhone)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.CellPhone)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Work Status:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Work Status:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
+                            <dd class="form-group-sm">
 
-                                    <input type="checkbox" class="checkbox-inline" id="Active" name="Active" value="Active" @((Model.employee.Active == "True") ? "checked" : "") /><label for="Active">Active</label>
-                                    <input type="checkbox" class="checkbox-inline" id="Retired" name="Retired" value="Retired" @((Model.employee.Retired == "True") ? "checked" : "") /><label label for="Retired">Retired</label>
-                                    <input type="checkbox" class="checkbox-inline" id="CobraStateContinuation" name="CobraStateContinuation" value="CobraStateContinuation" @((Model.employee.CobraStateContinuation == "True") ? "checked" : "") /><label for="CobraStateContinuation">Cobra State Continuation</label>
-                                </dd>
+                                <input type="checkbox" class="checkbox-inline" id="Active" name="Active" value="Active" @((Model.employee.Active == "True") ? "checked" : "") /><label for="Active">Active</label>
+                                <input type="checkbox" class="checkbox-inline" id="Retired" name="Retired" value="Retired" @((Model.employee.Retired == "True") ? "checked" : "") /><label label for="Retired">Retired</label>
+                                <input type="checkbox" class="checkbox-inline" id="CobraStateContinuation" name="CobraStateContinuation" value="CobraStateContinuation" @((Model.employee.CobraStateContinuation == "True") ? "checked" : "") /><label for="CobraStateContinuation">Cobra State Continuation</label>
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Annual Salary:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Annual Salary:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.employee.AnnualSalary)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.employee.AnnualSalary)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Covered by Other Ins?</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Covered by Other Ins?</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.grpHealth.OtherInsuranceCoverage)
-                                </dd>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.grpHealth.OtherInsuranceCoverage)
+                            </dd>
 
-                                <dt>
-                                    <label class="col-md-offset-2">Insurance Carrier:</label>
-                                </dt>
+                            <dt>
+                                <label class="col-md-offset-2">Insurance Carrier:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.grpHealth.InsuranceCarrier)
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">Policy Number:</label>
-                                </dt>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.grpHealth.InsuranceCarrier)
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">Policy Number:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.grpHealth.PolicyNumber)
-                                </dd>
-                                <dt>
-                                    <label class="col-md-offset-2">Ins. Phone#:</label>
-                                </dt>
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.grpHealth.PolicyNumber)
+                            </dd>
+                            <dt>
+                                <label class="col-md-offset-2">Ins. Phone#:</label>
+                            </dt>
 
-                                <dd class="form-group-sm">
-                                    @Html.DisplayFor(model => model.grpHealth.PhoneNumber)
-                                </dd>
-                            </dl>
-                        </div>
-                    </form>
-                    <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-default" onclick="return confirm('Are you sure you want to delete');" /> |
-                        @Html.ActionLink("Back to List", "EmpOverview")
+                            <dd class="form-group-sm">
+                                @Html.DisplayFor(model => model.grpHealth.PhoneNumber)
+                            </dd>
+                        </dl>
                     </div>
-                </div>
+                </form>
+                @using (Html.BeginForm())
+                {
+                    <form action="DeleteEmp" id="@Model.employee.Employee_id" method="post">
+                        @Html.AntiForgeryToken()
+                        <span id="confirmDeleteSpan_@Model.employee.Employee_id">Are you sure you want to delete?</span>
+                        <button type="submit" class="btn" onclick="ConfirmDelete('@Model.employee.Employee_id',true" )>Yes</button>
+                        <a href="#" class="btn" onclick="ConfirmDelete('@Model.employee.Employee_id',false" )>No</a>
+                        @*<span id="deleteSpan_@Model.employee.Employee_id"></span>*@
+                        @*<a href="#" class="btn-danger" onclick="ConfirmDelete('@Model.employee.Employee_id',true" )>Delete</a>*@
+                    </form>
+                    @*<div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" /> |*@
+                    @*@Html.ActionLink("Back to List", "EmpOverview")
+                    </div>*@
+                }
+
             </div>
         </div>
-    }
+    </div>
 </body>
 </html>
 
@@ -360,7 +369,18 @@
         });
     }
 
+    function ConfirmDelete(id, isDeleteClicked) {
+        var confirmDeleteSpan = 'deleteConfirm_' + id;
+        var deleteSpan = 'deleteSpan_' + id;
+
+        if (isDeleteClicked) {
+            $('#' + deleteSpan).hide();
+            $('#' + confirmDeleteSpan).show();
+        }
+        else {
+            $('#' + deleteSpan).show();
+            $('#' + confirmDeleteSpan).hide();
+        }
+    }
+
 </script>
-
-
-

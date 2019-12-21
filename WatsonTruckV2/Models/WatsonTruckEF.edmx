@@ -23,9 +23,10 @@
         </EntityType>
         <EntityType Name="AspNetUserLogins">
           <Key>
-            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
@@ -155,7 +156,7 @@
             <PropertyRef Name="Employee_id" />
           </Key>
           <Property Name="Employee_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EmployeeRole" Type="varchar" MaxLength="15" />
+          <Property Name="UserRole" Type="varchar" MaxLength="15" />
           <Property Name="CurrentEmployer" Type="varchar" MaxLength="30" />
           <Property Name="PreviousEmployer" Type="varchar" MaxLength="30" />
           <Property Name="FirstName" Type="varchar" MaxLength="30" />
@@ -558,7 +559,9 @@
           <Property Name="PObox" Type="varchar" MaxLength="10" />
         </EntityType>
         <Association Name="FK_Beneficiary_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Beneficiary" Type="Self.Beneficiary" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
@@ -626,7 +629,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Deductions_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Deductions" Type="Self.Deductions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
@@ -638,7 +643,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Family Info_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Family_Info" Type="Self.Family_Info" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
@@ -650,7 +657,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Group Health_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Group_Health" Type="Self.Group_Health" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
@@ -662,7 +671,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_InsurancePlan_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="InsurancePlan" Type="Self.InsurancePlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
@@ -674,7 +685,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_InsurancePlanDetail_InsurancePlan">
-          <End Role="InsurancePlan" Type="Self.InsurancePlan" Multiplicity="1" />
+          <End Role="InsurancePlan" Type="Self.InsurancePlan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="InsurancePlanDetail" Type="Self.InsurancePlanDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="InsurancePlan">
@@ -686,7 +699,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_InsurancePremium_InsurancePlan">
-          <End Role="InsurancePlan" Type="Self.InsurancePlan" Multiplicity="1" />
+          <End Role="InsurancePlan" Type="Self.InsurancePlan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="InsurancePremium" Type="Self.InsurancePremium" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="InsurancePlan">
@@ -710,25 +725,15 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Life Insurance_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Life_Insurance" Type="Self.Life_Insurance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Employee_id" />
             </Principal>
             <Dependent Role="Life_Insurance">
-              <PropertyRef Name="Employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Other Insurance_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="Other_Insurance" Type="Self.Other_Insurance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Employee_id" />
-            </Principal>
-            <Dependent Role="Other_Insurance">
               <PropertyRef Name="Employee_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -854,10 +859,6 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Life_Insurance" EntitySet="Life_Insurance" />
           </AssociationSet>
-          <AssociationSet Name="FK_Other Insurance_Employee" Association="Self.FK_Other Insurance_Employee">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="Other_Insurance" EntitySet="Other_Insurance" />
-          </AssociationSet>
           <AssociationSet Name="FK_Other Insurance_Family Info" Association="Self.FK_Other Insurance_Family Info">
             <End Role="Family_Info" EntitySet="Family_Info" />
             <End Role="Other_Insurance" EntitySet="Other_Insurance" />
@@ -867,20 +868,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WatsonTruckModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="AvailablePosition">
-          <Key>
-            <PropertyRef Name="Job_id" />
-          </Key>
-          <Property Name="Job_id" Type="Int32" Nullable="false" />
-          <Property Name="JobApplicant_id" Type="Int32" Nullable="false" />
-          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="JobDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="PostedDate" Type="DateTime" Precision="0" />
-          <Property Name="PositionPosted" Type="Boolean" />
-        </EntityType>
         <EntityContainer Name="WatsonTruckEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AvailablePositions" EntityType="Self.AvailablePosition" />
           <FunctionImport Name="DeleteEmployeeAndDependents">
           <Parameter Name="empid" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -929,7 +917,6 @@
           <EntitySet Name="InsurancePlans" EntityType="WatsonTruckModel.InsurancePlan" />
           <EntitySet Name="InsurancePlanDetails" EntityType="WatsonTruckModel.InsurancePlanDetail" />
           <EntitySet Name="InsurancePremiums" EntityType="WatsonTruckModel.InsurancePremium" />
-          <EntitySet Name="JobApplicants" EntityType="WatsonTruckModel.JobApplicant" />
           <EntitySet Name="Life_Insurance" EntityType="WatsonTruckModel.Life_Insurance" />
           <EntitySet Name="Other_Insurance" EntityType="WatsonTruckModel.Other_Insurance" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="WatsonTruckModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -960,17 +947,9 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="InsurancePlan" EntitySet="InsurancePlans" />
           </AssociationSet>
-          <AssociationSet Name="FK_JobApplicant_Employee" Association="WatsonTruckModel.FK_JobApplicant_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="JobApplicant" EntitySet="JobApplicants" />
-          </AssociationSet>
           <AssociationSet Name="FK_Life_Insurance_Employee" Association="WatsonTruckModel.FK_Life_Insurance_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Life_Insurance" EntitySet="Life_Insurance" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Other_Insurance_Employee" Association="WatsonTruckModel.FK_Other_Insurance_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Other_Insurance" EntitySet="Other_Insurance" />
           </AssociationSet>
           <AssociationSet Name="FK_Other_Insurance_Family_Info" Association="WatsonTruckModel.FK_Other_Insurance_Family_Info">
             <End Role="Family_Info" EntitySet="Family_Info" />
@@ -987,6 +966,12 @@
           <AssociationSet Name="AspNetUserRoles" Association="WatsonTruckModel.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="AvailablePositions" EntityType="WatsonTruckModel.AvailablePosition" />
+          <EntitySet Name="JobApplicants" EntityType="WatsonTruckModel.JobApplicant" />
+          <AssociationSet Name="FK_JobApplicant_Employee" Association="WatsonTruckModel.FK_JobApplicant_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="JobApplicant" EntitySet="JobApplicants" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -1020,9 +1005,10 @@
         </EntityType>
         <EntityType Name="AspNetUserLogin">
           <Key>
-            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
@@ -1138,7 +1124,6 @@
             <PropertyRef Name="Employee_id" />
           </Key>
           <Property Name="Employee_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmployeeRole" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="CurrentEmployer" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="PreviousEmployer" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -1180,9 +1165,9 @@
           <NavigationProperty Name="Family_Info" Relationship="WatsonTruckModel.FK_Family_Info_Employee" FromRole="Employee" ToRole="Family_Info" />
           <NavigationProperty Name="Group_Health" Relationship="WatsonTruckModel.FK_Group_Health_Employee" FromRole="Employee" ToRole="Group_Health" />
           <NavigationProperty Name="InsurancePlans" Relationship="WatsonTruckModel.FK_InsurancePlan_Employee" FromRole="Employee" ToRole="InsurancePlan" />
-          <NavigationProperty Name="JobApplicants" Relationship="WatsonTruckModel.FK_JobApplicant_Employee" FromRole="Employee" ToRole="JobApplicant" />
           <NavigationProperty Name="Life_Insurance" Relationship="WatsonTruckModel.FK_Life_Insurance_Employee" FromRole="Employee" ToRole="Life_Insurance" />
-          <NavigationProperty Name="Other_Insurance" Relationship="WatsonTruckModel.FK_Other_Insurance_Employee" FromRole="Employee" ToRole="Other_Insurance" />
+          <NavigationProperty Name="JobApplicants" Relationship="WatsonTruckModel.FK_JobApplicant_Employee" FromRole="Employee" ToRole="JobApplicant" />
+          <Property Name="UserRole" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Family_Info">
           <Key>
@@ -1334,6 +1319,268 @@
           <Property Name="BiWeeklyPremiumCost" Type="Decimal" Precision="6" Scale="2" />
           <NavigationProperty Name="InsurancePlan" Relationship="WatsonTruckModel.FK_InsurancePremium_InsurancePlan" FromRole="InsurancePremium" ToRole="InsurancePlan" />
         </EntityType>
+        <EntityType Name="Life_Insurance">
+          <Key>
+            <PropertyRef Name="LifeInsurance_id" />
+          </Key>
+          <Property Name="LifeInsurance_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Employee_id" Type="Int32" Nullable="false" />
+          <Property Name="GroupPlanNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="BenefitsEffectiveDate" Type="DateTime" Precision="0" />
+          <Property Name="InitialEnrollment" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ReEnrollment" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="AddEmployeeAndDependents" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DropRefuseCoverage" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="InformationChange" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="IncreaseAmount" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="FamilyStatusChange" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="MarriedOrHaveSpouse" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="HaveChildrenOrHaveDependents" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfMarriage" Type="DateTime" Precision="0" />
+          <Property Name="PlacementDateOfAdoptedChild" Type="DateTime" Precision="0" />
+          <Property Name="AddDependent" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DropDependent" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DropEmployee" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DropDependents" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="LastDayOfCoverage" Type="DateTime" Precision="0" />
+          <Property Name="Retirement" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="LastDayWorked" Type="DateTime" Precision="0" />
+          <Property Name="OtherEvent" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="OtherEventReason" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OtherEventDate" Type="DateTime" Precision="0" />
+          <Property Name="EmployeeDentalDrop" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="SpouseDentalDrop" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DependentDentalDrop" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeVisionDrop" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="SpouseVisionDrop" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DependentVisionDrop" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DropBasicLife" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DropDental" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DropVision" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Divorce" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DivorceDate" Type="DateTime" Precision="0" />
+          <Property Name="DeathOfSpouse" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DeathOfSpouseDate" Type="DateTime" Precision="0" />
+          <Property Name="TerminationOrExpirationOfCoverage" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="TerminationOrExpirationOfCoverageDate" Type="DateTime" Precision="0" />
+          <Property Name="DentalCoverageLost" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="VisionCoverageLost" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="CoveredUnderOtherInsurance" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DoNotWantDentalCoverage" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeCoveredUnderOtherDentalPlan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="SpouseCoveredUnderOtherDentalPlan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DependentsCoveredUnderOtherDentalPlan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DoNotWantVisionCoverage" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeCoveredUnderOtherVisionPlan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="SpouseCoveredUnderOtherVisionPlan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DependentsCoveredUnderOtherVisionPlan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="OwnerBasicLifeWithADandDPolicyAmount" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ManagerBasicLifeWithADandDPolicyAmount" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeBasicLifeWithADandDPolicyAmount" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="SpouseBasicLifeWithADandDPolicyAmount" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DoNotWantBasicLifeCoverageWithADandD" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="AmountOfPreviousPolicy" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeSignature" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeSignatureDate" Type="DateTime" Precision="0" />
+          <Property Name="SubTotalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TerminationEmploymentOfDropCoverage" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="TerminationEmploymentDateOfDropCoverage" Type="DateTime" Precision="0" />
+          <Property Name="TerminationEmploymentLossOfOtherCoverage" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="TerminationEmploymentDateLossOfOtherCoverage" Type="DateTime" Precision="0" />
+          <Property Name="Other" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OtherReason" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="DentalCoverage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VisionCoverage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employee" Relationship="WatsonTruckModel.FK_Life_Insurance_Employee" FromRole="Life_Insurance" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Other_Insurance">
+          <Key>
+            <PropertyRef Name="OtherInsurance_id" />
+          </Key>
+          <Property Name="FamilyMember_id" Type="Int32" Nullable="false" />
+          <Property Name="OtherInsurance_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Employee_id" Type="Int32" Nullable="false" />
+          <Property Name="InsuranceCarrier" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PolicyNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MailingAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CoveredByOtherInsurance" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PObox" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Family_Info" Relationship="WatsonTruckModel.FK_Other_Insurance_Family_Info" FromRole="Other_Insurance" ToRole="Family_Info" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="WatsonTruckModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WatsonTruckModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="AspNetUserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="WatsonTruckModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WatsonTruckModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="AspNetUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Beneficiary_Employee">
+          <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WatsonTruckModel.Beneficiary" Role="Beneficiary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_id" />
+            </Principal>
+            <Dependent Role="Beneficiary">
+              <PropertyRef Name="Employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deductions_Employee">
+          <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WatsonTruckModel.Deduction" Role="Deduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_id" />
+            </Principal>
+            <Dependent Role="Deduction">
+              <PropertyRef Name="Employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Family_Info_Employee">
+          <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WatsonTruckModel.Family_Info" Role="Family_Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_id" />
+            </Principal>
+            <Dependent Role="Family_Info">
+              <PropertyRef Name="Employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Group_Health_Employee">
+          <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WatsonTruckModel.Group_Health" Role="Group_Health" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_id" />
+            </Principal>
+            <Dependent Role="Group_Health">
+              <PropertyRef Name="Employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InsurancePlan_Employee">
+          <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WatsonTruckModel.InsurancePlan" Role="InsurancePlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_id" />
+            </Principal>
+            <Dependent Role="InsurancePlan">
+              <PropertyRef Name="Employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Life_Insurance_Employee">
+          <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WatsonTruckModel.Life_Insurance" Role="Life_Insurance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_id" />
+            </Principal>
+            <Dependent Role="Life_Insurance">
+              <PropertyRef Name="Employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Other_Insurance_Family_Info">
+          <End Type="WatsonTruckModel.Family_Info" Role="Family_Info" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WatsonTruckModel.Other_Insurance" Role="Other_Insurance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Family_Info">
+              <PropertyRef Name="FamilyMember_id" />
+            </Principal>
+            <Dependent Role="Other_Insurance">
+              <PropertyRef Name="FamilyMember_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InsurancePlanDetail_InsurancePlan">
+          <End Type="WatsonTruckModel.InsurancePlan" Role="InsurancePlan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WatsonTruckModel.InsurancePlanDetail" Role="InsurancePlanDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InsurancePlan">
+              <PropertyRef Name="InsurancePlan_id" />
+            </Principal>
+            <Dependent Role="InsurancePlanDetail">
+              <PropertyRef Name="InsurancePlan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InsurancePremium_InsurancePlan">
+          <End Type="WatsonTruckModel.InsurancePlan" Role="InsurancePlan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WatsonTruckModel.InsurancePremium" Role="InsurancePremium" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InsurancePlan">
+              <PropertyRef Name="InsurancePlan_id" />
+            </Principal>
+            <Dependent Role="InsurancePremium">
+              <PropertyRef Name="InsurancePlan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="WatsonTruckModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="WatsonTruckModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="AvailablePosition">
+          <Key>
+            <PropertyRef Name="Job_id" />
+          </Key>
+          <Property Name="Job_id" Type="Int32" Nullable="false" />
+          <Property Name="JobApplicant_id" Type="Int32" Nullable="false" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JobDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PostedDate" Type="DateTime" Precision="0" />
+          <Property Name="PositionPosted" Type="Boolean" />
+        </EntityType>
         <EntityType Name="JobApplicant">
           <Key>
             <PropertyRef Name="JobApplicant_id" />
@@ -1467,187 +1714,6 @@
           <Property Name="ApplicantSignatureDateTwo" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Employee" Relationship="WatsonTruckModel.FK_JobApplicant_Employee" FromRole="JobApplicant" ToRole="Employee" />
         </EntityType>
-        <EntityType Name="Life_Insurance">
-          <Key>
-            <PropertyRef Name="LifeInsurance_id" />
-          </Key>
-          <Property Name="LifeInsurance_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Employee_id" Type="Int32" Nullable="false" />
-          <Property Name="GroupPlanNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="BenefitsEffectiveDate" Type="DateTime" Precision="0" />
-          <Property Name="InitialEnrollment" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="ReEnrollment" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="AddEmployeeAndDependents" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DropRefuseCoverage" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="InformationChange" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="IncreaseAmount" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="FamilyStatusChange" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="MarriedOrHaveSpouse" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="HaveChildrenOrHaveDependents" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DateOfMarriage" Type="DateTime" Precision="0" />
-          <Property Name="PlacementDateOfAdoptedChild" Type="DateTime" Precision="0" />
-          <Property Name="AddDependent" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DropDependent" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DropEmployee" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DropDependents" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="LastDayOfCoverage" Type="DateTime" Precision="0" />
-          <Property Name="Retirement" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="LastDayWorked" Type="DateTime" Precision="0" />
-          <Property Name="OtherEvent" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="OtherEventReason" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="OtherEventDate" Type="DateTime" Precision="0" />
-          <Property Name="EmployeeDentalDrop" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="SpouseDentalDrop" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DependentDentalDrop" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="EmployeeVisionDrop" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="SpouseVisionDrop" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DependentVisionDrop" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DropBasicLife" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DropDental" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DropVision" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="Divorce" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DivorceDate" Type="DateTime" Precision="0" />
-          <Property Name="DeathOfSpouse" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DeathOfSpouseDate" Type="DateTime" Precision="0" />
-          <Property Name="TerminationOrExpirationOfCoverage" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="TerminationOrExpirationOfCoverageDate" Type="DateTime" Precision="0" />
-          <Property Name="DentalCoverageLost" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="VisionCoverageLost" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="CoveredUnderOtherInsurance" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DoNotWantDentalCoverage" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="EmployeeCoveredUnderOtherDentalPlan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="SpouseCoveredUnderOtherDentalPlan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DependentsCoveredUnderOtherDentalPlan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DoNotWantVisionCoverage" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="EmployeeCoveredUnderOtherVisionPlan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="SpouseCoveredUnderOtherVisionPlan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DependentsCoveredUnderOtherVisionPlan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="OwnerBasicLifeWithADandDPolicyAmount" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="ManagerBasicLifeWithADandDPolicyAmount" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="EmployeeBasicLifeWithADandDPolicyAmount" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="SpouseBasicLifeWithADandDPolicyAmount" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DoNotWantBasicLifeCoverageWithADandD" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="AmountOfPreviousPolicy" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="EmployeeSignature" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="EmployeeSignatureDate" Type="DateTime" Precision="0" />
-          <Property Name="SubTotalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="TerminationEmploymentOfDropCoverage" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="TerminationEmploymentDateOfDropCoverage" Type="DateTime" Precision="0" />
-          <Property Name="TerminationEmploymentLossOfOtherCoverage" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="TerminationEmploymentDateLossOfOtherCoverage" Type="DateTime" Precision="0" />
-          <Property Name="Other" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="OtherReason" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="DentalCoverage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="VisionCoverage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Employee" Relationship="WatsonTruckModel.FK_Life_Insurance_Employee" FromRole="Life_Insurance" ToRole="Employee" />
-        </EntityType>
-        <EntityType Name="Other_Insurance">
-          <Key>
-            <PropertyRef Name="OtherInsurance_id" />
-          </Key>
-          <Property Name="FamilyMember_id" Type="Int32" Nullable="false" />
-          <Property Name="OtherInsurance_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Employee_id" Type="Int32" Nullable="false" />
-          <Property Name="InsuranceCarrier" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="PolicyNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="MailingAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ZipCode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="CoveredByOtherInsurance" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="PObox" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Employee" Relationship="WatsonTruckModel.FK_Other_Insurance_Employee" FromRole="Other_Insurance" ToRole="Employee" />
-          <NavigationProperty Name="Family_Info" Relationship="WatsonTruckModel.FK_Other_Insurance_Family_Info" FromRole="Other_Insurance" ToRole="Family_Info" />
-        </EntityType>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Type="WatsonTruckModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="WatsonTruckModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="AspNetUserClaim">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Type="WatsonTruckModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="WatsonTruckModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="AspNetUserLogin">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Beneficiary_Employee">
-          <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="WatsonTruckModel.Beneficiary" Role="Beneficiary" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Employee_id" />
-            </Principal>
-            <Dependent Role="Beneficiary">
-              <PropertyRef Name="Employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Deductions_Employee">
-          <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="WatsonTruckModel.Deduction" Role="Deduction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Employee_id" />
-            </Principal>
-            <Dependent Role="Deduction">
-              <PropertyRef Name="Employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Family_Info_Employee">
-          <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="WatsonTruckModel.Family_Info" Role="Family_Info" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Employee_id" />
-            </Principal>
-            <Dependent Role="Family_Info">
-              <PropertyRef Name="Employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Group_Health_Employee">
-          <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="WatsonTruckModel.Group_Health" Role="Group_Health" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Employee_id" />
-            </Principal>
-            <Dependent Role="Group_Health">
-              <PropertyRef Name="Employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InsurancePlan_Employee">
-          <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="WatsonTruckModel.InsurancePlan" Role="InsurancePlan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Employee_id" />
-            </Principal>
-            <Dependent Role="InsurancePlan">
-              <PropertyRef Name="Employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_JobApplicant_Employee">
           <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1" />
           <End Type="WatsonTruckModel.JobApplicant" Role="JobApplicant" Multiplicity="*" />
@@ -1660,91 +1726,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Life_Insurance_Employee">
-          <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="WatsonTruckModel.Life_Insurance" Role="Life_Insurance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Employee_id" />
-            </Principal>
-            <Dependent Role="Life_Insurance">
-              <PropertyRef Name="Employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Other_Insurance_Employee">
-          <End Type="WatsonTruckModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="WatsonTruckModel.Other_Insurance" Role="Other_Insurance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Employee_id" />
-            </Principal>
-            <Dependent Role="Other_Insurance">
-              <PropertyRef Name="Employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Other_Insurance_Family_Info">
-          <End Type="WatsonTruckModel.Family_Info" Role="Family_Info" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="WatsonTruckModel.Other_Insurance" Role="Other_Insurance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Family_Info">
-              <PropertyRef Name="FamilyMember_id" />
-            </Principal>
-            <Dependent Role="Other_Insurance">
-              <PropertyRef Name="FamilyMember_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InsurancePlanDetail_InsurancePlan">
-          <End Type="WatsonTruckModel.InsurancePlan" Role="InsurancePlan" Multiplicity="1" />
-          <End Type="WatsonTruckModel.InsurancePlanDetail" Role="InsurancePlanDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="InsurancePlan">
-              <PropertyRef Name="InsurancePlan_id" />
-            </Principal>
-            <Dependent Role="InsurancePlanDetail">
-              <PropertyRef Name="InsurancePlan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InsurancePremium_InsurancePlan">
-          <End Type="WatsonTruckModel.InsurancePlan" Role="InsurancePlan" Multiplicity="1" />
-          <End Type="WatsonTruckModel.InsurancePremium" Role="InsurancePremium" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="InsurancePlan">
-              <PropertyRef Name="InsurancePlan_id" />
-            </Principal>
-            <Dependent Role="InsurancePremium">
-              <PropertyRef Name="InsurancePlan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="WatsonTruckModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="WatsonTruckModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="WatsonTruckModelStoreContainer" CdmEntityContainer="WatsonTruckEntities">
-          <EntitySetMapping Name="AvailablePositions">
-            <EntityTypeMapping TypeName="WatsonTruckModel.AvailablePosition">
-              <MappingFragment StoreEntitySet="AvailablePositions">
-                <ScalarProperty Name="Job_id" ColumnName="Job_id" />
-                <ScalarProperty Name="JobApplicant_id" ColumnName="JobApplicant_id" />
-                <ScalarProperty Name="Department" ColumnName="Department" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
-                <ScalarProperty Name="PostedDate" ColumnName="PostedDate" />
-                <ScalarProperty Name="PositionPosted" ColumnName="PositionPosted" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="DeleteEmployeeAndDependents" FunctionName="WatsonTruckModel.Store.DeleteEmployeeAndDependents" />
           <FunctionImportMapping FunctionImportName="DeleteSpouseAndDependent" FunctionName="WatsonTruckModel.Store.DeleteSpouseAndDependent" />
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="WatsonTruckModel.Store.sp_alterdiagram" />
@@ -1795,7 +1782,6 @@
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1905,6 +1891,7 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="WatsonTruckModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
                 <ScalarProperty Name="CobraStateContinuation" ColumnName="CobraStateContinuation" />
                 <ScalarProperty Name="Retired" ColumnName="Retired" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
@@ -1941,7 +1928,6 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="PreviousEmployer" ColumnName="PreviousEmployer" />
                 <ScalarProperty Name="CurrentEmployer" ColumnName="CurrentEmployer" />
-                <ScalarProperty Name="EmployeeRole" ColumnName="EmployeeRole" />
                 <ScalarProperty Name="Employee_id" ColumnName="Employee_id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2093,6 +2079,119 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Life_Insurance">
+            <EntityTypeMapping TypeName="WatsonTruckModel.Life_Insurance">
+              <MappingFragment StoreEntitySet="Life_Insurance">
+                <ScalarProperty Name="VisionCoverage" ColumnName="VisionCoverage" />
+                <ScalarProperty Name="DentalCoverage" ColumnName="DentalCoverage" />
+                <ScalarProperty Name="OtherReason" ColumnName="OtherReason" />
+                <ScalarProperty Name="Other" ColumnName="Other" />
+                <ScalarProperty Name="TerminationEmploymentDateLossOfOtherCoverage" ColumnName="TerminationEmploymentDateLossOfOtherCoverage" />
+                <ScalarProperty Name="TerminationEmploymentLossOfOtherCoverage" ColumnName="TerminationEmploymentLossOfOtherCoverage" />
+                <ScalarProperty Name="TerminationEmploymentDateOfDropCoverage" ColumnName="TerminationEmploymentDateOfDropCoverage" />
+                <ScalarProperty Name="TerminationEmploymentOfDropCoverage" ColumnName="TerminationEmploymentOfDropCoverage" />
+                <ScalarProperty Name="SubTotalCode" ColumnName="SubTotalCode" />
+                <ScalarProperty Name="EmployeeSignatureDate" ColumnName="EmployeeSignatureDate" />
+                <ScalarProperty Name="EmployeeSignature" ColumnName="EmployeeSignature" />
+                <ScalarProperty Name="AmountOfPreviousPolicy" ColumnName="AmountOfPreviousPolicy" />
+                <ScalarProperty Name="DoNotWantBasicLifeCoverageWithADandD" ColumnName="DoNotWantBasicLifeCoverageWithADandD" />
+                <ScalarProperty Name="SpouseBasicLifeWithADandDPolicyAmount" ColumnName="SpouseBasicLifeWithADandDPolicyAmount" />
+                <ScalarProperty Name="EmployeeBasicLifeWithADandDPolicyAmount" ColumnName="EmployeeBasicLifeWithADandDPolicyAmount" />
+                <ScalarProperty Name="ManagerBasicLifeWithADandDPolicyAmount" ColumnName="ManagerBasicLifeWithADandDPolicyAmount" />
+                <ScalarProperty Name="OwnerBasicLifeWithADandDPolicyAmount" ColumnName="OwnerBasicLifeWithADandDPolicyAmount" />
+                <ScalarProperty Name="DependentsCoveredUnderOtherVisionPlan" ColumnName="DependentsCoveredUnderOtherVisionPlan" />
+                <ScalarProperty Name="SpouseCoveredUnderOtherVisionPlan" ColumnName="SpouseCoveredUnderOtherVisionPlan" />
+                <ScalarProperty Name="EmployeeCoveredUnderOtherVisionPlan" ColumnName="EmployeeCoveredUnderOtherVisionPlan" />
+                <ScalarProperty Name="DoNotWantVisionCoverage" ColumnName="DoNotWantVisionCoverage" />
+                <ScalarProperty Name="DependentsCoveredUnderOtherDentalPlan" ColumnName="DependentsCoveredUnderOtherDentalPlan" />
+                <ScalarProperty Name="SpouseCoveredUnderOtherDentalPlan" ColumnName="SpouseCoveredUnderOtherDentalPlan" />
+                <ScalarProperty Name="EmployeeCoveredUnderOtherDentalPlan" ColumnName="EmployeeCoveredUnderOtherDentalPlan" />
+                <ScalarProperty Name="DoNotWantDentalCoverage" ColumnName="DoNotWantDentalCoverage" />
+                <ScalarProperty Name="CoveredUnderOtherInsurance" ColumnName="CoveredUnderOtherInsurance" />
+                <ScalarProperty Name="VisionCoverageLost" ColumnName="VisionCoverageLost" />
+                <ScalarProperty Name="DentalCoverageLost" ColumnName="DentalCoverageLost" />
+                <ScalarProperty Name="TerminationOrExpirationOfCoverageDate" ColumnName="TerminationOrExpirationOfCoverageDate" />
+                <ScalarProperty Name="TerminationOrExpirationOfCoverage" ColumnName="TerminationOrExpirationOfCoverage" />
+                <ScalarProperty Name="DeathOfSpouseDate" ColumnName="DeathOfSpouseDate" />
+                <ScalarProperty Name="DeathOfSpouse" ColumnName="DeathOfSpouse" />
+                <ScalarProperty Name="DivorceDate" ColumnName="DivorceDate" />
+                <ScalarProperty Name="Divorce" ColumnName="Divorce" />
+                <ScalarProperty Name="DropVision" ColumnName="DropVision" />
+                <ScalarProperty Name="DropDental" ColumnName="DropDental" />
+                <ScalarProperty Name="DropBasicLife" ColumnName="DropBasicLife" />
+                <ScalarProperty Name="DependentVisionDrop" ColumnName="DependentVisionDrop" />
+                <ScalarProperty Name="SpouseVisionDrop" ColumnName="SpouseVisionDrop" />
+                <ScalarProperty Name="EmployeeVisionDrop" ColumnName="EmployeeVisionDrop" />
+                <ScalarProperty Name="DependentDentalDrop" ColumnName="DependentDentalDrop" />
+                <ScalarProperty Name="SpouseDentalDrop" ColumnName="SpouseDentalDrop" />
+                <ScalarProperty Name="EmployeeDentalDrop" ColumnName="EmployeeDentalDrop" />
+                <ScalarProperty Name="OtherEventDate" ColumnName="OtherEventDate" />
+                <ScalarProperty Name="OtherEventReason" ColumnName="OtherEventReason" />
+                <ScalarProperty Name="OtherEvent" ColumnName="OtherEvent" />
+                <ScalarProperty Name="LastDayWorked" ColumnName="LastDayWorked" />
+                <ScalarProperty Name="Retirement" ColumnName="Retirement" />
+                <ScalarProperty Name="LastDayOfCoverage" ColumnName="LastDayOfCoverage" />
+                <ScalarProperty Name="DropDependents" ColumnName="DropDependents" />
+                <ScalarProperty Name="DropEmployee" ColumnName="DropEmployee" />
+                <ScalarProperty Name="DropDependent" ColumnName="DropDependent" />
+                <ScalarProperty Name="AddDependent" ColumnName="AddDependent" />
+                <ScalarProperty Name="PlacementDateOfAdoptedChild" ColumnName="PlacementDateOfAdoptedChild" />
+                <ScalarProperty Name="DateOfMarriage" ColumnName="DateOfMarriage" />
+                <ScalarProperty Name="HaveChildrenOrHaveDependents" ColumnName="HaveChildrenOrHaveDependents" />
+                <ScalarProperty Name="MarriedOrHaveSpouse" ColumnName="MarriedOrHaveSpouse" />
+                <ScalarProperty Name="FamilyStatusChange" ColumnName="FamilyStatusChange" />
+                <ScalarProperty Name="IncreaseAmount" ColumnName="IncreaseAmount" />
+                <ScalarProperty Name="InformationChange" ColumnName="InformationChange" />
+                <ScalarProperty Name="DropRefuseCoverage" ColumnName="DropRefuseCoverage" />
+                <ScalarProperty Name="AddEmployeeAndDependents" ColumnName="AddEmployeeAndDependents" />
+                <ScalarProperty Name="ReEnrollment" ColumnName="ReEnrollment" />
+                <ScalarProperty Name="InitialEnrollment" ColumnName="InitialEnrollment" />
+                <ScalarProperty Name="BenefitsEffectiveDate" ColumnName="BenefitsEffectiveDate" />
+                <ScalarProperty Name="GroupPlanNumber" ColumnName="GroupPlanNumber" />
+                <ScalarProperty Name="Employee_id" ColumnName="Employee_id" />
+                <ScalarProperty Name="LifeInsurance_id" ColumnName="LifeInsurance_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Other_Insurance">
+            <EntityTypeMapping TypeName="WatsonTruckModel.Other_Insurance">
+              <MappingFragment StoreEntitySet="Other_Insurance">
+                <ScalarProperty Name="PObox" ColumnName="PObox" />
+                <ScalarProperty Name="CoveredByOtherInsurance" ColumnName="CoveredByOtherInsurance" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="MailingAddress" ColumnName="MailingAddress" />
+                <ScalarProperty Name="PolicyNumber" ColumnName="PolicyNumber" />
+                <ScalarProperty Name="InsuranceCarrier" ColumnName="InsuranceCarrier" />
+                <ScalarProperty Name="Employee_id" ColumnName="Employee_id" />
+                <ScalarProperty Name="OtherInsurance_id" ColumnName="OtherInsurance_id" />
+                <ScalarProperty Name="FamilyMember_id" ColumnName="FamilyMember_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="WatsonTruckModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="RoleId" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="AvailablePositions">
+            <EntityTypeMapping TypeName="WatsonTruckModel.AvailablePosition">
+              <MappingFragment StoreEntitySet="AvailablePositions">
+                <ScalarProperty Name="PositionPosted" ColumnName="PositionPosted" />
+                <ScalarProperty Name="PostedDate" ColumnName="PostedDate" />
+                <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="JobApplicant_id" ColumnName="JobApplicant_id" />
+                <ScalarProperty Name="Job_id" ColumnName="Job_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="JobApplicants">
             <EntityTypeMapping TypeName="WatsonTruckModel.JobApplicant">
               <MappingFragment StoreEntitySet="JobApplicant">
@@ -2226,107 +2325,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Life_Insurance">
-            <EntityTypeMapping TypeName="WatsonTruckModel.Life_Insurance">
-              <MappingFragment StoreEntitySet="Life_Insurance">
-                <ScalarProperty Name="VisionCoverage" ColumnName="VisionCoverage" />
-                <ScalarProperty Name="DentalCoverage" ColumnName="DentalCoverage" />
-                <ScalarProperty Name="OtherReason" ColumnName="OtherReason" />
-                <ScalarProperty Name="Other" ColumnName="Other" />
-                <ScalarProperty Name="TerminationEmploymentDateLossOfOtherCoverage" ColumnName="TerminationEmploymentDateLossOfOtherCoverage" />
-                <ScalarProperty Name="TerminationEmploymentLossOfOtherCoverage" ColumnName="TerminationEmploymentLossOfOtherCoverage" />
-                <ScalarProperty Name="TerminationEmploymentDateOfDropCoverage" ColumnName="TerminationEmploymentDateOfDropCoverage" />
-                <ScalarProperty Name="TerminationEmploymentOfDropCoverage" ColumnName="TerminationEmploymentOfDropCoverage" />
-                <ScalarProperty Name="SubTotalCode" ColumnName="SubTotalCode" />
-                <ScalarProperty Name="EmployeeSignatureDate" ColumnName="EmployeeSignatureDate" />
-                <ScalarProperty Name="EmployeeSignature" ColumnName="EmployeeSignature" />
-                <ScalarProperty Name="AmountOfPreviousPolicy" ColumnName="AmountOfPreviousPolicy" />
-                <ScalarProperty Name="DoNotWantBasicLifeCoverageWithADandD" ColumnName="DoNotWantBasicLifeCoverageWithADandD" />
-                <ScalarProperty Name="SpouseBasicLifeWithADandDPolicyAmount" ColumnName="SpouseBasicLifeWithADandDPolicyAmount" />
-                <ScalarProperty Name="EmployeeBasicLifeWithADandDPolicyAmount" ColumnName="EmployeeBasicLifeWithADandDPolicyAmount" />
-                <ScalarProperty Name="ManagerBasicLifeWithADandDPolicyAmount" ColumnName="ManagerBasicLifeWithADandDPolicyAmount" />
-                <ScalarProperty Name="OwnerBasicLifeWithADandDPolicyAmount" ColumnName="OwnerBasicLifeWithADandDPolicyAmount" />
-                <ScalarProperty Name="DependentsCoveredUnderOtherVisionPlan" ColumnName="DependentsCoveredUnderOtherVisionPlan" />
-                <ScalarProperty Name="SpouseCoveredUnderOtherVisionPlan" ColumnName="SpouseCoveredUnderOtherVisionPlan" />
-                <ScalarProperty Name="EmployeeCoveredUnderOtherVisionPlan" ColumnName="EmployeeCoveredUnderOtherVisionPlan" />
-                <ScalarProperty Name="DoNotWantVisionCoverage" ColumnName="DoNotWantVisionCoverage" />
-                <ScalarProperty Name="DependentsCoveredUnderOtherDentalPlan" ColumnName="DependentsCoveredUnderOtherDentalPlan" />
-                <ScalarProperty Name="SpouseCoveredUnderOtherDentalPlan" ColumnName="SpouseCoveredUnderOtherDentalPlan" />
-                <ScalarProperty Name="EmployeeCoveredUnderOtherDentalPlan" ColumnName="EmployeeCoveredUnderOtherDentalPlan" />
-                <ScalarProperty Name="DoNotWantDentalCoverage" ColumnName="DoNotWantDentalCoverage" />
-                <ScalarProperty Name="CoveredUnderOtherInsurance" ColumnName="CoveredUnderOtherInsurance" />
-                <ScalarProperty Name="VisionCoverageLost" ColumnName="VisionCoverageLost" />
-                <ScalarProperty Name="DentalCoverageLost" ColumnName="DentalCoverageLost" />
-                <ScalarProperty Name="TerminationOrExpirationOfCoverageDate" ColumnName="TerminationOrExpirationOfCoverageDate" />
-                <ScalarProperty Name="TerminationOrExpirationOfCoverage" ColumnName="TerminationOrExpirationOfCoverage" />
-                <ScalarProperty Name="DeathOfSpouseDate" ColumnName="DeathOfSpouseDate" />
-                <ScalarProperty Name="DeathOfSpouse" ColumnName="DeathOfSpouse" />
-                <ScalarProperty Name="DivorceDate" ColumnName="DivorceDate" />
-                <ScalarProperty Name="Divorce" ColumnName="Divorce" />
-                <ScalarProperty Name="DropVision" ColumnName="DropVision" />
-                <ScalarProperty Name="DropDental" ColumnName="DropDental" />
-                <ScalarProperty Name="DropBasicLife" ColumnName="DropBasicLife" />
-                <ScalarProperty Name="DependentVisionDrop" ColumnName="DependentVisionDrop" />
-                <ScalarProperty Name="SpouseVisionDrop" ColumnName="SpouseVisionDrop" />
-                <ScalarProperty Name="EmployeeVisionDrop" ColumnName="EmployeeVisionDrop" />
-                <ScalarProperty Name="DependentDentalDrop" ColumnName="DependentDentalDrop" />
-                <ScalarProperty Name="SpouseDentalDrop" ColumnName="SpouseDentalDrop" />
-                <ScalarProperty Name="EmployeeDentalDrop" ColumnName="EmployeeDentalDrop" />
-                <ScalarProperty Name="OtherEventDate" ColumnName="OtherEventDate" />
-                <ScalarProperty Name="OtherEventReason" ColumnName="OtherEventReason" />
-                <ScalarProperty Name="OtherEvent" ColumnName="OtherEvent" />
-                <ScalarProperty Name="LastDayWorked" ColumnName="LastDayWorked" />
-                <ScalarProperty Name="Retirement" ColumnName="Retirement" />
-                <ScalarProperty Name="LastDayOfCoverage" ColumnName="LastDayOfCoverage" />
-                <ScalarProperty Name="DropDependents" ColumnName="DropDependents" />
-                <ScalarProperty Name="DropEmployee" ColumnName="DropEmployee" />
-                <ScalarProperty Name="DropDependent" ColumnName="DropDependent" />
-                <ScalarProperty Name="AddDependent" ColumnName="AddDependent" />
-                <ScalarProperty Name="PlacementDateOfAdoptedChild" ColumnName="PlacementDateOfAdoptedChild" />
-                <ScalarProperty Name="DateOfMarriage" ColumnName="DateOfMarriage" />
-                <ScalarProperty Name="HaveChildrenOrHaveDependents" ColumnName="HaveChildrenOrHaveDependents" />
-                <ScalarProperty Name="MarriedOrHaveSpouse" ColumnName="MarriedOrHaveSpouse" />
-                <ScalarProperty Name="FamilyStatusChange" ColumnName="FamilyStatusChange" />
-                <ScalarProperty Name="IncreaseAmount" ColumnName="IncreaseAmount" />
-                <ScalarProperty Name="InformationChange" ColumnName="InformationChange" />
-                <ScalarProperty Name="DropRefuseCoverage" ColumnName="DropRefuseCoverage" />
-                <ScalarProperty Name="AddEmployeeAndDependents" ColumnName="AddEmployeeAndDependents" />
-                <ScalarProperty Name="ReEnrollment" ColumnName="ReEnrollment" />
-                <ScalarProperty Name="InitialEnrollment" ColumnName="InitialEnrollment" />
-                <ScalarProperty Name="BenefitsEffectiveDate" ColumnName="BenefitsEffectiveDate" />
-                <ScalarProperty Name="GroupPlanNumber" ColumnName="GroupPlanNumber" />
-                <ScalarProperty Name="Employee_id" ColumnName="Employee_id" />
-                <ScalarProperty Name="LifeInsurance_id" ColumnName="LifeInsurance_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Other_Insurance">
-            <EntityTypeMapping TypeName="WatsonTruckModel.Other_Insurance">
-              <MappingFragment StoreEntitySet="Other_Insurance">
-                <ScalarProperty Name="PObox" ColumnName="PObox" />
-                <ScalarProperty Name="CoveredByOtherInsurance" ColumnName="CoveredByOtherInsurance" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="MailingAddress" ColumnName="MailingAddress" />
-                <ScalarProperty Name="PolicyNumber" ColumnName="PolicyNumber" />
-                <ScalarProperty Name="InsuranceCarrier" ColumnName="InsuranceCarrier" />
-                <ScalarProperty Name="Employee_id" ColumnName="Employee_id" />
-                <ScalarProperty Name="OtherInsurance_id" ColumnName="OtherInsurance_id" />
-                <ScalarProperty Name="FamilyMember_id" ColumnName="FamilyMember_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="WatsonTruckModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="RoleId" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRole">
-              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

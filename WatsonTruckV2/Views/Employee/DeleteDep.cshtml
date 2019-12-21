@@ -126,17 +126,25 @@
                         </dd>
                     </dl>
                 </div>
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-
-                    <div class="form-actions no-color">
-                        @*<button type="submit" id="confirmDelete" value="Delete" class="btn" data-toggle="confirmation">Delete</button>*@
-                        <input type="submit" value="Delete" class="btn btn-default" /> |
-                        @Html.ActionLink("Back to List", "FamilyOverview", new { Employee_id = ViewBag.Employee_id })
-                    </div>
-                }
             </form>
+            @using (Html.BeginForm())
+            {
+                <form action="DeleteDep" id="@Model.family.FamilyMember_id" method="post">
+                    @Html.AntiForgeryToken()
+                    <span id="confirmDeleteSpan_@Model.family.FamilyMember_id">Are you sure you want to delete?</span>
+                    <button type="submit" class="btn" onclick="ConfirmDelete('@Model.family.FamilyMember_id',true" )>Yes</button>
+                    <a href="#" class="btn" onclick="ConfirmDelete('@Model.family.FamilyMember_id',false" )>No</a>
+                    <span id="deleteSpan_@Model.family.FamilyMember_id"></span>
+                    @*<a href="#" class="btn-danger" onclick="ConfirmDelete('@Model.family.FamilyMember_id',true" )>Delete</a>*@
+                </form>
+
+                @*<div class="form-actions no-color">*@
+                    @*<button type="submit" id="confirmDelete" value="Delete" class="btn" data-toggle="confirmation">Delete</button>*@
+                    @*<input type="submit" value="Delete" class="btn btn-default" /> |*@
+                    @*@Html.ActionLink("Back to List", "FamilyOverview", new { Employee_id = ViewBag.Employee_id })*@
+                @*</div>*@
+            }
+            
         </div>
     </div>
 
@@ -214,6 +222,20 @@
             }
 
         });
+    }
+
+    function ConfirmDelete(id, isDeleteClicked) {
+        var confirmDeleteSpan = 'deleteConfirm_' + id;
+        var deleteSpan = 'deleteSpan_' + id;
+
+        if (isDeleteClicked) {
+            $('#' + deleteSpan).hide();
+            $('#' + confirmDeleteSpan).show();
+        }
+        else {
+            $('#' + deleteSpan).show();
+            $('#' + confirmDeleteSpan).hide();
+        }
     }
 
 </script>

@@ -14,7 +14,6 @@ namespace WatsonTruckV2.Models
     
     public partial class AspNetUserLogin
     {
-        public int RoleId { get; set; }
         public string LoginProvider { get; set; }
         public string ProviderKey { get; set; }
         public string UserId { get; set; }

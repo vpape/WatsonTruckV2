@@ -4,23 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4ddd8f966e54431e9361bcfd373170d9" Name="Diagram1" ZoomLevel="35">
-        <EntityTypeShape EntityType="WatsonTruckModel.AvailablePosition" Width="1.5" PointX="2.5" PointY="13.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="WatsonTruckModel.AspNetRole" Width="1.5" PointX="2.5" PointY="3.875" />
-        <EntityTypeShape EntityType="WatsonTruckModel.AspNetUserClaim" Width="2.125" PointX="8.25" PointY="5.125" />
-        <EntityTypeShape EntityType="WatsonTruckModel.AspNetUserLogin" Width="2.125" PointX="8.25" PointY="2.375" />
-        <EntityTypeShape EntityType="WatsonTruckModel.AspNetUser" Width="2.125" PointX="5" PointY="2.75" />
-        <EntityTypeShape EntityType="WatsonTruckModel.Beneficiary" Width="1.5" PointX="14.5" PointY="21.375" />
-        <EntityTypeShape EntityType="WatsonTruckModel.Deduction" Width="1.5" PointX="22" PointY="14.375" />
-        <EntityTypeShape EntityType="WatsonTruckModel.Employee" Width="1.5" PointX="17" PointY="11.875" />
-        <EntityTypeShape EntityType="WatsonTruckModel.Family_Info" Width="1.5" PointX="9.75" PointY="9.25" />
-        <EntityTypeShape EntityType="WatsonTruckModel.Group_Health" Width="1.5" PointX="17.75" PointY="22.875" />
-        <EntityTypeShape EntityType="WatsonTruckModel.InsurancePlan" Width="1.5" PointX="20.25" PointY="5.25" />
-        <EntityTypeShape EntityType="WatsonTruckModel.InsurancePlanDetail" Width="1.5" PointX="24.125" PointY="4.75" />
-        <EntityTypeShape EntityType="WatsonTruckModel.InsurancePremium" Width="1.5" PointX="20.375" PointY="9" />
-        <EntityTypeShape EntityType="WatsonTruckModel.JobApplicant" Width="1.5" PointX="5.75" PointY="10.25" />
-        <EntityTypeShape EntityType="WatsonTruckModel.Life_Insurance" Width="1.5" PointX="25.5" PointY="13" />
-        <EntityTypeShape EntityType="WatsonTruckModel.Other_Insurance" Width="1.5" PointX="13" PointY="12.125" />
+      <Diagram DiagramId="4ddd8f966e54431e9361bcfd373170d9" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="WatsonTruckModel.AspNetRole" Width="1.5" PointX="7.75" PointY="2.5" />
+        <EntityTypeShape EntityType="WatsonTruckModel.AspNetUserClaim" Width="1.5" PointX="12.25" PointY="1" />
+        <EntityTypeShape EntityType="WatsonTruckModel.AspNetUserLogin" Width="1.5" PointX="12.25" PointY="3.75" />
+        <EntityTypeShape EntityType="WatsonTruckModel.AspNetUser" Width="1.5" PointX="10" PointY="1.375" />
+        <EntityTypeShape EntityType="WatsonTruckModel.Beneficiary" Width="1.5" PointX="5.625" PointY="24.375" />
+        <EntityTypeShape EntityType="WatsonTruckModel.Deduction" Width="1.5" PointX="14.25" PointY="16.375" />
+        <EntityTypeShape EntityType="WatsonTruckModel.Employee" Width="1.5" PointX="8.5" PointY="14.5" />
+        <EntityTypeShape EntityType="WatsonTruckModel.Family_Info" Width="1.5" PointX="11.625" PointY="14.75" />
+        <EntityTypeShape EntityType="WatsonTruckModel.Group_Health" Width="1.5" PointX="5.125" PointY="15.625" />
+        <EntityTypeShape EntityType="WatsonTruckModel.InsurancePlan" Width="1.5" PointX="8.375" PointY="7.5" />
+        <EntityTypeShape EntityType="WatsonTruckModel.InsurancePlanDetail" Width="1.5" PointX="11" PointY="7" />
+        <EntityTypeShape EntityType="WatsonTruckModel.InsurancePremium" Width="1.5" PointX="5.5" PointY="9.375" />
+        <EntityTypeShape EntityType="WatsonTruckModel.Life_Insurance" Width="1.5" PointX="2.75" PointY="13.5" />
+        <EntityTypeShape EntityType="WatsonTruckModel.Other_Insurance" Width="1.5" PointX="14.25" PointY="12" />
         <AssociationConnector Association="WatsonTruckModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="WatsonTruckModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="WatsonTruckModel.FK_Beneficiary_Employee" />
@@ -28,14 +26,15 @@
         <AssociationConnector Association="WatsonTruckModel.FK_Family_Info_Employee" />
         <AssociationConnector Association="WatsonTruckModel.FK_Group_Health_Employee" />
         <AssociationConnector Association="WatsonTruckModel.FK_InsurancePlan_Employee" />
-        <AssociationConnector Association="WatsonTruckModel.FK_JobApplicant_Employee" />
         <AssociationConnector Association="WatsonTruckModel.FK_Life_Insurance_Employee" />
-        <AssociationConnector Association="WatsonTruckModel.FK_Other_Insurance_Employee" />
         <AssociationConnector Association="WatsonTruckModel.FK_Other_Insurance_Family_Info" />
         <AssociationConnector Association="WatsonTruckModel.FK_InsurancePlanDetail_InsurancePlan" />
         <AssociationConnector Association="WatsonTruckModel.FK_InsurancePremium_InsurancePlan" />
         <AssociationConnector Association="WatsonTruckModel.AspNetUserRoles" />
-        </Diagram>
+        <EntityTypeShape EntityType="WatsonTruckModel.AvailablePosition" Width="1.5" PointX="0.625" PointY="4" />
+        <EntityTypeShape EntityType="WatsonTruckModel.JobApplicant" Width="1.5" PointX="0.625" PointY="7.5" />
+        <AssociationConnector Association="WatsonTruckModel.FK_JobApplicant_Employee" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

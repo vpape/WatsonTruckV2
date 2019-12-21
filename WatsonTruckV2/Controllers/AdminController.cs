@@ -85,7 +85,7 @@ namespace WatsonTruckV2.Controllers
         {
             Employee e = new Employee();
 
-            e.EmployeeRole = Role;
+            e.UserRole = Role;
             e.CurrentEmployer = CurrentEmployer;
             e.JobTitle = JobTitle;
             e.SSN = EmpNumber;
@@ -237,7 +237,7 @@ namespace WatsonTruckV2.Controllers
                 .Where(i => i.Employee_id == Employee_id)
                 .Single();
 
-            e.EmployeeRole = EmpRole;
+            e.UserRole = EmpRole;
             e.CurrentEmployer = CurrentEmployer;
             e.JobTitle = JobTitle;
             e.SSN = EmpNumber;
@@ -276,7 +276,7 @@ namespace WatsonTruckV2.Controllers
             grph.PhoneNumber = InsPhoneNumber;
 
             ViewBag.Employee_id = e.Employee_id;
-            ViewBag.EmployeeRole = e.EmployeeRole;
+            ViewBag.EmployeeRole = e.UserRole;
 
             if (ModelState.IsValid)
             {
